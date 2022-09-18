@@ -21,14 +21,13 @@ class Circle {
 	double radius;
 
   public:
+	constexpr static const double DEFAULT_RADIUS = 10.0;
+
 	// Default constructor
 	Circle();
 
 	// Parameterized constructor
 	Circle(int x, int y, double radius);
-
-	// Default destructor
-	~Circle();
 
 	// Return the circle's centre x-coordinate
 	int getX() const;
