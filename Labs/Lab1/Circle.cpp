@@ -17,17 +17,18 @@
 using namespace std;
 
 // Default constructor
-Circle::Circle() : xCoordinate(0), yCoordinate(0), radius(DEFAULT_RADIUS) {}
+Circle::Circle() : xCoordinate(0), yCoordinate(0), radius(10.0) {}
 
 // Parameterized constructor
 Circle::Circle(int x, int y, double radius)
 {
-    // Set the class data members value
-    xCoordinate = x;
-    yCoordinate = y;
+    // If the radius is less than 0, set it to 0
+    if (radius <= 0.0) radius = DEFAULT_RADIUS;
 
-    // If the radius is invalid, set it to the default value
-    if (radius < 0) this->radius = DEFAULT_RADIUS;
+    // Initialize the class members
+    this->xCoordinate = x;
+    this->yCoordinate = y;
+    this->radius = radius;
 }
 
 // Return the circle's centre x-coordinate
@@ -59,10 +60,8 @@ void Circle::move(int horiz, int vert)
 void Circle::setRadius(double r)
 {
     // If the passed radius is invalid, set the circle's radius to the default value
-    if (r <= 0.0) 
-        radius = DEFAULT_RADIUS;
-    else
-        radius = r;
+    if (r <= 0.0) r = DEFAULT_RADIUS;
+    radius = r;
 }
 
 // Compute and returns the circle's area
@@ -74,7 +73,7 @@ double Circle::computeArea() const
 // Display the circle's data members like this: x = 0, y = 11, radius = 0.2
 void Circle::displayCircle() const
 {
-    cout << "x = " << xCoordinate << ", y = " << yCoordinate << ", radius = " << radius << endl;
+    cout << "x = " << getX() << ", y = " << getY() << ", radius = " << getRadius() << endl;
 }
 
 // Returns true if c intersects the calling circle
