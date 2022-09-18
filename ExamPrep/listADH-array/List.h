@@ -12,10 +12,8 @@
  * Author: AL
  */
 
-#idndef LIST_H
-#define LIST_H
+
 #include <string>
-#include "Profile.h"
 
 using namespace std;
 
@@ -27,7 +25,7 @@ private:
                                             // Small capacity so can test when data collection becomes full.
                                             // As we are testing the code of our assignment, we can change the 
                                             // value given to this constant. 
-   Profile * elements;                      // Data structure with size = CAPACITY
+   int * elements;                      // Data structure with size = CAPACITY
    unsigned int elementCount;               // Current number of elements in List
 
 public:
@@ -45,7 +43,7 @@ public:
    //                is successful, newElement is at newPosition in the List,
    //                other elements, located after newElement, "have moved" 1 position up, 
    //                and the returned value is true. Otherwise, false is returned.
-   bool insert(unsigned int newPosition, const Profile& newElement);
+   bool insert(unsigned int newPosition, const int& newElement);
 
    // Description: Removes the element at position in the List 
    // Postcondition: If 1 <= position <= getElementCount() and the removal is successful,
@@ -60,10 +58,9 @@ public:
    
    // Description: Returns the element at position in the List.
    // Precondition: 1 <= position <= getElementCount().
-   Profile getElement(unsigned int position) const;
+   int getElement(unsigned int position) const;
 
    // Description: Prints all elements in the List.
-   friend ostream & operator<<(ostream & os, const List& rhs);
+   void printList() const;
 
 }; // end header file List
-#endif
