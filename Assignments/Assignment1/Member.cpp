@@ -22,34 +22,76 @@
 
 // TODO 
 // Private Method:     
-// void setPhone(const string aPhone);
+// Description: Sets the member's cell phone number
+void Member::setPhone(const string aPhone)
+{
+    phone = aPhone;
+}
 
-// Public Methods
-// Default Constructor:     Member();
-// Parameterized Constructor:     Member(string aName, string aPhone, string anEmail, string aCreditCard);
+// Description: Create a member with a cell phone number of "000-000-0000". 
+// Postcondition: All data members set to an empty string, 
+//                except the cell phone number which is set to "000-000-0000".
+Member::Member()
+{
+    const string empty = "";
+    const string def_phone = "000-000-0000";
 
-// Getters and setters
+    name = empty;
+    phone = def_phone;
+    email = empty;
+    creditCard = empty;
+}
+
+// Parameterized Constructor:
+Member::Member(string aName, string aPhone, string anEmail, string aCreditCard)
+{
+    name = aName;                     
+    phone = aPhone;
+    email = anEmail;
+    creditCard = aCreditCard;
+}
+
 // Description: Returns member's name.
-// string getName() const;
+string Member::getName() const
+{
+    return name;
+}
 
 // Description: Returns member's phone.
-// string getPhone() const;
+string Member::getPhone() const
+{
+    return phone;
+}
 
 // Description: Returns member's email.
-// string getEmail() const;
+string Member::getEmail() const
+{
+    return email;
+}
 	
 // Description: Returns member's credit card.
-// string getCreditCard() const;
+string Member::getCreditCard() const
+{
+    return creditCard;
+}
 
 // Description: Sets the member's name.
-// void setName(const string aName);
+void Member::setName(const string aName)
+{
+    name = aName;
+}
 
 // Description: Sets the member's email.
-// void setEmail(const string anEmail);
+void Member::setEmail(const string anEmail)
+{
+    email = anEmail;
+}
 
 // Description: Sets the member's credit card number.
-// void setCreditCard(const string aCreditCard);
-
+void Member::setCreditCard(const string aCreditCard)
+{
+    creditCard = aCreditCard;
+}
 
 // Overloaded Operators
 // Description: Comparison operator. Compares "this" Member object with "rhs" Member object.
