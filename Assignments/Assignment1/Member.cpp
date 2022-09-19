@@ -8,6 +8,9 @@
  *                  This cell phone number cannot be modified. 
  *
  * Author: AL
+ * 
+ * Completed by: Steven Wong
+ * 
  * Last modified: Sept. 2022
  */
 
@@ -16,6 +19,36 @@
 #include <string>
 #include "Member.h"
 
+
+// TODO 
+// Private Method:     
+// void setPhone(const string aPhone);
+
+// Public Methods
+// Default Constructor:     Member();
+// Parameterized Constructor:     Member(string aName, string aPhone, string anEmail, string aCreditCard);
+
+// Getters and setters
+// Description: Returns member's name.
+// string getName() const;
+
+// Description: Returns member's phone.
+// string getPhone() const;
+
+// Description: Returns member's email.
+// string getEmail() const;
+	
+// Description: Returns member's credit card.
+// string getCreditCard() const;
+
+// Description: Sets the member's name.
+// void setName(const string aName);
+
+// Description: Sets the member's email.
+// void setEmail(const string anEmail);
+
+// Description: Sets the member's credit card number.
+// void setCreditCard(const string aCreditCard);
 
 
 // Overloaded Operators
