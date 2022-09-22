@@ -3,8 +3,8 @@
  * 
  * Class Description: List data collection ADT.
  * Class Invariant: Data collection with the following characteristics:
- *                   - Each element is unique (no duplicates).
- *                   - ***There is another class invariant: Add it here!***
+ *                   - Each element is in descending order of cell phone number.
+ *                   - ***There is another class invariant: Add it here!*** ^^???
  *
  * Author: AL
  * Last modified: Sept. 2022
