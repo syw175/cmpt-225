@@ -18,9 +18,6 @@
 
 using namespace std;
 
-// TODO
-// Private Methods:
-// Is that how you declare?
 // Description: Removes all elements from the List.
 // Postconditions: List contains no elements and the element count is 0.
 void List::clear()
@@ -45,7 +42,12 @@ List::List()
 // Description: Destruct a List object, releasing heap-allocated memory.
 List::~List()
 {
-    // Does this deallocate memory of the Member type objects??
+
+    // Call clear and deallocate memory associated with Member objects 
+    // Call the remove?? 
+    clear();
+
+    // Deallocate elemnts
     delete [] elements;
 }
 
@@ -88,8 +90,9 @@ bool List::remove(Member& toBeRemoved)
 // Postcondition: List is back to the state it was right after being constructed.
 void List::removeAll()
 {
-    // Call the remove?? 
-    clear();
+    // Memory is not deallocated
+
+
 }
 
 // Description: Search for target element.
@@ -97,29 +100,27 @@ void List::removeAll()
 //              otherwise, returns NULL.
 Member* List::search(Member& target)
 {
+    Member *person = NULL;
     // Iterate through the elements...
     for (unsigned int i = 0, j = getElementCount(); i < j; i++)
     {
         // if the ith element is equal to the target element, return it
-        if (elements[i] == *target) return elements[i];
+        if (elements[i] == target) 
+            person = &elements[i];
     }
 
     // At this point, the element does not exist in the data collection... return NULL
-    return NULL;
+    return person;
 }
 
 // Description: Prints all elements stored in List by descending order of search key.
 // Time Efficiency: O(n)
 void List::printList()
 {
-    // CAN I USE THE FUNCTION THAT SAYS FOR TESTING PURPOES IN MEMBER.CPP??
-
-
-    // Correct to assume that list elements are already sorted??
+    // Iterate through the list and print all elements in descending order of phone #
     for (unsigned int i = 0, j = getElementCount(); i < j; i++)
     {
         // Get the current member and print out their information
-        Member curr = elements[i];
-        cout <<  curr.getName() << ", " << curr.getPhone() << ", " << curr.getEmail() << ", " << curr.getCreditCard() << endl;
+        cout << elements[i] << endl;
     }
 }
