@@ -19,7 +19,7 @@ int main(void)
 {
     // Initialize variables
     Circle *array = NULL; 
-    unsigned int arraySize;
+    unsigned int arraySize = 0;
     unsigned int elementCount = 0;
     int xVal; 
     int yVal;
