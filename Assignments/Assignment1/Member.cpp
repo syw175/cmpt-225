@@ -20,7 +20,6 @@
 #include "Member.h"
 
 
-// TODO 
 // Private Method:     
 // Description: Sets the member's cell phone number
 void Member::setPhone(const string aPhone)
@@ -36,13 +35,27 @@ Member::Member()
     const string empty = "";
     const string def_phone = "000-000-0000";
 
+
+    // PROFESSIONAL WAY TO INITIALIZE EMPTY STRING
+    // WHAT IS DONE WITH CONSTEXPR STRING LENGTH = 12??
     name = empty;
     phone = def_phone;
     email = empty;
     creditCard = empty;
 }
 
-// Parameterized Constructor:
+// Parameterized Constructor
+Member::Member(string aPhone)
+{
+    const string empty = "";
+
+    name = empty;
+    setPhone(aPhone);
+    email = empty;
+    creditCard = empty;
+}
+
+// Parameterized Constructor
 Member::Member(string aName, string aPhone, string anEmail, string aCreditCard)
 {
     name = aName;                     
@@ -126,5 +139,4 @@ ostream & operator<<(ostream & os, const Member & p) {
 	     
     return os;
 } 
-
 // end of Member.cpp
