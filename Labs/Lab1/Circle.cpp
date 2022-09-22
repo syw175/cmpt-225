@@ -79,26 +79,15 @@ void Circle::displayCircle() const
 // Returns true if c intersects the calling circle
 bool Circle::intersect(Circle c) const
 {
+    bool result = true;
     // Calculate the distance between the two circles centers
     double distance = sqrt(pow(c.getX() - getX(), 2) + pow(c.getY() - getY(), 2));
 
-    // If the distance is 0, and r1 == r2, then the circles are the same 
-    if (distance == 0 && getRadius() == c.getRadius())
-    {
-        return false;
-    }
+    // If the distance is 0, and r1 == r2, then the circles are the same
     // If distance is greater than the sum of the two radii, they are separate
-    else if (distance > (getRadius() + c.getRadius()))
-    {
-        return false;
-    }
     // If the distance is less than the absolute value of r1-r2, the circles are concentric
-    else if (distance < abs(getRadius() - c.getRadius()))
-    {
-        return false;
-    }
-    else 
-    {
-        return true;
-    }
+    if (distance == 0 && getRadius() == c.getRadius() || distance > (getRadius() + c.getRadius()) || distance < abs(getRadius() - c.getRadius()))
+        result = false;
+
+    return result;
 }
