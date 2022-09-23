@@ -5,7 +5,6 @@
  * Class Invariant: Data collection with the following characteristics:
  *                   - Each element is unique (no duplicates).
  *                   - Each element is in descending order of cell phone number.
- *                   - ***There is another class invariant: Add it here!*** ^^???
  *
  * Author: Steven Wong
  * 
@@ -100,16 +99,16 @@ void List::removeAll()
 //              otherwise, returns NULL.
 Member* List::search(Member& target)
 {
+    // Initialize a pointer to a Member object
     Member *person = NULL;
-    // Iterate through the elements...
+
+    // Iterate through the array until we find the target
     for (unsigned int i = 0, j = getElementCount(); i < j; i++)
     {
-        // if the ith element is equal to the target element, return it
-        if (elements[i] == target) 
-            person = &elements[i];
+        // If we find the target, set person to the address of the target
+        if (elements[i] == target) person = &elements[i];
     }
-
-    // At this point, the element does not exist in the data collection... return NULL
+    // Return the address of the target or NULL if not found
     return person;
 }
 
@@ -117,10 +116,9 @@ Member* List::search(Member& target)
 // Time Efficiency: O(n)
 void List::printList()
 {
-    // Iterate through the list and print all elements in descending order of phone #
     for (unsigned int i = 0, j = getElementCount(); i < j; i++)
     {
-        // Get the current member and print out their information
+        // Print the ith Member with the form: Louis Pace, 604-853-1423, louis@nowhere.com, 1234 5678 9098 7654 
         cout << elements[i] << endl;
     }
 }
