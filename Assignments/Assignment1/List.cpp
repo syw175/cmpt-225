@@ -17,37 +17,19 @@
 
 using namespace std;
 
-// Description: Removes all elements from the List.
-// Postconditions: List contains no elements and the element count is 0.
-void List::clear()
-{
-    // How to remove all elements from the list?
-    // Perhaps calling the removeAll function()
-    // Or just setting elementCount to 0
-    elementCount = 0;
-}
-
-// Public Methods:
 // Default constructor
+// List starts as NULL with element count = 0 
+// If the list elementCount becomes 0, clear() is callled and array = NULL 
+// For any additions, if elementCount is 0, array must be allocated on HEAP with CAPACITY
+
 List::List()
 {
-    // Initialize an array of Members on the heap with the default capacity
-    elements = new Member[CAPACITY];
-
-    // Initializing elementCount not required right?
-    elementCount = 0;
 }
 
 // Description: Destruct a List object, releasing heap-allocated memory.
 List::~List()
 {
-
-    // Call clear and deallocate memory associated with Member objects 
-    // Call the remove?? 
-    clear();
-
-    // Deallocate elemnts
-    delete [] elements;
+    this->clear();
 }
 
 // Description: Returns the total number of elements currently stored in List.
@@ -63,12 +45,22 @@ unsigned int List::getElementCount() const
  */
 bool List::insert(Member& newElement)
 {
+    bool result = true; 
     // Check if newElement is already in the data collection
-    if (search(newElement) == NULL) return false;
+    if (search(newElement) == NULL) result = false;
+
+    // Check if there is still capacity in the array
+    if (CAPACITY <= getElementCount()) result = false; 
 
     // Iterate through the array until current !< next (We found the right place for it)
+    for (unsigned int i = 0, k = getElementCount(); i < k; i++)
+    {
+        // If this is true... we have found the place of newElement in the List
+        if (elements[i] < newElement)
+        {
 
-
+        }
+    }
 }
 
 /* Description: Remove an element. 
@@ -77,21 +69,43 @@ bool List::insert(Member& newElement)
  */
 bool List::remove(Member& toBeRemoved)
 {
+    bool status = true;
+
     // Check if toBeRemoved exists in the data collection
-    if (search(toBeRemoved) == NULL) return false;
+    if (search(toBeRemoved) == NULL) status = false;
+
+    // Pointer manpulation??? 
+
+    // Case 1: Member is the only element in the list
+
+    // Case 2: Member is in the middle of the list 
+
+    // Case 3: Member is the last element in the list... does not need to remove any gaps 
 
 
 
 
+
+    // Return the status of remove()
+    return status;
+}
+
+// Description: Removes all elements from the List.
+// Postconditions: List contains no elements and the element count is 0.
+//                 List is returned to the default state in the constructor.
+void List::clear()
+{
+   delete [] elements;
+   elements = NULL;
+   elementCount = 0;
+   return;
 }
 
 // Description: Remove all elements.
 // Postcondition: List is back to the state it was right after being constructed.
 void List::removeAll()
 {
-    // Memory is not deallocated
-
-
+    this->clear();
 }
 
 // Description: Search for target element.
