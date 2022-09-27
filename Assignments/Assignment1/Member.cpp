@@ -19,6 +19,8 @@
 #include <string>
 #include "Member.h"
 
+const string EMPTY_STR = "";
+const string DEF_PHONE = "000-000-0000";
 
 // Private Method:     
 // Description: Sets the member's cell phone number
@@ -32,36 +34,40 @@ void Member::setPhone(const string aPhone)
 //                except the cell phone number which is set to "000-000-0000".
 Member::Member()
 {
-    const string empty = "";
-    const string def_phone = "000-000-0000";
-
-
-    // PROFESSIONAL WAY TO INITIALIZE EMPTY STRING
-    // WHAT IS DONE WITH CONSTEXPR STRING LENGTH = 12??
-    name = empty;
-    phone = def_phone;
-    email = empty;
-    creditCard = empty;
+    // Set data members
+    name = EMPTY_STR;
+    phone = DEF_PHONE;
+    email = EMPTY_STR;
+    creditCard = EMPTY_STR;
 }
 
 // Parameterized Constructor
 Member::Member(string aPhone)
 {
-    const string empty = "";
+    // Set data members
+    name = EMPTY_STR;
+    email = EMPTY_STR;
+    creditCard = EMPTY_STR;
 
-    name = empty;
-    setPhone(aPhone);
-    email = empty;
-    creditCard = empty;
+    // Check if phone number is valid
+    if (aPhone.length() == 12 && aPhone[3] == '-' && aPhone[7] == '-')
+        setPhone(aPhone);
+    else
+        setPhone(DEF_PHONE);
 }
 
 // Parameterized Constructor
 Member::Member(string aName, string aPhone, string anEmail, string aCreditCard)
 {
     name = aName;                     
-    phone = aPhone;
     email = anEmail;
     creditCard = aCreditCard;
+    
+    // Check if phone number is valid
+    if (aPhone.length() == 12 && aPhone[3] == '-' && aPhone[7] == '-')
+        setPhone(aPhone);
+    else
+        setPhone(DEF_PHONE);
 }
 
 // Description: Returns member's name.
