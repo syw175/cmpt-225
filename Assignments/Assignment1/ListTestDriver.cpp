@@ -39,6 +39,12 @@ int main(void)
     // Try to remove an element from an empty list
     assert(list->remove(*member1) == false);
 
+    // Try to removeAll elements from an empty list
+    list->removeAll();
+
+    // Check that the initial element count is 0 and the array is now NULL after removeAll()
+    assert(list->getElementCount() == 0);
+
     // Try to search for an element in an empty list
     assert(list->search(*member1) == NULL);
 
@@ -70,7 +76,9 @@ int main(void)
     assert(list->getElementCount() == 3);
 
     // Print the list [should print 3 elements]
+    cout << "Printing the list with 3 elements" << endl;
     list->printList();
+    cout << endl;
 
     // Try to remove an element that is not in the list
     assert(list->remove(*member4) == false);
@@ -85,7 +93,9 @@ int main(void)
     assert(list->getElementCount() == 2);
 
     // Print the list [should print 2 elements]
+    cout << "Printing the list with 2 elements" << endl;
     list->printList();
+    cout << endl;
 
     // Fill the list to capacity
     assert(list->insert(*member4) == true);
@@ -102,7 +112,9 @@ int main(void)
     assert(list->getElementCount() == 5);
 
     // Print the list [should print 5 elements]
+    cout << "Printing the list with 5 elements" << endl;
     list->printList();
+    cout << endl;
     
 
 

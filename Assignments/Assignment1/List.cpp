@@ -32,7 +32,6 @@ unsigned int List::getElementCount() const
     return elementCount;
 }
 
-// NEEDS TESTING, COULD SEG FAULT WHEN SHIFTING ELEMENTS TO THE LEFT
 /* Description: Insert an element.
  * Precondition: newElement must not already be in data collection.  
  * Postcondition: newElement inserted in its proper place in List
@@ -42,15 +41,14 @@ bool List::insert(Member& newElement)
 {
    bool inserted = true;
 
-    // Check if newElement is already in the list
-    if (this->remove(newElement))
+    // Do not insert newElement if it already exists in the data structure
+    if (search(newElement) != NULL)
     {
-        // If newElement is already in the list, return false
         inserted = false;
     }
+    // If newElement is not in the list, insert it in its proper place
     else
     {
-        // If newElement is not in the list, insert it in its proper place
         // If the list is empty, allocate memory for the list
         if (getElementCount() == 0)
         {
@@ -58,14 +56,14 @@ bool List::insert(Member& newElement)
         }
 
         // If the list is not empty, check if the list at capacity
-        else if (getElementCount() == CAPACITY)
+        if (getElementCount() == CAPACITY)
         {
             inserted = false;
         }
         // If the list is not full, insert newElement in its proper sorted place
         else 
         {
-            // Find the index of the newElement
+            // Find the correct index position to insert the newElement
             unsigned int index = 0;
             while (index < getElementCount() && newElement < elements[index])
             {
@@ -94,8 +92,8 @@ bool List::remove(Member& toBeRemoved)
 {
     bool result = true;
 
-    // Check whether the element is in the list
-    if (this->search(toBeRemoved) == NULL)
+    // Check whether the element toBeRemoved exists in the data structure
+    if (search(toBeRemoved) == NULL)
     {
         result = false;
     }
@@ -150,12 +148,14 @@ Member* List::search(Member& target)
 {
     // Initialize a pointer to a Member object
     Member *person = NULL;
-
-    // Iterate through the array until we find the target
-    for (unsigned int i = 0, j = getElementCount(); i < j; i++)
+    if (getElementCount() != 0)
     {
-        // If we find the target, set person to the address of the target
-        if (elements[i] == target) person = &elements[i];
+        // Iterate through the array until we find the target
+        for (unsigned int i = 0, j = getElementCount(); i < j; i++)
+        {
+            // If we find the target, set person to the address of the target
+            if (elements[i] == target) person = &elements[i];
+        }
     }
     // Return the address of the target or NULL if not found
     return person;
@@ -165,9 +165,13 @@ Member* List::search(Member& target)
 // Time Efficiency: O(n)
 void List::printList()
 {
-    for (unsigned int i = 0, j = getElementCount(); i < j; i++)
+    // Check if the list is not empty before printing
+    if (getElementCount() != 0)
     {
-        // Print the ith Member with the form: Louis Pace, 604-853-1423, louis@nowhere.com, 1234 5678 9098 7654 
-        cout << elements[i] << endl;
+        // Iterate through the array and print each element
+        for (unsigned int i = 0, j = getElementCount(); i < j; i++)
+        {
+            cout << elements[i];
+        }
     }
 }
