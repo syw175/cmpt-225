@@ -58,7 +58,7 @@ bool List::insert(Member& newElement)
         }
 
         // If the list is not empty, check if the list at capacity
-        else if (elementCount == CAPACITY)
+        else if (getElementCount() == CAPACITY)
         {
             inserted = false;
         }
@@ -66,14 +66,14 @@ bool List::insert(Member& newElement)
         else 
         {
             // Find the index of the newElement
-            int index = 0;
-            while (index < elementCount && newElement < elements[index])
+            unsigned int index = 0;
+            while (index < getElementCount() && newElement < elements[index])
             {
                 index++;
             }
 
             // Shift all elements after the index to the right
-            for (int i = elementCount; i > index; i--)
+            for (unsigned int i = getElementCount(); i > index; i--)
             {
                 elements[i] = elements[i - 1];
             }
@@ -102,7 +102,7 @@ bool List::remove(Member& toBeRemoved)
     else
     {
         // Find the index position of the element to be removed
-        int i = 0;
+        unsigned int i = 0;
         for (i = 0; i < getElementCount(); i++)
         {
             if (toBeRemoved == elements[i])
@@ -119,7 +119,7 @@ bool List::remove(Member& toBeRemoved)
         elementCount--;
 
         // If the list is empty, deallocate the array from the heap
-        if (elementCount == 0)
+        if (getElementCount() == 0)
             this->clear();
     }
     return result;
