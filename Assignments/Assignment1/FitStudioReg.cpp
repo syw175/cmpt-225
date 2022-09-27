@@ -15,6 +15,13 @@
 
 using std::cout;
 
+// Function prototypes
+void add(List *members);
+void remove(List *members);
+void search(List *members);
+void modify(List *members);
+void print(List *members);
+
 int main() {
 
     // Variables declaration
@@ -49,4 +56,26 @@ int main() {
         }
     }
     return 0;
+}
+
+// TODO: Implement methods
+void add(List *members)
+{
+
+}
+void remove(List *members)
+{
+
+}
+void search(List *members)
+{
+
+}
+void modify(List *members)
+{
+
+}
+void print(List *members)
+{
+
 }
