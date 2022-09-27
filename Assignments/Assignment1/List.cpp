@@ -17,30 +17,22 @@
 
 using namespace std;
 
-// REMOVE THIS COMMENT LATER
-// List starts as NULL with element count = 0 
-// If the list elementCount becomes 0, clear() is callled and array = NULL 
-// For any additions, if elementCount is 0, array must be allocated on HEAP with CAPACITY
-
-// DONE.. REMOVE THIS COMMENT LATER
 // Default constructor
 List::List() {}
 
-// DONE.. REMOVE THIS COMMENT LATER
 // Description: Destruct a List object, releasing heap-allocated memory.
 List::~List()
 {
     this->clear();
 }
 
-// DONE.. REMOVE THIS COMMENT LATER
 // Description: Returns the total number of elements currently stored in List.
 unsigned int List::getElementCount() const
 {
     return elementCount;
 }
 
-// INCOMPLETE: REMOVE COMMENT LATER
+// NEEDS TESTING, COULD SEG FAULT WHEN SHIFTING ELEMENTS TO THE LEFT
 /* Description: Insert an element.
  * Precondition: newElement must not already be in data collection.  
  * Postcondition: newElement inserted in its proper place in List
@@ -48,69 +40,91 @@ unsigned int List::getElementCount() const
  */
 bool List::insert(Member& newElement)
 {
-    bool result = true; 
+   bool inserted = true;
 
-    elements[getElementCount()] = newElement;
-    elementCount++;
-    // // Check if newElement is already in the data collection
-    // if (search(newElement) == NULL) result = false;
+    // Check if newElement is already in the list
+    if (this->remove(newElement))
+    {
+        // If newElement is already in the list, return false
+        inserted = false;
+    }
+    else
+    {
+        // If newElement is not in the list, insert it in its proper place
+        // If the list is empty, allocate memory for the list
+        if (getElementCount() == 0)
+        {
+            elements = new Member[CAPACITY];
+        }
 
-    // // Check if there is still capacity in the array
-    // if (CAPACITY <= getElementCount()) result = false; 
+        // If the list is not empty, check if the list at capacity
+        else if (elementCount == CAPACITY)
+        {
+            inserted = false;
+        }
+        // If the list is not full, insert newElement in its proper sorted place
+        else 
+        {
+            // Find the index of the newElement
+            int index = 0;
+            while (index < elementCount && newElement < elements[index])
+            {
+                index++;
+            }
 
-    // // Iterate through the array until current !< next (We found the right place for it)
-    // for (unsigned int i = 0, k = getElementCount(); i < k; i++)
-    // {
-    //     // If this is true... we have found the place of newElement in the List
-    //     if (elements[i] < newElement)
-    //     {
+            // Shift all elements after the index to the right
+            for (int i = elementCount; i > index; i--)
+            {
+                elements[i] = elements[i - 1];
+            }
 
-    //     }
-    // }
-    
-    return result;
+            // Insert newElement at the index
+            elements[index] = newElement;
+            elementCount++;
+        }
+    }
+    return inserted;
 }
 
-// NEEDS CHECKING... REMOVE COMMENT LATER
 /* Description: Remove an element. 
  * Postcondition: toBeRemoved is removed (leaving no gap in the data structure of List)
  *                and elementCount has been decremented.
  */
 bool List::remove(Member& toBeRemoved)
 {
-    bool status = true;
+    bool result = true;
 
-    // Check if toBeRemoved exists in the data collection
-    if (search(toBeRemoved) == NULL) status = false;
-
-    if (status)
+    // Check whether the element is in the list
+    if (this->search(toBeRemoved) == NULL)
     {
-        // Remove Element by shifting all elements after toBeRemoved
-        for (unsigned int i = 0, k = getElementCount(); i < k; i++)
-        {
-            if (elements[i] == toBeRemoved)
-            {
-                for (unsigned int j = i; j < getElementCount(); j++)
-                {
-                    // position toward the beginning of the array
-                    // (no shift if position == elementCount)
-                    elements[j] = elements[j+1];
-                }
-            }
-        }
-        // Decrease count of elements
-        elementCount--;
+        result = false;
     }
+    else
+    {
+        // Find the index position of the element to be removed
+        int i = 0;
+        for (i = 0; i < getElementCount(); i++)
+        {
+            if (toBeRemoved == elements[i])
+                break;
+        }
 
-    // If the list is empty, clear it...
-    if (getElementCount() == 0) clear();
+        // Shift all elements to the right of the element to be removed to the left
+        for (int j = i; j < getElementCount() - 1; j++)
+        {
+            elements[j] = elements[j + 1];
+        }
 
-    // Return the status of remove()
-    return status;
+        // Decrement the element count
+        elementCount--;
+
+        // If the list is empty, deallocate the array from the heap
+        if (elementCount == 0)
+            this->clear();
+    }
+    return result;
 } 
 
-
-// DONE.. REMOVE THIS COMMENT LATER
 // Description: Removes all elements from the List.
 // Postconditions: List contains no elements and the element count is 0.
 //                 List is returned to the default state in the constructor.
@@ -122,7 +136,6 @@ void List::clear()
    return;
 }
 
-// ASK ABOUT THIS LATER.. 
 // Description: Remove all elements.
 // Postcondition: List is back to the state it was right after being constructed.
 void List::removeAll()
@@ -130,7 +143,6 @@ void List::removeAll()
     this->clear();
 }
 
-// DONE.. REMOVE THIS COMMENT LATER
 // Description: Search for target element.
 //              Returns a pointer to the element if found,
 //              otherwise, returns NULL.
@@ -149,7 +161,6 @@ Member* List::search(Member& target)
     return person;
 }
 
-// DONE.. REMOVE THIS COMMENT LATER
 // Description: Prints all elements stored in List by descending order of search key.
 // Time Efficiency: O(n)
 void List::printList()
