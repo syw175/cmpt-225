@@ -115,9 +115,37 @@ int main(void)
     cout << "Printing the list with 5 elements" << endl;
     list->printList();
     cout << endl;
-    
 
+    // Remove an element from a full list
+    assert(list->remove(*member5) == true);
 
+    // Check that the element count is now 4
+    assert(list->getElementCount() == 4);
+
+    // Print the list [should print 4 elements]
+    cout << "Printing the list with 4 elements" << endl;
+    list->printList();
+    cout << endl;
+
+    // Remove all elements from the list
+    list->removeAll();
+
+    // Check that the element count is now 0
+    assert(list->getElementCount() == 0);
+
+    // Print the list [should print nothing]
+    cout << "Printing the list with 0 elements" << endl;
+    list->printList();
+
+    // Delete the list and members
+    delete list;
+    delete member1;
+    delete member2;
+    delete member3;
+    delete member4;
+    delete member5;
+    delete member6;
+    delete member7;
 
     return 0;
 }
