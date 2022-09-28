@@ -16,7 +16,7 @@
 using std::cout;
 
 // Function prototypes
-void add(List &members);
+void add(List *members);
 void remove(List *members);
 void search(List *members);
 void modify(List *members);
@@ -46,7 +46,7 @@ int main() {
         cout << endl;
         input = tolower(input);
 		switch(input) {
-            case 'a': add(*Members); break;
+            case 'a': add(Members); break;
             case 'r': remove(Members); break;
             case 's': search(Members); break;
             case 'm': modify(Members); break;
@@ -59,57 +59,128 @@ int main() {
 }
 
 // TODO: Implement methods
-void add(List &members)
+void add(List *members)
 {
     // Initialize variables
     string name, phone, email, creditCard;
 
-    // Prompt user
-    cout << "You have chosen to add a new member" << endl; 
-    cout << "Enter the full name of the new member: "; 
-    cin >> name; 
+    // Prompt user for input
+    cout << "Enter the name of the new member: ";
+    cin >> name;
 
-    cout << "Enter the phone number of the new member in the format 'XXX-XXX-XXXX': ";
-    cin >> phone; 
+    cout << "Enter the phone number of the new member: ";
+    cin >> phone;
 
     cout << "Enter the email of the new member: ";
     cin >> email;
 
     cout << "Enter the credit card number of the new member: ";
-    cin >> creditCard; 
+    cin >> creditCard;
 
-    // Create a new member with the given information
+    // Create new member
     Member *newMember = new Member(name, phone, email, creditCard);
 
-    if (!members.insert(*newMember))
+    // Verify that memory was allocated
+    if (newMember == NULL)
     {
-        cout << "Adding new member failed!" << endl;
-        delete newMember;
+        cout << "Error: Memory could not be allocated." << endl;
+        return;
     }
-    else 
-    {
-        cout << "Success!" << endl;
-    }
+
+    // Insert new member into list
+    if (members->insert(*newMember))
+        cout << "Member successfully added!" << endl;
+    else
+        cout << "Error: Member could not be added." << endl;
 }
 
-
+// CREATING A NEW MEMBER OBJECT ISSUES WITH DEFAULT PHONE # REMOVING A MEMBER
 // Remove a member from the list
-void remove(List &members)
+void remove(List *members)
 {
-    // Ask user for member's phone number
-  
+    string phone; 
 
-    // Search for the member in the list
+    // Prompt user for input
+    cout << "Enter the phone number of the member to remove: ";
+    cin >> phone;
 
+    // Create new member
+    Member *newMember = new Member(phone);
+
+    // Verify that memory was allocated
+    if (newMember == NULL)
+    {
+        cout << "Error: Memory could not be allocated." << endl;
+        return;
+    }
+
+    // Remove member from list
+    if (members->remove(*newMember))
+        cout << "Member successfully removed!" << endl;
+    else
+        cout << "Error: Member could not be removed." << endl;
 }
 
 void search(List *members)
 {
+    string phone;
+
+    // Prompt user to enter the phone number of the member to search for
+    cout << "Enter the phone number of the member to search for: ";
+    cin >> phone;
+
+    // Create a new member with the phone number
+    Member* member = new Member(phone);
+
+    // Search for the member in the list
+    Member* foundMember = members->search(*member);
+
+    // Print the member's information if found
+    if (foundMember != NULL)
+    {
+        cout << "Member found!" << endl;
+        cout << foundMember << endl;
+    }
+    else
+    {
+        cout << "Member not found." << endl;
+    }
+
 
 }
 void modify(List *members)
 {
+    string phone;
+    string response;
+    char input;
 
+    // Prompt user to enter the phone number of the member to search for
+    cout << "Enter the phone number of the member to modify: ";
+    cin >> phone;
+
+    // Get the member from the list
+    Member* member = new Member(phone);
+    Member* foundMember = members->search(*member);
+
+    // Prompt the user for which field to modify, n for name, p for phone, e for email, c for credit card
+    cout << "n --> to change the name" << endl;
+    cout << "m -> to change the email" << endl;
+    cout << "c -> to change the credit card" << endl;
+    cout << "x -> to cancel" << endl;
+
+    cin >> input;
+    input = tolower(input);
+
+    switch(input) 
+    {
+        case 'n': cout << "Enter the new name: "; cin >> response; foundMember->setName(response); break;
+        case 'm': cout << "Enter the new email: "; cin >> response; foundMember->setEmail(response); break;
+        case 'c': cout << "Enter the new credit card number: "; cin >> response; foundMember->setCreditCard(response); break;
+        case 'x': cout << "Modification cancelled." << endl; break;
+        default: cout << "Not sure what you mean! Returning to main menu..." << endl;
+    }
+
+    return;
 }
 // Print all members in the list
 void print(List *members)
