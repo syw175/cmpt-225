@@ -28,9 +28,10 @@ void Member::setPhone(const string aPhone)
 {
     // Check if phone number is valid
     if (aPhone.length() == 12 && aPhone[3] == '-' && aPhone[7] == '-')
-        setPhone(aPhone);
+        phone = aPhone;
     else
-        setPhone(DEF_PHONE);}
+        phone = DEF_PHONE;
+}
 
 // Description: Create a member with a cell phone number of "000-000-0000". 
 // Postcondition: All data members set to an empty string, 
