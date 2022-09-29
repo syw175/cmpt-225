@@ -26,8 +26,11 @@ const string DEF_PHONE = "000-000-0000";
 // Description: Sets the member's cell phone number
 void Member::setPhone(const string aPhone)
 {
-    phone = aPhone;
-}
+    // Check if phone number is valid
+    if (aPhone.length() == 12 && aPhone[3] == '-' && aPhone[7] == '-')
+        setPhone(aPhone);
+    else
+        setPhone(DEF_PHONE);}
 
 // Description: Create a member with a cell phone number of "000-000-0000". 
 // Postcondition: All data members set to an empty string, 
@@ -48,12 +51,7 @@ Member::Member(string aPhone)
     name = EMPTY_STR;
     email = EMPTY_STR;
     creditCard = EMPTY_STR;
-
-    // Check if phone number is valid
-    if (aPhone.length() == 12 && aPhone[3] == '-' && aPhone[7] == '-')
-        setPhone(aPhone);
-    else
-        setPhone(DEF_PHONE);
+    setPhone(aPhone);
 }
 
 // Parameterized Constructor
@@ -62,12 +60,7 @@ Member::Member(string aName, string aPhone, string anEmail, string aCreditCard)
     name = aName;                     
     email = anEmail;
     creditCard = aCreditCard;
-    
-    // Check if phone number is valid
-    if (aPhone.length() == 12 && aPhone[3] == '-' && aPhone[7] == '-')
-        setPhone(aPhone);
-    else
-        setPhone(DEF_PHONE);
+    setPhone(aPhone);
 }
 
 // Description: Returns member's name.
