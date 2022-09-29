@@ -22,6 +22,9 @@ void search(List *members);
 void modify(List *members);
 void print(List *members);
 
+
+
+// NECCESARY FOR DELETE ON EXIT?? TEST w/ VALGRIND
 int main() {
 
     // Variables declaration
@@ -65,20 +68,11 @@ void add(List *members)
     string name, phone, email, creditCard;
 
     // Prompt user for input
-    cout << "Enter the name of the new member: ";
-    cin >> name;
-
-    cout << "Enter the phone number of the new member: ";
+    cout << "Enter the phone number of the member to be added: ";
     cin >> phone;
 
-    cout << "Enter the email of the new member: ";
-    cin >> email;
-
-    cout << "Enter the credit card number of the new member: ";
-    cin >> creditCard;
-
     // Create new member
-    Member *newMember = new Member(name, phone, email, creditCard);
+    Member *newMember = new Member(phone);
 
     // Verify that memory was allocated
     if (newMember == NULL)
@@ -87,11 +81,34 @@ void add(List *members)
         return;
     }
 
-    // Insert new member into list
-    if (members->insert(*newMember))
-        cout << "Member successfully added!" << endl;
+    // Check to see if there is already a member with the same phone number
+    if (members->search(*newMember) != NULL)
+    {
+        cout << "Error: A member with the same phone number already exists." << endl;
+        return;
+    }
     else
-        cout << "Error: Member could not be added." << endl;
+    {
+        // Ask for the rest of the information
+        cout << "Enter the name of the member to be added: ";
+        cin >> name;
+
+        cout << "Enter the email of the member to be added: ";
+        cin >> email;
+
+        cout << "Enter the credit card number of the member to be added: ";
+        cin >> creditCard;
+
+        // Set the member's information
+        newMember = new Member(name, phone, email, creditCard);
+
+        // If memory was allocated, add the member to the list
+        if (newMember != NULL)
+            members->insert(*newMember);
+        else
+            cout << "Error: Memory could not be allocated." << endl;
+    }
+
 }
 
 // CREATING A NEW MEMBER OBJECT ISSUES WITH DEFAULT PHONE # REMOVING A MEMBER
@@ -139,7 +156,7 @@ void search(List *members)
     if (foundMember != NULL)
     {
         cout << "Member found!" << endl;
-        cout << foundMember << endl;
+        cout << *foundMember << endl;
     }
     else
     {
