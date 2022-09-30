@@ -51,24 +51,17 @@ bool List::insert(Member& newElement)
     {
         // If the list is empty, allocate memory for the list
         if (getElementCount() == 0)
-        {
             elements = new Member[CAPACITY];
-        }
-
         // If the list is not empty, check if the list at capacity
         if (getElementCount() == CAPACITY)
-        {
             inserted = false;
-        }
         // If the list is not full, insert newElement in its proper sorted place
         else 
         {
             // Find the correct index position to insert the newElement
             unsigned int index = 0;
             while (index < getElementCount() && newElement < elements[index])
-            {
                 index++;
-            }
 
             // Shift all elements after the index to the right
             for (unsigned int i = getElementCount(); i > index; i--)
@@ -103,16 +96,16 @@ bool List::remove(Member& toBeRemoved)
         unsigned int i = 0;
         for (i = 0; i < getElementCount(); i++)
         {
+            // Shift all elements to the right of the element to be removed to the left
             if (toBeRemoved == elements[i])
+            {
+                for (unsigned int j = i; j < getElementCount() - 1; j++) 
+                {
+                    elements[j] = elements[j + 1];
+                }
                 break;
+            }
         }
-
-        // Shift all elements to the right of the element to be removed to the left
-        for (int j = i; j < getElementCount() - 1; j++)
-        {
-            elements[j] = elements[j + 1];
-        }
-
         // Decrement the element count
         elementCount--;
 
@@ -154,7 +147,8 @@ Member* List::search(Member& target)
         for (unsigned int i = 0, j = getElementCount(); i < j; i++)
         {
             // If we find the target, set person to the address of the target
-            if (elements[i] == target) person = &elements[i];
+            if (elements[i] == target) 
+                person = &elements[i];
         }
     }
     // Return the address of the target or NULL if not found
