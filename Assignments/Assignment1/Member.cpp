@@ -16,6 +16,7 @@
 
 
 #include <iostream>
+#include <regex>
 #include <string>
 #include "Member.h"
 
@@ -26,8 +27,8 @@ const string DEF_PHONE = "000-000-0000";
 // Description: Sets the member's cell phone number
 void Member::setPhone(const string aPhone)
 {
-    // Check if phone number is valid
-    if (aPhone.length() == 12 && aPhone[3] == '-' && aPhone[7] == '-')
+    // Check if phone number is valid, otherwise set to default
+    if (regex_match(aPhone, regex("\\d{3}-\\d{3}-\\d{4}")))
         phone = aPhone;
     else
         phone = DEF_PHONE;
