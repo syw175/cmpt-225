@@ -22,9 +22,6 @@ void search(List *members);
 void modify(List *members);
 void print(List *members);
 
-
-
-// NECCESARY FOR DELETE ON EXIT?? TEST w/ VALGRIND
 int main() {
 
     // Variables declaration
@@ -61,7 +58,7 @@ int main() {
     return 0;
 }
 
-// TODO: Implement methods
+// Add a new member to the list
 void add(List *members)
 {
     // Initialize variables
@@ -91,7 +88,7 @@ void add(List *members)
     {
         // Ask for the rest of the information
         cout << "Enter the name of the member to be added: ";
-        cin >> name;
+        getline(cin >> ws, name);
 
         cout << "Enter the email of the member to be added: ";
         cin >> email;
@@ -111,7 +108,6 @@ void add(List *members)
 
 }
 
-// CREATING A NEW MEMBER OBJECT ISSUES WITH DEFAULT PHONE # REMOVING A MEMBER
 // Remove a member from the list
 void remove(List *members)
 {
@@ -138,6 +134,7 @@ void remove(List *members)
         cout << "Error: Member could not be removed." << endl;
 }
 
+// Search for a member in the list with a given phone number
 void search(List *members)
 {
     string phone;
@@ -160,11 +157,11 @@ void search(List *members)
     }
     else
     {
-        cout << "Member not found." << endl;
+        cout << "Error: Member not found." << endl;
     }
-
-
 }
+
+// Modify a member's information
 void modify(List *members)
 {
     string phone;
@@ -175,33 +172,48 @@ void modify(List *members)
     cout << "Enter the phone number of the member to modify: ";
     cin >> phone;
 
-    // Get the member from the list
-    Member* member = new Member(phone);
-    Member* foundMember = members->search(*member);
+    // Create a new member with the phone number
+    Member* foundMember = new Member(phone);
 
-    // Prompt the user for which field to modify, n for name, p for phone, e for email, c for credit card
-    cout << "n --> to change the name" << endl;
-    cout << "m -> to change the email" << endl;
-    cout << "c -> to change the credit card" << endl;
-    cout << "x -> to cancel" << endl;
+    // Search for the member in the list
+    foundMember = members->search(*foundMember);
 
-    cin >> input;
-    input = tolower(input);
-
-    switch(input) 
+    // Prompt the user to modify the member's information if found
+    if (foundMember != NULL)
     {
-        case 'n': cout << "Enter the new name: "; cin >> response; foundMember->setName(response); break;
-        case 'm': cout << "Enter the new email: "; cin >> response; foundMember->setEmail(response); break;
-        case 'c': cout << "Enter the new credit card number: "; cin >> response; foundMember->setCreditCard(response); break;
-        case 'x': cout << "Modification cancelled." << endl; break;
-        default: cout << "Not sure what you mean! Returning to main menu..." << endl;
-    }
+        // Print the member's information
+        cout << "Member found!" << endl;
+        cout << *foundMember << endl;
 
-    return;
+        // Prompt the user for which field to modify, n for name, p for phone, e for email, c for credit card
+        cout << "n --> to change the name" << endl;
+        cout << "m -> to change the email" << endl;
+        cout << "c -> to change the credit card" << endl;
+        cout << "x -> to cancel" << endl;
+
+        // Take input and lowercase it
+        cin >> input;
+        input = tolower(input);
+
+        // Modify the member's information based on the user's input
+        switch(input) 
+        {
+            case 'n': cout << "Enter the new name: "; getline(cin >> ws, response); foundMember->setName(response); break;
+            case 'm': cout << "Enter the new email: "; cin >> response; foundMember->setEmail(response); break;
+            case 'c': cout << "Enter the new credit card number: "; cin >> response; foundMember->setCreditCard(response); break;
+            case 'x': cout << "Modification cancelled." << endl; break;
+            default: cout << "Not sure what you mean! Returning to main menu..." << endl;
+        }
+    }
+    else
+    {
+        cout << "Error: Member not found." << endl;
+    }
 }
+
 // Print all members in the list
 void print(List *members)
 {
-    cout << "Now printing the list containing " << members->getElementCount() << " elements" << endl;
+    cout << "Now printing the list containing " << members->getElementCount() << " fitness user(s)" << endl;
     members->printList();
 }
