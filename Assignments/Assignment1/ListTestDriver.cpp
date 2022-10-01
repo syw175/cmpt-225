@@ -149,3 +149,130 @@ int main(void)
 
     return 0;
 }
+
+
+// // Google Test Framework
+// #include "gtest/gtest.h"
+
+// // List ADT
+// #include "List.h"
+// #include "Member.h"
+
+// // Test fixture
+// class ListTest : public ::testing::Test {
+// protected:
+//     ListTest() : list() {}
+//     virtual ~ListTest() {}
+//     virtual void SetUp() {}
+//     virtual void TearDown() {}
+//     List list;
+// };
+
+// // Test the default constructor
+// TEST_F(ListTest, DefaultConstructor) {
+//     EXPECT_EQ(0, list.getElementCount());
+//     EXPECT_EQ(NULL, list.elements);    
+// }
+
+// // Test the insert method
+// TEST_F(ListTest, Insert) {
+//     Member* member1 = new Member("Steven", "123-456-7890", "1234 123 Street", "4516 1234 1234 1234");
+//     Member* member2 = new Member("John", "123-456-3320", "1234 Steve Street", "4516 1234 1234 1234");
+//     Member* member3 = new Member("Jane", "123-456-1111", "1234 Steve Street", "4516 1234 1234 1234");
+//     Member* member4 = new Member();
+//     Member* member5 = new Member("778-709-3575");
+//     Member* member6 = new Member("778-709-5183");
+//     Member* member7 = new Member("778-709-1111");
+
+//     EXPECT_EQ(true, list.insert(*member1));
+//     EXPECT_EQ(true, list.insert(*member2));
+//     EXPECT_EQ(true, list.insert(*member3));
+//     EXPECT_EQ(true, list.insert(*member4));
+//     EXPECT_EQ(true, list.insert(*member5));
+//     EXPECT_EQ(false, list.insert(*member6));
+//     EXPECT_EQ(5, list.getElementCount());
+//     EXPECT_EQ(false, list.insert(*member1));
+//     EXPECT_EQ(5, list.getElementCount());
+// }
+
+// // Test the remove method
+// TEST_F(ListTest, Remove) {
+//     Member* member1 = new Member("Steven", "123-456-7890", "1234 123 Street", "4516 1234 1234 1234");
+//     Member* member2 = new Member("John", "123-456-3320", "1234 Steve Street", "4516 1234 1234 1234");
+//     Member* member3 = new Member("Jane", "123-456-1111", "1234 Steve Street", "4516 1234 1234 1234");
+//     Member* member4 = new Member();
+//     Member* member5 = new Member("778-709-3575");
+//     Member* member6 = new Member("778-709-5183");
+//     Member* member7 = new Member("778-709-1111");
+
+//     EXPECT_EQ(true, list.insert(*member1));
+//     EXPECT_EQ(true, list.insert(*member2));
+//     EXPECT_EQ(true, list.insert(*member3));
+//     EXPECT_EQ(true, list.insert(*member4));
+//     EXPECT_EQ(true, list.insert(*member5));
+//     EXPECT_EQ(false, list.insert(*member6));
+//     EXPECT_EQ(5, list.getElementCount());
+//     EXPECT_EQ(true, list.remove(*member1));
+//     EXPECT_EQ(4, list.getElementCount());
+//     EXPECT_EQ(true, list.remove(*member2));
+//     EXPECT_EQ(3, list.getElementCount());
+//     EXPECT_EQ(true, list.remove(*member3));
+//     EXPECT_EQ(2, list.getElementCount());
+//     EXPECT_EQ(true, list.remove(*member4));
+//     EXPECT_EQ(1, list.getElementCount());
+//     EXPECT_EQ(true, list.remove(*member5));
+//     EXPECT_EQ(0, list.getElementCount());
+//     EXPECT_EQ(false, list.remove(*member6));
+//     EXPECT_EQ(0, list.getElementCount());
+// }
+
+// // Test the search method
+// TEST_F(ListTest, Search) {
+//     Member* member1 = new Member("Steven", "123-456-7890", "1234 123 Street", "4516 1234 1234 1234");
+//     Member* member2 = new Member("John", "123-456-3320", "1234 Steve Street", "4516 1234 1234 1234");
+//     Member* member3 = new Member("Jane", "123-456-1111", "1234 Steve Street", "4516 1234 1234 1234");
+//     Member* member4 = new Member();
+//     Member* member5 = new Member("778-709-3575");
+//     Member* member6 = new Member("778-709-5183");
+//     Member* member7 = new Member("778-709-1111");
+
+//     EXPECT_EQ(true, list.insert(*member1));
+//     EXPECT_EQ(true, list.insert(*member2));
+//     EXPECT_EQ(true, list.insert(*member3));
+//     EXPECT_EQ(true, list.insert(*member4));
+//     EXPECT_EQ(true, list.insert(*member5));
+//     EXPECT_EQ(false, list.insert(*member6));
+//     EXPECT_EQ(5, list.getElementCount());
+//     EXPECT_EQ(true, list.search(*member1));
+//     EXPECT_EQ(true, list.search(*member2));
+//     EXPECT_EQ(true, list.search(*member3));
+//     EXPECT_EQ(true, list.search(*member4));
+//     EXPECT_EQ(true, list.search(*member5));
+//     EXPECT_EQ(false, list.search(*member6));
+//     EXPECT_EQ(5, list.getElementCount());
+// }
+
+// // Test the print method with 1 member
+// TEST_F(ListTest, Print1) {
+//     Member* member1 = new Member("Steven", "123-456-7890", "1234 123 Street", "4516 1234 1234 1234");
+//     EXPECT_EQ(true, list.insert(*member1));
+//     EXPECT_EQ(1, list.getElementCount());
+
+//     std::stringstream ss;
+//     list.print(ss);
+//     EXPECT_EQ("Steven 123-456-7890 1234 123 Street 4516 1234 1234 1234");
+// }
+
+// // Test the print method with 2 members
+// TEST_F(ListTest, Print2) {
+//     Member* member1 = new Member("Steven", "123-456-7890", "1234 123 Street", "4516 1234 1234 1234");
+//     Member* member2 = new Member("John", "123-456-3320", "1234 Steve Street", "4516 1234 1234 1234");
+//     EXPECT_EQ(true, list.insert(*member1));
+//     EXPECT_EQ(true, list.insert(*member2));
+//     EXPECT_EQ(2, list.getElementCount());
+
+//     std::stringstream ss;
+//     list.print(ss);
+//     EXPECT_EQ("Steven 123-456-7890 1234 123 Street 4516 1234 1234 1234");
+//     EXPECT_EQ("John 123-456-3320 1234 Steve Street 4516 1234 1234 1234");
+// }
