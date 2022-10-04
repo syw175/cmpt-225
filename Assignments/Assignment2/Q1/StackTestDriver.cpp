@@ -3,8 +3,8 @@
  *
  * Description: Test Driver for Stack class.
  *
- * Author:
- * Date:
+ * Author: Steven Wong
+ * Date: October 2022
  */
 
 /* 
@@ -57,4 +57,3 @@ int main () {
     
     return 0;
 }
-
