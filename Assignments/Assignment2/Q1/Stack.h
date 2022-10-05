@@ -31,13 +31,16 @@ class Stack {
         ~Stack();
 
         // Insert an element onto the top of the stack and return true if successful, false otherwise
-        bool push(int &newElement);
+        bool push(int newElement);
 
         // Retrieve and return the top most element of the stack 
-        int &peek() const;
+        int peek() const;
 
         // Remove the top most element of the stack, return true if successful, false otherwise
         bool pop();
+
+        // Returns the number of elements in the stack
+        unsigned int size() const;
 
         // Returns true if the Stack is empty and false otherwise
         bool isEmpty() const;
