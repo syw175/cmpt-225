@@ -13,14 +13,12 @@
 #include <exception>
 #include "Stack.h"
 
-// Done
 // Default Constructor
 Stack::Stack() {}
 
-// Done
 // Destructor
 Stack::~Stack()
-{
+{   
     // Iterate through the linked list and deallocate nodes from the heap
     StackNode *current = head;
     while (current != nullptr)
@@ -32,14 +30,12 @@ Stack::~Stack()
     }
 }
 
-// Done
 // Returns true if the Stack is empty and false otherwise
 bool Stack::isEmpty() const
 {
     return size() == 0;
 }
 
-// Done
 // Pre-Condition: The stack must not be empty
 // Retrieve and return the top most element of the stack
 int Stack::peek() const
@@ -57,7 +53,6 @@ int Stack::peek() const
     return current->data;
 }
 
-// Incomplete
 // Insert an element onto the top of the stack and return true if successful, false otherwise
 bool Stack::push(int newElement)
 {
@@ -76,19 +71,20 @@ bool Stack::push(int newElement)
         head = newNode;
         elementCount++;
     }
+    // Iterate to the last node in the SHSL (top of stack)
     else
     {
         StackNode *current = head;
         while (current->next != nullptr)
             current = current->next;
 
+        // Set the nex pointer of the last node to NewNode
         current->next = newNode;
         elementCount++;
     }
     return pushed;
 }
 
-// Done
 // Remove the top most element of the stack, return true if successful, false otherwise
 bool Stack::pop()
 {
@@ -96,26 +92,29 @@ bool Stack::pop()
     // If the stack is empty, set the status of popped to false
     if (isEmpty())
         popped = false;
-    // If the stack is not empty, delete the last node
+    // If the stack only has one element, delete the head and set it to nullptr
+    else if (size() == 1)
+    {
+        delete head;
+        head = nullptr;
+        elementCount--;
+    }
+    // If the stack has more than one element, iterate to the second last node in the SHSL linked list
     else
     {
-        // Iterate to the last node in the SHSL linked list (the top of the stack)
         StackNode *current = head;
-        while (current->next != nullptr)
+        while (current->next->next != nullptr)
             current = current->next;
 
-        // Delete the last node and decrement elementCount
-        delete current;
+        // Delete the last node and set the next pointer of the second last node to nullptr
+        delete current->next;
+        current->next = nullptr;
         elementCount--;
-        // If the stack is now empty, set the head to nullptr
-        if (isEmpty())
-            head = nullptr;
     }
     // Return the status of popped
     return popped;
 }
 
-// Done
 // Returns the number of elements in the stack
 unsigned int Stack::size() const
 {
