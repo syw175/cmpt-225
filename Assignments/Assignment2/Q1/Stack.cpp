@@ -93,10 +93,10 @@ bool Stack::push(int newElement)
 // Remove the top most element of the stack, return true if successful, false otherwise
 bool Stack::pop()
 {
-    bool popped = true;
+    bool ableToPop = true;
     // If the stack is empty, set the status of popped to false
     if (isEmpty())
-        popped = false;
+        ableToPop = false;
     // If the stack only has one element, delete the head and set it to nullptr
     else if (size() == 1)
     {
@@ -117,7 +117,7 @@ bool Stack::pop()
         elementCount--;
     }
     // Return the status of popped
-    return popped;
+    return ableToPop;
 }
 
 // Returns the number of elements in the stack
