@@ -6,8 +6,8 @@
  *                    Its underlying data structure is a 
  *                    singly-headed singly-linked list (SHSL).
  *
- * Creation Date:
- * Author:
+ * Creation Date: September 2022
+ * Author: Steven Wong
  */
  
 #ifndef LIST_H

@@ -5,8 +5,8 @@
  *                   in which the data is of "int" data type.
  *                   Designed and implemented as a non-ADT.
  *
- * Created on: 
- * Author: 
+ * Created on: September 2022
+ * Author: Steven Wong
  */
 
 #include <cstdio>  // Needed for NULL

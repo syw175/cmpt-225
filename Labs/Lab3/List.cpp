@@ -6,8 +6,8 @@
  *                    Its underlying data structure is a 
  *                    singly-headed singly-linked list (SHSL).
  *
- * Creation Date:
- * Author:
+ * Creation Date: September 2022
+ * Author: Steven Wong
  */
 
 #include <string>
@@ -29,8 +29,14 @@ List::List(){
 // Description: Copy constructor creates a new List object as a copy of an existing List object.
 List::List(const List& lst){
 	elementCount = lst.elementCount;
-	head = lst.head; //shallow copy - you need to fix this!
-
+	// head = lst.head; //shallow copy - you need to fix this!
+	// Deep Copy
+	Node *current = lst.head;
+	while (current != NULL)
+	{
+		append(current->data);
+		current = current->next;
+	}
 }
 
 // Description: Destruct a List object, releasing all heap-allocated memory.
