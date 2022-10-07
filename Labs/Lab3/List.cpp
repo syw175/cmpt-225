@@ -41,8 +41,13 @@ List::List(const List& lst){
 
 // Description: Destruct a List object, releasing all heap-allocated memory.
 List::~List(){
-	// You need to write this!
-
+	Node *current = head;
+	while (current != NULL)
+	{
+		Node *tmp = current->next;
+		delete current;
+		current = tmp;
+	}
 }
 
 /**************************************************************************/
