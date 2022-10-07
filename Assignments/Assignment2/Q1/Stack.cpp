@@ -18,16 +18,10 @@ Stack::Stack() {}
 
 // Destructor
 Stack::~Stack()
-{   
-    // Iterate through the linked list and deallocate nodes from the heap
-    StackNode *current = head;
-    while (current != nullptr)
-    {
-        StackNode *next = current->next;
-        // Delete the current node and move to the next node
-        delete current;
-        current = next;
-    }
+{
+    // Pop and deallocate nodes until the Stack is empty
+    while (!isEmpty())
+        pop();
 }
 
 // Returns true if the Stack is empty and false otherwise
@@ -42,7 +36,9 @@ int Stack::peek() const
 {
     // Ensure that the pre-condition is met
     if (isEmpty())
-        throw std::runtime_error("Stack is empty. Cannot peek.");
+        // Need follow up on handling this exception
+        // throw std::runtime_error("Stack is empty. Cannot peek.");
+        std::cout << "EMPTY" << std::endl;
  
     // Iterate to the last node in the SHSL linked list (the top of the stack)
     StackNode *current = head;
@@ -56,33 +52,42 @@ int Stack::peek() const
 // Insert an element onto the top of the stack and return true if successful, false otherwise
 bool Stack::push(int newElement)
 {
-    bool pushed = true;
+    bool ableToPush = true;
     // Create a new StackNode and set its data to the newElement
     StackNode *newNode = new StackNode;
-    newNode->data = newElement;
-    newNode->next = nullptr;
 
     // If memory allocation failed, set pushed to false
     if (newNode == nullptr)
-        pushed = false;
-    // If the stack is empty, set the head to newElement and increment elementCount
-    else if (isEmpty())
-    {
-        head = newNode;
-        elementCount++;
-    }
-    // Iterate to the last node in the SHSL (top of stack)
+        ableToPush = false;
     else
     {
-        StackNode *current = head;
-        while (current->next != nullptr)
-            current = current->next;
-
-        // Set the nex pointer of the last node to NewNode
-        current->next = newNode;
-        elementCount++;
+        newNode->data = newElement;
+        newNode->next = nullptr;
     }
-    return pushed;
+
+    // If able to push, add the new node to the back of the SHSL linked list
+    if (ableToPush)
+    {
+        // If the stack is empty, set the head to newElement and increment elementCount
+        if (isEmpty())
+        {
+            head = newNode;
+            elementCount++;
+        }
+        else
+        {
+            // Iterate to the last node in the SHSL (top of stack)
+            StackNode *current = head;
+            while (current->next != nullptr)
+                current = current->next;
+
+            // Set the next pointer of the last node to NewNode
+            current->next = newNode;
+            elementCount++;
+        }
+    }
+    // Return true if able to push, false otherwise
+    return ableToPush;
 }
 
 // Remove the top most element of the stack, return true if successful, false otherwise
