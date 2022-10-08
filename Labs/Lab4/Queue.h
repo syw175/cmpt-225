@@ -57,6 +57,9 @@ public:
    // For Testing Purposes
    // Description: Prints the content of "this". 
    void printQueue() const;
+
+   // Practicing overloading the << operating again
+   friend ostream &operator<<(ostream &os, Queue &q);
       
 }; // end Queue
 #endif

@@ -85,4 +85,16 @@ void Queue::printQueue() const {
    cout << endl;
 } // end of printQueue
 
+// Practicing with overloading the << operator
+ostream &operator<<(ostream &os, Queue &q)
+{
+   os << "Printing the queue from front = " << q.front << "to back = " << q.back << endl; 
+   for (int i = q.front; i <= q.back; i++)
+   {
+      os << q.elements[i];
+   }
+   os << endl;
+   return os;
+}
+
 // End of implementation file.
