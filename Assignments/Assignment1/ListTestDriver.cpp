@@ -126,6 +126,8 @@ int main(void)
     cout << "Printing the list with 4 elements" << endl;
     list->printList();
     cout << endl;
+        cout << *list << endl;
+
 
     // Remove all elements from the list
     list->removeAll();
@@ -136,6 +138,9 @@ int main(void)
     // Print the list [should print nothing]
     cout << "Printing the list with 0 elements" << endl;
     list->printList();
+
+    // Test the new overloaded << operator
+    cout << *list << endl;
 
     // Delete the list and members
     delete list;

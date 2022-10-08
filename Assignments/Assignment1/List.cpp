@@ -169,3 +169,12 @@ void List::printList()
         }
     }
 }
+
+// Practicing overloading the << operator
+// Print all elements in descending order of search key
+ostream &operator<<(ostream &os, const List &myList)
+{
+    for (unsigned int i = 0; i < myList.getElementCount(); i++)
+        os << myList.elements[i];
+    return os;
+}

@@ -64,5 +64,7 @@ public:
     // Time Efficiency: O(n)
     void printList();
 
+    friend ostream &operator<<(ostream &stream, const List &myList);
+
 }; // end List.h
 #endif	
