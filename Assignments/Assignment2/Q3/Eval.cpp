@@ -3,8 +3,8 @@
  *
  * Description: Evaluation of infix expressions using two Stacks.
  *
- * Author:
- * Date:
+ * Author: Steven Wong
+ * Date: October 2022
  */
 
 #include <iostream>
@@ -47,10 +47,9 @@ using namespace std;
 //         else:
 //             push T to the operator stack; get the next token
 
-
-
 // For testing purposes, function prototypes
-int evalauteOperation(Token &operand1, Token &operand2, Token &operation);
+Token &evalauteOperation(Stack<Token> &numstack, Stack<Token> &opstack);
+// Token &evalauteOperation(Token &operand1, Token &operand2, Token &operation);
 
 
 int main () {
@@ -59,22 +58,10 @@ int main () {
 
     Stack<Token> numstack, opstack;  // 2x Stacks of type Token
 
-
-
-    // //  Token  //
-// class Token {
-//     public:
-//         TokenType tt;
-//         string text;
-//         int val;
-// };
-
-
-    // WIP 
     t = S.getnext();
 
     // while T is not EOF or the operator stack is non empty
-    while (t.tt != eof || !opstack.isEmpty())
+    while (t.tt != eof || !opstack.isEmpty()) 
     {
         // if T is a number:
         // push T to the number stack; get the next token
@@ -104,68 +91,93 @@ int main () {
             else
             {
                 // pop the top two numbers and the top operator
-                Token operand1 = numstack.pop(); 
-                Token operand2 = numstack.pop();
-                Token operation = opstack.pop();
-
                 // perform the operation
-                Token result = 
-
-                // push the result to the number stack
-                
+                // push the result to the number stack   
+                numstack.push(evalauteOperation(numstack, opstack));
             }
         }        
-
-
-
-        
-
-    }
-    
-
-    t = S.getnext();
-
-    // Pretty printer coding demo.  Please remove before coding
-    while (t.tt != eof) {
-        if (t.tt == integer || t.tt == lptok || t.tt == rptok) {
-            cout << t;
-        } else if (t.tt == pltok || t.tt == mitok || 
-                   t.tt == asttok || t.tt == slashtok) {
-            cout << ' ' << t << ' ';
+        // else if T is +, - or EOF:
+        else if (t.tt == pltok || t.tt == mitok || t.tt == eof)
+        {
+            // if the operator stack is nonempty and the top is one of +, -, *, /:
+            if (!opstack.isEmpty() && (opstack.peek().tt == pltok || opstack.peek().tt == mitok || opstack.peek().tt == asttok || opstack.peek().tt == slashtok))
+            {
+                // pop the top two numbers and the top operator
+                // perform the operation
+                // push the result to the number stack
+                numstack.push(evalauteOperation(numstack, opstack));
+            }
+            // push T to the operator stack; get the next token
+            else
+            {
+                opstack.push(t);
+                t = S.getnext();
+            }
         }
-
-        t = S.getnext();
+        // else if T is * or /:
+        else if (t.tt == asttok || t.tt == slashtok)
+        {
+            // if the operator stack is nonempty and the top is one of *, /:
+            if (!opstack.isEmpty() && (opstack.peek().tt == asttok || opstack.peek().tt == slashtok))
+            {
+                // pop the top two numbers and the top operator
+                // perform the operation
+                // push the result to the number stack
+                numstack.push(evalauteOperation(numstack, opstack));
+            }
+            else
+            {
+                // push T to the operator stack; get the next token
+                opstack.push(t);
+                t = S.getnext();
+            }
+        }
     }
 
-    cout << endl;
-    // End pretty printer coding demo.
-
+    cout << numstack.peek().val << endl;
     return 0;
 }
 
-// Assumes that all tokens have valid values
-int evalauteOperation(Token &operand1, Token &operand2, Token &operation)
+
+
+// Assume client code is right for now
+Token &evalauteOperation(Stack<Token> &numstack, Stack<Token> &opstack)
 {
+    Token operand1 = numstack.pop(); 
+    Token operand2 = numstack.pop();
+    Token operation = opstack.pop();
 
-    // typedef enum { pltok, mitok, asttok, slashtok, lptok, rptok, integer, errtok, eof }
-
+    Token *newToken = new Token();
     TokenType symbol = operation.tt;
     
     switch (symbol)
     {
-        case 0:
-            return operand1.val + operand2.val;
-
-        case 1:
-            return operand1.val - operand2.val;
-
-        case 2:
-            return operand1.val * operand2.val;
-
-        case 3:
-            return operand1.val / operand2.val;
-        
+        // Addition
+        case pltok:
+            newToken->tt = integer;
+            newToken->val = operand2.val + operand1.val;
+            break;
+        // Minus
+        case mitok:
+            newToken->tt = integer;
+            newToken->val = operand2.val - operand1.val;
+            break;
+        // Multiplication
+        case asttok:
+            newToken->tt = integer;
+            newToken->val = operand2.val * operand1.val;
+            break;
+        // Integer Division w/ Truncation
+        case slashtok:
+            newToken->tt = integer;
+            newToken->val = operand2.val / operand1.val;
+            break;
+        // Default case for any errors or special situations
         default:
-            return 0;
+            newToken->tt = errtok;
+            newToken->val = 0;
+            break;
     }
+    Token &result = *newToken;
+    return result;
 }
