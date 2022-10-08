@@ -3,8 +3,8 @@
  *
  * Description: Queue test driver.
  *
- * Author:
- * Date:
+ * Author: Steven Wong
+ * Date: October 2022
  */
 
 #include <iostream>
