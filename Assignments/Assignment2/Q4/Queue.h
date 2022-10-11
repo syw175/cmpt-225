@@ -25,7 +25,6 @@ class Queue {
         unsigned int backindex = 0;                     // Index of where the next element will be enqueued                     
 
 /* You can add private methods. */
-        void resize(void);
 
 
     public:
@@ -55,6 +54,18 @@ class Queue {
         // Description: Returns true if and only if Queue empty
         // Time Efficiency: O(1)
         bool isEmpty() const;
+
+        // Description: Prints the content of "this"
+        // Time Efficiency: O(n)
+        void printQueue() const;
+
+        // Description: Returns the current capacity of the Queue
+        // Time Efficiency: O(1)
+        unsigned int getCapacity() const;
+
+        // Description: Returns the number of elements in the Queue
+        // Time Efficiency: O(1)
+        unsigned int getElementCount() const;
 
         // Description: Testing function used to print out the Queue
         friend std::ostream &operator<<(std::ostream &os, const Queue &q);
