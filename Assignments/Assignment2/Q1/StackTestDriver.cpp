@@ -5,14 +5,10 @@
  *
  * Author: Steven Wong
  * Date: October 2022
+ *
  */
 
-/* 
-   Feel free to modify this test driver to match your design of the Stack class.
-   For example, I designed my push(...) and pop() methods such that they each return
-   a bool value. I will then change this test driver to capture this bool value. 
-*/ 
-
+#include <cassert>
 #include <iostream> 
 #include "Stack.h"
 
@@ -21,39 +17,71 @@ using std::endl;
 
 
 int main () {
-    Stack * stk = new Stack( );
+    Stack * stk = new Stack();
 
-    // push 1, 2, 3, 4, 5
-    for (int i = 1; i <= 5; i++) {
-        stk->push(i);
-        cout << "push " << i << endl;
-    }
+    // Test isEmpty() on an empty stack
+    assert(stk->isEmpty() == true);
+    assert(stk->size() == 0);
 
+    // Try to print an empty stack
+    cout << "Testing print on an empty stack: " << endl;
+    cout << "Expected: EMPTY" << endl;
+    cout << "Actual: ";
+    cout << *stk;
 
-    // pop top two
-    int x = stk->peek();
-    stk->pop();
-    int y = stk->peek();
-    stk->pop();
-    cout << "top 1: " << x << ", top 2: " << y << endl;
+    // Try to pop an empty stack
+    assert(stk->pop() == false);
+    assert(stk->size() == 0);
 
+    // Test push()
+    assert(stk->push(1) == true);
+    assert(stk->push(2) == true);
+    assert(stk->push(3) == true);
+    assert(stk->push(4) == true);
+    assert(stk->push(5) == true); 
 
-    // push 6, 7, 8, 9, 10
-    for (int i = 6; i <= 10; i++) {
-        stk->push(i);
-        cout << "push " << i << endl;
-    }
+    // Try to print an stack with elements
+    cout << "Testing print on a stack with elements: " << endl;
+    cout << "Expected: 5 4 3 2 1" << endl;
+    cout << "Actual: ";
+    cout << *stk << endl;
 
+    // Test isEmpty() on a non-empty stack and size()
+    assert(stk->isEmpty() == false);
+    assert(stk->size() == 5);
+    assert(stk->peek() == 5);
 
-    // pop all
-    while (!stk->isEmpty()) {
-        int x = stk->peek();
-        stk->pop();
-        cout << "pop " << x << endl;
-    }
+    // Test pop()
+    assert(stk->pop() == true);
+    assert(stk->peek() == 4);
+
+    // Test pop() to insure Stack is correctly emptied
+    assert(stk->pop() == true);
+    assert(stk->peek() == 3);
+
+    // Print out the stack and check the output
+    cout << "Testing print after popping: " << endl;
+    cout << "Expected: 3 2 1" << endl;
+    cout << "Actual: ";
+    cout << *stk << endl;
+    
+    assert(stk->pop() == true);
+    assert(stk->peek() == 2);
+
+    // Test pop() on a stack with one element
+    assert(stk->pop() == true);
+    assert(stk->peek() == 1);
+
+    // Test pop() on a stack with no elements
+    assert(stk->pop() == true);
+    assert(stk->isEmpty() == true);
+
+    // Test pop() on an empty stack
+    assert(stk->pop() == false);
 
     delete stk;
     stk = nullptr;
-    
+
+    // End of test driver
     return 0;
 }

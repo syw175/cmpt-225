@@ -125,3 +125,31 @@ unsigned int Stack::size() const
 {
     return elementCount;
 }
+
+// Overloaded << operator
+std::ostream & operator<<(std::ostream &os, const Stack &stack)
+{
+    // If the stack is empty, print "EMPTY"
+    if (stack.isEmpty())
+        os << "EMPTY" << std::endl;
+    else
+    {
+        // Create an array of size stack.size() and copy the elements of the stack into the array
+        int *stackArray = new int[stack.size()];
+        Stack::StackNode *current = stack.head;
+        for (int i = 0; i < stack.size(); i++)
+        {
+            stackArray[i] = current->data;
+            current = current->next;
+        }
+
+        // Send the array to the output stream
+        for (int i = stack.size() - 1; i >= 0; i--)
+            os << stackArray[i] << " ";
+        os << std::endl;
+
+        // Deallocate the array
+        delete[] stackArray;
+    }
+    return os;
+}

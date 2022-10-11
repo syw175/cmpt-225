@@ -44,4 +44,8 @@ class Stack {
 
         // Returns true if the Stack is empty and false otherwise
         bool isEmpty() const;
+
+        // Overloaded << operator
+        friend std::ostream & operator<<(std::ostream& os, const Stack &stack);
 };
+// End header file
