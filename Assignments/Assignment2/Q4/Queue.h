@@ -68,6 +68,7 @@ class Queue {
         unsigned int getElementCount() const;
 
         // Description: Testing function used to print out the Queue
+        // Time Efficiency: O(n)
         friend std::ostream &operator<<(std::ostream &os, const Queue &q);
 };
 #endif
