@@ -1,10 +1,10 @@
 /* 
- * Queue.h - Does not work well!
+ * Queue.h
  *
  * Description: Array-based implementation of Queue as an ADT class
  * Class Invariant: Queue maintained in FIFO order
  *
- * Author: Steven Wong
+ * Author: Steven Wong + YOUR NAME
  * Date: October 2022
  */
  
