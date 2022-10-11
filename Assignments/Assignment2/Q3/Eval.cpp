@@ -13,16 +13,15 @@
 
 using namespace std;
 
-// For testing purposes, function prototypes
+// Function Prototypes
 Token &evalauteOperation(Stack<Token> &numstack, Stack<Token> &opstack);
 
-
-int main () {
+int main () 
+{
     Scanner S(cin);
     Token t;
 
     Stack<Token> numstack, opstack;  // 2x Stacks of type Token
-
     t = S.getnext();
 
     // while T is not EOF or the operator stack is non empty
@@ -89,20 +88,29 @@ int main () {
             }
         }
     }
-    cout << numstack.peek().val << endl;
+
+    // if the number stack is empty, print "Error: no result"
+    if (numstack.isEmpty())
+        cout << "Error: no result" << endl;
+    else
+        cout << numstack.peek().val << endl;
+
     return 0;
 }
 
-// Assume client code is right for now
+// Evaluate the top two numbers and the top operator, perform the operation, and push the result to the number stack
 Token &evalauteOperation(Stack<Token> &numstack, Stack<Token> &opstack)
 {
+    // pop the top two numbers and the top operator
     Token operand1 = numstack.pop(); 
     Token operand2 = numstack.pop();
     Token operation = opstack.pop();
 
+    // perform the operation
     Token *newToken = new Token();
     TokenType symbol = operation.tt;
     
+    // Logic for each operation
     switch (symbol)
     {
         // Addition
