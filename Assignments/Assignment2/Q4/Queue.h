@@ -4,7 +4,7 @@
  * Description: Array-based implementation of Queue as an ADT class
  * Class Invariant: Queue maintained in FIFO order
  *
- * Author: Steven Wong + YOUR NAME
+ * Author: Steven Wong and Chen Min
  * Date: October 2022
  */
  

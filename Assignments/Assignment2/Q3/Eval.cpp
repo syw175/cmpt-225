@@ -3,7 +3,7 @@
  *
  * Description: Evaluation of infix expressions using two Stacks.
  *
- * Author: Steven Wong
+ * Author: Steven Wong and Chen Min
  * Date: October 2022
  */
 

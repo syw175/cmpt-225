@@ -4,7 +4,7 @@
  * Description: Array-based implementation of Queue as an ADT class
  * Class Invariant: Queue maintained in FIFO order
  *
- * Author: Steven Wong + YOUR NAME
+ * Author: Steven Wong and Chen Min
  * Date: October 2022
  */
 
@@ -67,7 +67,7 @@ void Queue::dequeue()
     elementCount--;
     frontindex = (frontindex + 1) % capacity;
     
-    if (elementCount <= capacity * 0.25 && 0.5 * elementCount >= INITIAL_CAPACITY)
+    if (elementCount <= capacity * 0.25 && 0.5 * capacity >= INITIAL_CAPACITY)
     {
         int new_capacity = 0.5 * capacity;
         int* temp = new int[new_capacity];

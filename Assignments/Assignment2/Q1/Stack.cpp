@@ -5,7 +5,7 @@
  * Class Invariant: LIFO order
  *                  Top of Stack located at the back of SHSL list.
  *
- * Author: Steven Wong
+ * Author: Steven Wong and Chen Min
  * Date: October 2022
  */
 
