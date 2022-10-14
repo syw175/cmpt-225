@@ -38,22 +38,21 @@ void Queue::enqueue(int x)
         int new_capacity = capacity * 2;
         int* temp = new int[new_capacity];
         // Copy the elements from the old array to the new array
-        for (int i = 0; i < elementCount; i++)
+        for (unsigned int i = 0; i < elementCount; i++)
         {
-            if (i + frontindex <= capacity - 1 )
+            if (i + frontindex <= capacity - 1)
                 temp[i] = elements[i + frontindex];
             else
                 temp[i] = elements[i + frontindex - capacity];
         }
         // Delete the old array and update the Queue's data members
         delete[] elements;
-        elements = new int[new_capacity];
-        capacity = new_capacity;
         elements = temp;
+        capacity = new_capacity;
         frontindex = 0;
         backindex = elementCount;
     }
-    
+
     // Add the new element to the back of the queue
     elementCount++;
     elements[backindex] = x;
@@ -64,38 +63,47 @@ void Queue::enqueue(int x)
 // Description: Removes the frontmost element
 void Queue::dequeue()
 {
-    elementCount--;
-    frontindex = (frontindex + 1) % capacity;
-    
-    if (elementCount <= capacity * 0.25 && 0.5 * capacity >= INITIAL_CAPACITY)
+    // If the queue is not empty, dequeue
+    if (!isEmpty())
     {
-        int new_capacity = 0.5 * capacity;
-        int* temp = new int[new_capacity];
-        for (int i = 0; i < elementCount; i++)
+        // Update the front index and element count
+        elementCount--;
+        frontindex = (frontindex + 1) % capacity;
+        
+        // If the queue is less than 1/4 full, resize it
+        if (elementCount <= capacity * 0.25 && 0.5 * capacity >= INITIAL_CAPACITY)
         {
-            temp[i] = elements[i + frontindex];
+            int new_capacity = 0.5 * capacity;
+            int* temp = new int[new_capacity];
+            // Copy the elements from the old array to the new array
+            for (unsigned int i = 0; i < elementCount; i++)
+            {
+                temp[i] = elements[i + frontindex];
+            }
+            // Delete the old array and update the Queue's data members
+            delete[] elements;
+            elements = temp;
+            capacity = new_capacity;
+            frontindex = 0;
+            backindex = elementCount;
         }
-        delete[] elements;
-        elements = new int[new_capacity];
-        capacity = new_capacity;
-        elements = temp;
-        frontindex = 0;
-        backindex = elementCount;
+        return;
     }
-    return;
 }
 
 // Description: Returns a copy of the frontmost element
 // Precondition: Queue not empty
 int Queue::peek()const
 {
+    // If the queue is not empty, return the front element
+    if (isEmpty()) abort();
     return elements[frontindex];
 }
 
 // Description: Returns true if and only if Queue empty
 bool Queue::isEmpty()const
 {
-    return elementCount == 0;
+    return getElementCount() == 0;
 }
 
 // Get the current capacity of the queue
@@ -114,7 +122,7 @@ unsigned int Queue::getElementCount() const
 ostream &operator<<(ostream &os, const Queue &q)
 {
     // Go from front to back
-    for (int i = 0; i < q.elementCount; i++)
+    for (unsigned int i = 0; i < q.elementCount; i++)
         os << q.elements[(q.frontindex + i) % q.capacity] << " ";
     return os;
 }

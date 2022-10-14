@@ -55,10 +55,6 @@ class Queue {
         // Time Efficiency: O(1)
         bool isEmpty() const;
 
-        // Description: Prints the content of "this"
-        // Time Efficiency: O(n)
-        void printQueue() const;
-
         // Description: Returns the current capacity of the Queue
         // Time Efficiency: O(1)
         unsigned int getCapacity() const;
