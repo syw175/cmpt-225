@@ -14,7 +14,7 @@
 using namespace std;
 
 // Function Prototypes
-Token &evalauteOperation(Stack<Token> &numstack, Stack<Token> &opstack);
+Token &evaluateOperation(Stack<Token> &numstack, Stack<Token> &opstack);
 
 int main () 
 {
@@ -52,7 +52,7 @@ int main ()
             else
             {
                 // pop the top two numbers and the top operator, perform the operation, and push the result to the number stack
-                numstack.push(evalauteOperation(numstack, opstack));
+                numstack.push(evaluateOperation(numstack, opstack));
             }
         }        
         // else if T is +, - or EOF:
@@ -62,7 +62,7 @@ int main ()
             if (!opstack.isEmpty() && (opstack.peek().tt == pltok || opstack.peek().tt == mitok || opstack.peek().tt == asttok || opstack.peek().tt == slashtok))
             {
                 // pop the top two numbers and the top operator, perform the operation, and push the result to the number stack
-                numstack.push(evalauteOperation(numstack, opstack));
+                numstack.push(evaluateOperation(numstack, opstack));
             }
             // push T to the operator stack; get the next token
             else
@@ -78,7 +78,7 @@ int main ()
             if (!opstack.isEmpty() && (opstack.peek().tt == asttok || opstack.peek().tt == slashtok))
             {
                 // pop the top two numbers and the top operator, perform the operation, and push the result to the number stack
-                numstack.push(evalauteOperation(numstack, opstack));
+                numstack.push(evaluateOperation(numstack, opstack));
             }
             else
             {
@@ -98,8 +98,10 @@ int main ()
     return 0;
 }
 
+
+
 // Evaluate the top two numbers and the top operator, perform the operation, and push the result to the number stack
-Token &evalauteOperation(Stack<Token> &numstack, Stack<Token> &opstack)
+Token &evaluateOperation(Stack<Token> &numstack, Stack<Token> &opstack)
 {
     // pop the top two numbers and the top operator
     Token operand1 = numstack.pop(); 
