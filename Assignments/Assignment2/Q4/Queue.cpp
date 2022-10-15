@@ -78,7 +78,7 @@ void Queue::dequeue()
             // Copy the elements from the old array to the new array
             for (unsigned int i = 0; i < elementCount; i++)
             {
-                temp[i] = elements[i + frontindex];
+                temp[i] = elements[(i + frontindex) % capacity];
             }
             // Delete the old array and update the Queue's data members
             delete[] elements;
