@@ -55,6 +55,29 @@ DataCollection::~DataCollection(){
 void DataCollection::append(int newElement){
 
    // Put your code here!
+   // When would I be unable to append?
+   
+   // Create a new node for newElement
+   Node *toBeAppended = new Node(newElement);
+
+   // Check if memory allocation failed, and throw an exception
+   if (toBeAppended == nullptr)
+   {
+      throw UnableToInsertException("Memory alloc failed");
+   }
+
+   // If head is nullptr, set it to ToBeAppended
+   if (head == nullptr)
+      head = toBeAppended;
+   else
+   {
+      Node *current = head;
+      while (current != nullptr)
+      {
+         current = current->next;
+      }
+      current->next = toBeAppended;
+   }
 
    return;
 }
@@ -65,6 +88,21 @@ void DataCollection::prepend(int newElement){
    
    // Put your code here!
 
+   // Create a new node for newElement
+   Node *toBePrepended = new Node(newElement);
+
+   // Check if memory allocation was successful and throw an error if not
+   if (toBePrepended == nullptr)
+      throw UnableToInsertException("Error memory allocation issue");
+
+   // If the head is nllptr, set it to ToBePrepended
+   if (head == nullptr)
+      head = toBePrepended;
+   else
+   {
+      toBePrepended->next = head;
+      head = toBePrepended;
+   }
    return;
 }
  
