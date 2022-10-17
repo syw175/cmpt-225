@@ -72,7 +72,7 @@ void DataCollection::append(int newElement){
    else
    {
       Node *current = head;
-      while (current != nullptr)
+      while (current->next != nullptr)
       {
          current = current->next;
       }
