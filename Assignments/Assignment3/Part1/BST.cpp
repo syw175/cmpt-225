@@ -129,6 +129,22 @@
    // Description: Recursive in order traversal of a binary search tree.   
    void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const { 
    
-	  // to do
-	  
+      // to do
+      // to check, LAMBDAs
+
+     // If we are at nullptr, then base case is reached
+      if (current == nullptr)
+         return;
+
+      // Recursively traverse the BST's left sub-tree
+      if (current->hasLeft())
+         traverseInOrderR(visit, current->left);
+
+      // Visit the BST's current element
+      WordPair &element = current->element;
+      visit(element);
+
+      // Recursively traverse through BST's right sub-tree
+      if (current->hasRight())
+         traverseInOrderR(visit, current->right);
    }
