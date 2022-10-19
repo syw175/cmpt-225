@@ -106,14 +106,29 @@ WordPair& BST::retrieve(WordPair & targetElement) const
    return translated;
 }
 
+// TO CHECK
 // Description: Recursive retrieval from a binary search tree.
 // Exception: Throws the exception "ElementDoesNotExistException" 
 //         if "targetElement" is not found in the binary search tree.
 WordPair& BST::retrieveR(WordPair & targetElement, BSTNode * current) const
 {
-
-   // to do
-   
+   // If current is nullptr, targetElement is not in the BST
+   if (current == nullptr)
+      // NOT FOUND
+      throw ElementDoesNotExistException("Cannot retrieve, element is not in the tree!");
+   // If current is targetElement, return the wordpair
+   else if (current->element == targetElement)
+   {
+      // FOUND
+      WordPair &found = current->element;
+      return found;
+   }
+   // If targetElement is less than current, search the BST's left sub-tree
+   else if (targetElement < current->element)
+      return retrieveR(targetElement, current->left);
+   // If targetElement is greater than current, search the BST's right sub-tree
+   else
+      return retrieveR(targetElement, current->right);
 }
 
 // Description: Traverses the binary search tree in order.
@@ -132,14 +147,11 @@ void BST::traverseInOrder(void visit(WordPair &)) const
    return;
 }
 
+// to check, LAMBDAs, VISIT()
 // Description: Recursive in order traversal of a binary search tree.   
 void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
 { 
-
-   // to do
-   // to check, LAMBDAs
-
-   // If we are at nullptr, then base case is reached
+   // If current is nullptr, then base case is reached
    if (current == nullptr)
       return;
 
