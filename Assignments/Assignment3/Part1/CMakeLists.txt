@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(my_project)
+project(Part1)
 
 # GoogleTest requires at least C++14
 set(CMAKE_CXX_STANDARD 14)
@@ -20,12 +20,22 @@ enable_testing()
 
 # Header files that we expect to have
 set (Headers
-  Example.hpp
+  BST.h
+  BSTNode.h
+  ElementAlreadyExistsException.h
+  ElementDoesNotExistException.h
+  EmptyDataCollectionException.h 
+  wordPair.h
 )
 
 # Source files that we expect to have
 set(Sources
-  Example.cpp
+  BST.cpp
+  BSTNode.cpp
+  ElementAlreadyExistsException.cpp
+  ElementDoesNotExistException.cpp
+  EmptyDataCollectionException.cpp
+  wordPair.cpp
 )
 
 add_library(${This} STATIC ${Sources} ${Headers})

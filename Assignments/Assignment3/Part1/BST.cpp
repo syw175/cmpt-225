@@ -179,11 +179,12 @@ BSTNode *BST::treeCopy(const BSTNode *node)
    // Copy tree nodes during post-order traversal and increment elementCount
 
    // If tree is empty end recursion
+   return nullptr;
 }
 
 // To-Do
 // Description: Destroy all BSTNodes in the BST pre-order traversal
 void BST::destroyBST(BSTNode *root)
 {
-
+   return;
 }

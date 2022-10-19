@@ -1,15 +1,21 @@
 cmake_minimum_required(VERSION 3.14)
 
-set(This ExampleTests)
+set(This bstTests)
 
 set(Sources
-  ExampleTests.cpp
+  bstTests.cpp
   )
 
 add_executable(${This} ${Sources})
 target_link_libraries(${This} PUBLIC
+  # This?
   gtest_main
-  Example
+  BST
+  BSTNode
+  ElementAlreadyExistsException
+  ElementDoesNotExistException
+  EmptyDataCollection
+  wordPair
   )
 
 add_test(
