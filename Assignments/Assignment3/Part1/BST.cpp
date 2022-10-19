@@ -26,17 +26,18 @@
 // Default constructor
 BST::BST() { }
 
+// To-Check
 // Copy constructor
-BST::BST(BST & aBST)
+BST::BST(BST &aBST)
 {
-   // to do
+   root = treeCopy(aBST.root);
+   elementCount = aBST.getElementCount();
 }
 
 // Destructor 
 BST::~BST()
 {
-
-   // to do
+   destroyBST(root);
 }                
    
    
@@ -81,7 +82,7 @@ void BST::insert(WordPair & newElement)
 //              Returns true when "anElement" has been successfully inserted into the 
 //              binary search tree. Otherwise, returns false.
 bool BST::insertR(WordPair & anElement, BSTNode * current)
-{ 
+{
    
    // to do
    
@@ -167,4 +168,22 @@ void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
    // Recursively traverse through BST's right sub-tree
    if (current->hasRight())
       traverseInOrderR(visit, current->right);
+}
+
+// To-Do
+// Description: Recursive post-order traversal deep copy method
+BSTNode *BST::treeCopy(const BSTNode *node)
+{
+   // Create a new node
+
+   // Copy tree nodes during post-order traversal and increment elementCount
+
+   // If tree is empty end recursion
+}
+
+// To-Do
+// Description: Destroy all BSTNodes in the BST pre-order traversal
+void BST::destroyBST(BSTNode *root)
+{
+
 }

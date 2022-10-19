@@ -8,6 +8,7 @@
  * Class invariant: It is always a BST.
  * 
  * Author: Inspired from our textbook
+ * Completed by: Steven Wong
  * Date of last modification: Oct. 2022
  */
 
@@ -30,8 +31,15 @@ private:
    unsigned int elementCount = 0;        
 
    /* Utility methods */
-   
-   // Feel free to add private methods to this class.
+   // Description: Recursive post-order traversal of a BST and
+   //              create a deep copy of the tree, returning a
+   //              pointer to deep copy's root. 
+   BSTNode *treeCopy(const BSTNode *root);
+
+   // Description: Recursive pre-order traversal of a BST and 
+   //              destroys all BSTNodes in the tree, freeing its
+   //              memory from the heap.
+   void destroyBST(BSTNode *root);
    
    // Description: Recursive insertion into a binary search tree.
    //              Returns true when "anElement" has been successfully inserted into the 
