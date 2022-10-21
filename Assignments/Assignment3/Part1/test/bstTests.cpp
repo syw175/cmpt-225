@@ -92,13 +92,12 @@ struct BSTTest : public ::testing::Test
 };
 
 // Test 1: Test the default constructor
-TEST_F(BSTTest, Constructor)
+// TEST_F(BSTTest, Constructor)
+// {
+//   EXPECT_EQ(bst->getElementCount(), 0);
+// }
+
+TEST(BSTTest, testingTrue)
 {
-  EXPECT_EQ(bst->getElementCount(), 0);
-}
-
-
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+    EXPECT_EQ(1, 0);
 }

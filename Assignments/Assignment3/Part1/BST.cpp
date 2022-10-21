@@ -72,7 +72,7 @@ void BST::insert(WordPair & newElement)
       if (!insertR(newElement, root))
       {
          // cout << "BST:insert( )" << *newElement << " already in BST!" << endl; // For testing purposes
-         throw ElementAlreadyExistsException("Element already exists in the data collection.");
+         throw new ElementAlreadyExistsException("Element already exists in the data collection.");
       }
    }
    return;
@@ -101,7 +101,7 @@ bool BST::insertR(WordPair & anElement, BSTNode * current)
 WordPair& BST::retrieve(WordPair & targetElement) const
 {
    if (elementCount == 0)  
-      throw EmptyDataCollectionException("Binary search tree is empty.");
+      throw new EmptyDataCollectionException("Binary search tree is empty.");
 
    WordPair& translated = retrieveR(targetElement, root);
    return translated;
@@ -116,11 +116,12 @@ WordPair& BST::retrieveR(WordPair & targetElement, BSTNode * current) const
    // If current is nullptr, targetElement is not in the BST
    if (current == nullptr)
       // NOT FOUND
-      throw ElementDoesNotExistException("Cannot retrieve, element is not in the tree!");
+      throw new ElementDoesNotExistException("Cannot retrieve, element is not in the tree!");
    // If current is targetElement, return the wordpair
    else if (current->element == targetElement)
    {
       // FOUND
+      // CHECK IF THIS WORKS
       WordPair &found = current->element;
       return found;
    }
@@ -142,13 +143,13 @@ WordPair& BST::retrieveR(WordPair & targetElement, BSTNode * current) const
 void BST::traverseInOrder(void visit(WordPair &)) const
 {
    if (elementCount == 0)  
-      throw EmptyDataCollectionException("Binary search tree is empty.");
+      throw new EmptyDataCollectionException("Binary search tree is empty.");
 
    traverseInOrderR(visit, root);
    return;
 }
 
-// to check, LAMBDAs, VISIT()
+// I pass visit depending on my needs
 // Description: Recursive in order traversal of a binary search tree.   
 void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
 { 

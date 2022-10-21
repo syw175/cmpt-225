@@ -1,24 +1,18 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.8)
 
-set(This bstTests)
+set(This ExampleTests)
 
 set(Sources
-  bstTests.cpp
-  )
+    bstTests.cpp
+)
 
 add_executable(${This} ${Sources})
 target_link_libraries(${This} PUBLIC
-  # This?
-  gtest_main
-  BST
-  BSTNode
-  ElementAlreadyExistsException
-  ElementDoesNotExistException
-  EmptyDataCollection
-  wordPair
-  )
+    gtest_main
+    Tests
+)
 
 add_test(
-  NAME ${This}
-  COMMAND ${This}
-  )
+    NAME ${This}
+    COMMAND ${This}
+)
