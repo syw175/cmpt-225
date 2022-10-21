@@ -26,7 +26,6 @@
 // Default constructor
 BST::BST() { }
 
-// To-Check
 // Copy constructor
 BST::BST(BST &aBST)
 {
@@ -38,9 +37,8 @@ BST::BST(BST &aBST)
 BST::~BST()
 {
    destroyBST(root);
-}                
-   
-   
+}
+
 /* Getters and setters */
 
 // Description: Returns the number of elements currently stored in the binary search tree.   
@@ -49,7 +47,6 @@ unsigned int BST::getElementCount() const
 {
    return this->elementCount;
 }
-   
 
 /* BST Operations */
 
@@ -83,9 +80,41 @@ void BST::insert(WordPair & newElement)
 //              binary search tree. Otherwise, returns false.
 bool BST::insertR(WordPair & anElement, BSTNode * current)
 {
-   
-   // to do
-   
+   // to check
+   // Cannot have two identical elements in our BST
+   if (anElement == current->element)
+      return false;
+
+   // If anElement is less than the current node's element, the correct position for anElement is on the left sub-tree
+   else if (anElement < current->element)
+   {
+      // If left is empty, insert anElement and increment elementCount
+      if (current->left == nullptr)
+      {
+         BSTNode *newNode = new BSTNode(anElement);
+         current->left = newNode;
+         elementCount++;
+         return true;
+      }
+      // Otherwise, traverse to the next left-subtree
+      else
+         return insertR(anElement, current->left);
+   }
+   // Otherwise, anElement belongs on the right subtree of the BST
+   else
+   {
+      // If right is empty, insert anElement and increment elementCount
+      if (current->right == nullptr)
+      {
+         BSTNode *newNode = new BSTNode(anElement);
+         current->right = newNode;
+         elementCount++;
+         return true;
+      }
+      // Otherwise, traverse to the next right-subtree
+      else
+         return insertR(anElement, current->right);
+   }
 }
 
 

@@ -32,7 +32,7 @@ struct BSTTest : public ::testing::Test
   BSTNode *node8;
   BSTNode *node9;
   BSTNode *node10;
-  
+
   virtual void SetUp() override
   {
     // Initialize BSTs
@@ -107,8 +107,40 @@ TEST_F(BSTTest, BST_COPY_CONSTRUCTOR_EMPTY)
   delete bstCopy;
 }
 
-// Test 3: Check true is always true
-TEST(PLACEHOLDER_TEST, TRUE_IS_TRUE)
+// Test 3: Retrieve an element from an empty BST
+// Why is this test failing? I'm not sure what the error is.
+TEST_F(BSTTest, BST_RETRIEVE_EMPTY)
+{
+  try 
+  {
+    bst->retrieve(*wp1);
+    FAIL();
+  } 
+  catch (EmptyDataCollectionException &e)
+  {
+    SUCCEED();
+  }
+}
+
+// Test 4: Testing the insert method and check whether elements were correctly added to the BST
+TEST_F(BSTTest, BST_INSERT_CORRECT_ORDER)
+{
+  bst->insert(*wp1);
+  bst->insert(*wp2);
+  bst->insert(*wp3);
+  bst->insert(*wp4);
+  bst->insert(*wp5);
+
+  // Check that 5 elements were correctly added to the BST
+  EXPECT_EQ(bst->getElementCount(), 5);
+
+  // Check the ordering of elements in the BST
+  // To do
+}
+
+
+// Test X: Check true is always true
+TEST(BST_TRUE, BST_TRUE)
 {
   EXPECT_TRUE(true);
 }
