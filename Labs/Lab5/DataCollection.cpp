@@ -63,7 +63,7 @@ void DataCollection::append(int newElement){
    // Check if memory allocation failed, and throw an exception
    if (toBeAppended == nullptr)
    {
-      throw UnableToInsertException("Memory alloc failed");
+      throw new UnableToInsertException("Memory alloc failed");
    }
 
    // If head is nullptr, set it to ToBeAppended
@@ -93,7 +93,7 @@ void DataCollection::prepend(int newElement){
 
    // Check if memory allocation was successful and throw an error if not
    if (toBePrepended == nullptr)
-      throw UnableToInsertException("Error memory allocation issue");
+      throw new UnableToInsertException("Error memory allocation issue");
 
    // If the head is nllptr, set it to ToBePrepended
    if (head == nullptr)
