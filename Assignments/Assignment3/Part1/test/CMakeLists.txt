@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
 
-set(This ExampleTests)
+set(This BST-TESTING)
 
 set(Sources
     bstTests.cpp

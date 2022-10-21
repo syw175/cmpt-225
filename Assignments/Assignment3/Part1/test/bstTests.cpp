@@ -92,12 +92,23 @@ struct BSTTest : public ::testing::Test
 };
 
 // Test 1: Test the default constructor
-// TEST_F(BSTTest, Constructor)
-// {
-//   EXPECT_EQ(bst->getElementCount(), 0);
-// }
-
-TEST(BSTTest, testingTrue)
+TEST(BST_CONSTRUCTOR, BST_DEFAULT_CONSTRUCTOR)
 {
-    EXPECT_EQ(1, 0);
+  BST *bst = new BST();
+  EXPECT_EQ(bst->getElementCount(), 0);
+  delete bst;
+}
+
+// Test 2: Test the copy constructor with an empty BST
+TEST_F(BSTTest, BST_COPY_CONSTRUCTOR_EMPTY)
+{
+  BST *bstCopy = new BST(*bst);
+  EXPECT_EQ(bstCopy->getElementCount(), 0);
+  delete bstCopy;
+}
+
+// Test 3: Check true is always true
+TEST(PLACEHOLDER_TEST, TRUE_IS_TRUE)
+{
+  EXPECT_TRUE(true);
 }
