@@ -2,6 +2,8 @@
 build/
 xcuserdata
 cmake-build-debug/
+.vscode/
+googletest/
 .idea/
 bazel-bin
 bazel-genfiles
