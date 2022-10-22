@@ -36,7 +36,7 @@ private:
    //              pointer to deep copy's root. 
    BSTNode *treeCopy(const BSTNode *root);
 
-   // Description: Recursive pre-order traversal of a BST and 
+   // Description: Recursive post-order traversal of a BST and 
    //              destroys all BSTNodes in the tree, freeing its
    //              memory from the heap.
    void destroyBST(BSTNode *root);

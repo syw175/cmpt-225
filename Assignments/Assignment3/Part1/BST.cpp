@@ -89,7 +89,7 @@ bool BST::insertR(WordPair & anElement, BSTNode * current)
    else if (anElement < current->element)
    {
       // If left is empty, insert anElement and increment elementCount
-      if (current->left == nullptr)
+      if (!current->hasLeft())
       {
          BSTNode *newNode = new BSTNode(anElement);
          current->left = newNode;
@@ -104,7 +104,7 @@ bool BST::insertR(WordPair & anElement, BSTNode * current)
    else
    {
       // If right is empty, insert anElement and increment elementCount
-      if (current->right == nullptr)
+      if (!current->hasRight())
       {
          BSTNode *newNode = new BSTNode(anElement);
          current->right = newNode;
@@ -213,7 +213,7 @@ BSTNode *BST::treeCopy(const BSTNode *node)
 }
 
 // To-Do
-// Description: Destroy all BSTNodes in the BST pre-order traversal
+// Description: Destroy all BSTNodes in the BST post-order traversal (Both sub-trees have to be deleted first)
 void BST::destroyBST(BSTNode *root)
 {
    return;
