@@ -4,6 +4,14 @@
 #include "../ElementAlreadyExistsException.h"
 #include "../ElementDoesNotExistException.h"
 #include "../EmptyDataCollectionException.h"
+#include <iostream>
+
+using std::cout; 
+
+// Remove later
+void visit(WordPair & element) {
+   cout << element << endl;
+}
 
 struct BSTTest : public ::testing::Test
 {
@@ -92,7 +100,7 @@ struct BSTTest : public ::testing::Test
 };
 
 // Test 1: Test the default constructor
-TEST(BST_CONSTRUCTOR, BST_DEFAULT_CONSTRUCTOR)
+TEST(BST_CONSTRUCTOR, DEFAULT_CONSTRUCTOR)
 {
   BST *bst = new BST();
   EXPECT_EQ(bst->getElementCount(), 0);
@@ -100,30 +108,50 @@ TEST(BST_CONSTRUCTOR, BST_DEFAULT_CONSTRUCTOR)
 }
 
 // Test 2: Test the copy constructor with an empty BST
-TEST_F(BSTTest, BST_COPY_CONSTRUCTOR_EMPTY)
+TEST_F(BSTTest, COPY_CONSTRUCTOR_EMPTY_BST)
 {
   BST *bstCopy = new BST(*bst);
   EXPECT_EQ(bstCopy->getElementCount(), 0);
   delete bstCopy;
 }
 
-// Test 3: Retrieve an element from an empty BST
-// Why is this test failing? I'm not sure what the error is.
-TEST_F(BSTTest, BST_RETRIEVE_EMPTY)
+// Test 3: Test the copy constructor with a BST with elements
+TEST_F(BSTTest, COPY_CONSTRUCTOR_NON_EMPTY_BST)
 {
-  try 
-  {
-    bst->retrieve(*wp1);
-    FAIL();
-  } 
-  catch (EmptyDataCollectionException &e)
-  {
-    SUCCEED();
-  }
+  // Insert elements into bst
+  bst->insert(*wp2);
+  bst->insert(*wp3);
+  bst->insert(*wp4);
+  bst->insert(*wp5);
+  bst->insert(*wp6);
+  EXPECT_EQ(bst->getElementCount(), 5);
+
+  // Copy bst
+  BST *bstCopy = new BST(*bst);
+  EXPECT_EQ(bstCopy->getElementCount(), bst->getElementCount());
+
+  // Capture original and copy elements
+  std::string bstOutput = testing::internal::GetCapturedStdout();
+  bst->traverseInOrder(visit);
+
+  std::string bstCopyOutput = testing::internal::GetCapturedStdout();
+  bstCopy->traverseInOrder(visit);
+
+  // Compare original and copy elements
+  EXPECT_EQ(bstOutput, bstCopyOutput);
+  delete bstCopy;
 }
 
-// Test 4: Testing the insert method and check whether elements were correctly added to the BST
-TEST_F(BSTTest, BST_INSERT_CORRECT_ORDER)
+// Test 4: Retrieve an element from an empty BST
+TEST_F(BSTTest, RETRIEVE_FROM_EMPTY_BST)
+{
+  // Why does this not work?
+  EXPECT_THROW(bst->retrieve(*wp1), EmptyDataCollectionException);
+  // EXPECT_ANY_THROW(bst->retrieve(*wp1));
+}
+
+// Test 5: Testing the insert method and check whether elements were correctly added to the BST
+TEST_F(BSTTest, INSERTED_CORRECT_ORDER)
 {
   bst->insert(*wp1);
   bst->insert(*wp2);
@@ -134,13 +162,70 @@ TEST_F(BSTTest, BST_INSERT_CORRECT_ORDER)
   // Check that 5 elements were correctly added to the BST
   EXPECT_EQ(bst->getElementCount(), 5);
 
-  // Check the ordering of elements in the BST
-  // To do
+  // Check that the elements were added in the correct order with traversalInOrder()
+  testing::internal::CaptureStdout();
+  bst->traverseInOrder(visit);
+  // Capture the output of the traversal and compare it to the expected output
+  std::string output = testing::internal::GetCapturedStdout();
+  std::string expected = "conduit:'och\n\nfood:Soj\n\nstop:mevyap\n\ntoday:jajvam\n\nwin:Qap\n\n";
+  ASSERT_EQ(output, expected);
 }
 
+// TO CHECK
+// Test 6: Testing the insert method with duplicate elements
+TEST_F(BSTTest, BST_INSERT_DUPLICATE)
+{
+  bst->insert(*wp1);
+  bst->insert(*wp2);
+  bst->insert(*wp3);
+  bst->insert(*wp4);
+  bst->insert(*wp5);
 
-// Test X: Check true is always true
-TEST(BST_TRUE, BST_TRUE)
+  // Check that 5 elements were correctly added to the BST
+  EXPECT_EQ(bst->getElementCount(), 5);
+
+  // Try to insert a duplicate element
+  // EXPECT_ANY_THROW(bst->insert(*wp1));
+  EXPECT_THROW(bst->insert(*wp1), ElementAlreadyExistsException);
+}
+
+// Test 7: Retrieve an element from a BST that contains the element
+TEST_F(BSTTest, BST_RETRIEVE_ELEMENT_EXISTS)
+{
+  // Insert 2 elements into the BST
+  bst->insert(*wp9);
+  bst->insert(*wp10);
+  EXPECT_EQ(bst->getElementCount(), 2);
+
+  // Duplicate wp1 and try to retrieve it from the BST
+  WordPair *wp9Dupe = new WordPair(wp9->getEnglish(), wp9->getTranslation());
+  ASSERT_EQ(*wp9, *wp9Dupe);
+
+  // Retrieve wp1Dupe from the BST
+  WordPair &wp9Retrieved = bst->retrieve(*wp9Dupe);
+  EXPECT_EQ(wp9Retrieved, *wp9);
+  delete wp9Dupe;
+}
+
+// TO CHECK
+// Test 8: Retrieve an element from a BST that does not contain the element
+TEST_F(BSTTest, RETRIEVE_ELEMENT_DOES_NOT_EXIST)
+{
+  // Insert elements 5, 6, 7, 8, and 9 into the BST
+  bst->insert(*wp5);
+  bst->insert(*wp6);
+  bst->insert(*wp7);
+  bst->insert(*wp8);
+  bst->insert(*wp9);
+  EXPECT_EQ(bst->getElementCount(), 5);
+
+  // Try to retrieve wp1 from the BST
+  EXPECT_THROW(bst->retrieve(*wp1), ElementDoesNotExistException);
+  // EXPECT_ANY_THROW(bst->retrieve(*wp1));
+}
+
+// Test 9: Check true is always true
+TEST(SANITY_CHECK, TRUE_IS_TRUE)
 {
   EXPECT_TRUE(true);
 }

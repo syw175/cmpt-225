@@ -69,7 +69,7 @@ void BST::insert(WordPair & newElement)
       if (!insertR(newElement, root))
       {
          // cout << "BST:insert( )" << *newElement << " already in BST!" << endl; // For testing purposes
-         throw new ElementAlreadyExistsException("Element already exists in the data collection.");
+         throw ElementAlreadyExistsException("Element already exists in the data collection.");
       }
    }
    return;
@@ -130,7 +130,7 @@ bool BST::insertR(WordPair & anElement, BSTNode * current)
 WordPair& BST::retrieve(WordPair & targetElement) const
 {
    if (elementCount == 0)  
-      throw new EmptyDataCollectionException("Binary search tree is empty.");
+      throw EmptyDataCollectionException("Binary search tree is empty.");
 
    WordPair& translated = retrieveR(targetElement, root);
    return translated;
@@ -145,7 +145,7 @@ WordPair& BST::retrieveR(WordPair & targetElement, BSTNode * current) const
    // If current is nullptr, targetElement is not in the BST
    if (current == nullptr)
       // NOT FOUND
-      throw new ElementDoesNotExistException("Cannot retrieve, element is not in the tree!");
+      throw ElementDoesNotExistException("Cannot retrieve, element is not in the tree!");
    // If current is targetElement, return the wordpair
    else if (current->element == targetElement)
    {
@@ -172,7 +172,7 @@ WordPair& BST::retrieveR(WordPair & targetElement, BSTNode * current) const
 void BST::traverseInOrder(void visit(WordPair &)) const
 {
    if (elementCount == 0)  
-      throw new EmptyDataCollectionException("Binary search tree is empty.");
+      throw EmptyDataCollectionException("Binary search tree is empty.");
 
    traverseInOrderR(visit, root);
    return;
@@ -204,11 +204,6 @@ void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
 // Description: Recursive post-order traversal deep copy method
 BSTNode *BST::treeCopy(const BSTNode *node)
 {
-   // Create a new node
-
-   // Copy tree nodes during post-order traversal and increment elementCount
-
-   // If tree is empty end recursion
    return nullptr;
 }
 
@@ -216,5 +211,18 @@ BSTNode *BST::treeCopy(const BSTNode *node)
 // Description: Destroy all BSTNodes in the BST post-order traversal (Both sub-trees have to be deleted first)
 void BST::destroyBST(BSTNode *root)
 {
-   return;
+   // Base case
+   if (root->isLeaf())
+      return;
+   
+   // Traverse the left sub-tree and delete its nodes
+   if (root->hasLeft())
+      destroyBST(root->left);
+   
+   // Traverse the right sub-tree and delete its nodes
+   if (root->hasRight())
+      destroyBST(root->right);
+   
+   // Delete the node
+   delete root;
 }
