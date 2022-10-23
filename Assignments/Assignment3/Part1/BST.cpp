@@ -117,7 +117,6 @@ bool BST::insertR(WordPair & anElement, BSTNode * current)
    }
 }
 
-
 // Description: Retrieves "targetElement" from the binary search tree.
 //           This is a wrapper method which calls the recursive retrieveR( ).
 // Precondition: Binary search tree is not empty.
@@ -178,7 +177,6 @@ void BST::traverseInOrder(void visit(WordPair &)) const
    return;
 }
 
-// I pass visit depending on my needs
 // Description: Recursive in order traversal of a binary search tree.   
 void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
 { 
@@ -200,14 +198,28 @@ void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
       traverseInOrderR(visit, current->right);
 }
 
-// To-Do
+// To-TEST
 // Description: Recursive post-order traversal deep copy method
 BSTNode *BST::treeCopy(const BSTNode *node)
 {
-   return nullptr;
+   BSTNode *newTree = nullptr;
+   // Copy nodes
+   if (node != nullptr)
+   {
+      WordPair *copy = new WordPair(node->element.getEnglish(), node->element.getTranslation());
+      newTree = new BSTNode(*copy, node->left, node->right);
+
+      if (node->hasLeft())
+         newTree->left = treeCopy(node->left);
+
+      if (node->hasRight())
+         newTree->right =treeCopy(node->right);
+   }
+   // Otherwise tree is empty, just return it
+   return newTree;
 }
 
-// To-Do
+// To-Check
 // Description: Destroy all BSTNodes in the BST post-order traversal (Both sub-trees have to be deleted first)
 void BST::destroyBST(BSTNode *root)
 {
