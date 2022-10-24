@@ -146,9 +146,23 @@ void DataCollection::removeSecondLastElement()
 // Description: Reverse the linkedlist
 void DataCollection::reverseList()
 {
-   // Implement me
-   // To Check
-
+   Node *curr = head;
+   Node *prev = nullptr;
+   Node *next = nullptr;
+   // While current is not null
+   while (curr != nullptr)
+   {
+      // Save current's pointer to the next element
+      next = curr->next;
+      // Reverse current's pointer to the previous element
+      curr->next = prev;
+      // Update the previous pointer
+      prev = curr; 
+      // Go to the next node
+      curr = next;
+   }
+   // Update head ref
+   head = prev;
 }
 
 // Description: Insert the targetElement at a specified ith "index", assume linkedlist starts at 1
