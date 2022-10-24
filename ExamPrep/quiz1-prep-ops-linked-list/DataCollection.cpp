@@ -25,7 +25,7 @@ DataCollection::DataCollection(){
 // Description: Copy constructor creates a new DataCollection object as a copy of an existing DataCollection object.
 DataCollection::DataCollection(const DataCollection & DC){
    // cout << "DataCollection Copy constructor called!" << endl;
-
+   // UNTESTED
    head = nullptr;
 
    if (DC.head != nullptr){
@@ -40,7 +40,7 @@ DataCollection::DataCollection(const DataCollection & DC){
 // Description: Destructs a DataCollection object, releasing all heap-allocated memory.
 DataCollection::~DataCollection(){
    // cout << "DataCollection Destructor called!" << endl;
-
+   // UNTESTED
    Node * temp = nullptr;
    for ( Node * toBeDeleted = head; toBeDeleted != nullptr; ) {
       temp = toBeDeleted->next;
@@ -53,8 +53,7 @@ DataCollection::~DataCollection(){
 // Description: Appends an element (newElement) to the DataCollection.
 // Exception Handling: Throws UnableToInsertException.
 void DataCollection::append(int newElement){
-
-   // Put your code here!
+   // DONE AND TESTED
    Node *toBeAppended = new Node(newElement);
 
    // If head is nullptr, set it to ToBeAppended
@@ -75,8 +74,7 @@ void DataCollection::append(int newElement){
 // Description: Prepends an element (newElement) to the DataCollection.
 // Exception Handling: Throws UnableToInsertException.
 void DataCollection::prepend(int newElement){
-   // Put your code here!
-   // Create a new node for newElement
+   // DONE AND TESTED
    Node *toBePrepended = new Node(newElement);
 
    // If the head is nllptr, set it to ToBePrepended
@@ -90,12 +88,45 @@ void DataCollection::prepend(int newElement){
    return;
 }
 
-
-// Below follows SOME PRACTICE QUESTIONS I MADE FOR QUIZ PREP
+// Below follows SOME PRACTICE QUESTIONS
 // Description: Remove the first occurence of a target element in the linked list
+// Throw an UnableToInsertException if unable to remove
 void DataCollection::removeTargetElement(const int elementToRemove)
 {
-   // Implement me
+   // WORKING AND TESTED WITH NO MEMORY LEAKS
+   // If list is empty, throw exception
+   if (head == nullptr)
+      throw UnableToInsertException("Unable to remove targetElement because the list is empty");
+   // If element to be removed is head, remove it and set head to nullptr
+   else if (head->data == elementToRemove)
+   {
+      Node *tmp = head->next;
+      delete head;
+      head = tmp;
+   }
+   // Search the list, remove element, fix the pointers to the adjacent node and return
+   else
+   {
+      // Create a pointer to the current node
+      Node *current = head;
+      while (current->next != nullptr)
+      {
+         // If the next node is the target element, remove it
+         if (current->next->data == elementToRemove)
+         {
+            // Create a pointer to the node to be removed
+            Node *tmp = current->next->next;
+            delete current->next;
+            current->next = tmp;
+            // Return to exit the function
+            return;
+         }
+         // If next node is not target element, move to the next node
+         current = current->next;
+      }
+      // At this point, the target element was not found in the list
+      throw UnableToInsertException("Unable to remove targetElement because it is not found in the list");
+   }
 }
 
 // Description: Remove some element at a specified ith "index", assume linkedlist starts at 1
@@ -116,6 +147,8 @@ void DataCollection::removeSecondLastElement()
 void DataCollection::reverseList()
 {
    // Implement me
+   // To Check
+
 }
 
 // Description: Insert the targetElement at a specified ith "index", assume linkedlist starts at 1
@@ -123,6 +156,8 @@ void DataCollection::reverseList()
 void DataCollection::insertElementAt(const int elementToAdd, const int index)
 {
    // Implement me
+   // To Check
+
 }
 
 // Description: Insert the targetElement in its correct ascending order position
@@ -130,7 +165,37 @@ void DataCollection::insertElementAt(const int elementToAdd, const int index)
 void DataCollection::insertAscendingOrder(const int elementToAdd)
 {
    // Implement me
+   // UNTESTED
+   // To Check
+   Node *prev = nullptr;
+   Node *curr = head;
+
+   // Create a newNode containing elementToAdd
+   Node *newNode = new Node(elementToAdd);
+   // If list is empty, make newNode our head
+   if (head == nullptr)
+      head = newNode;
+   // If the value of newNode is less than head, then set head to newNode
+   else if (newNode->data < head->data)
+   {
+      newNode->next = head;
+      head = newNode;
+   }
+   // Else, iterate through the linked list and find our proper place for newNode
+   else
+   {
+      Node *prev = nullptr;
+      Node *curr = head;
+      while (curr != nullptr && curr->data < newNode->data)
+      {
+         prev = curr;
+         curr = curr->next;
+      }
+      prev->next = newNode;
+      newNode->next = curr;
+   }
 }
+
 
 // Description: Insert the targetElement in its correct descending order position
 // If the element already exists in the linked list, put it before or after
@@ -140,19 +205,19 @@ void DataCollection::insertDescendingOrder(const int elementToAdd)
 }
 
 // Description: Prints the content of this DataCollection "thisDC".
-ostream & operator<<(ostream & os, const DataCollection & thisDC) {
-
+ostream & operator<<(ostream & os, const DataCollection & thisDC)
+{
+   // TESTED AND WORKING
    DataCollection::Node *current = thisDC.head;
-   cout << "{"; 
-   while (current != nullptr){
-      cout << current -> data; 
-      current = current -> next; 
-      if (current != nullptr){
-         cout << ","; 
-      }
+   cout << "{";
+   
+   while (current != nullptr)
+   {
+      cout << current -> data;
+      current = current -> next;
+      if (current != nullptr)
+         cout << ",";
    }
    cout << "}";
-
    return os;
-
 } 

@@ -4,7 +4,7 @@
  * Description: Implementation of a linked list-based Data Collection ADT class - SHSL list
  * Class Invariant: No class invariant!
  *
- * Author: AL
+ * Author: Steven Wong
  * Date: Oct. 2022
  */
  
@@ -54,6 +54,7 @@ class DataCollection {
 
       // Below follows SOME PRACTICE QUESTIONS I MADE FOR QUIZ PREP
       // Description: Remove the first occurence of a target element in the linked list
+      // Throw an UnableToInsertException if unable to remove
       void removeTargetElement(const int elementToRemove);
 
       // Description: Remove the second last element of the linkedlist
