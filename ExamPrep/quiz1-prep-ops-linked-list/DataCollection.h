@@ -23,11 +23,8 @@ class DataCollection {
          public:
             int data;
             Node * next = nullptr;
-         
          Node(int theData): data(theData) {}
       };
-     
-      
       // Data member: 
       Node * head = nullptr;  // head is the pointer to the first node
 

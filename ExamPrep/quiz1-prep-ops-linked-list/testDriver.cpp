@@ -17,7 +17,6 @@ int main () {
    DataCollection * aDC1 = new DataCollection( );
    DataCollection * aDC2 = new DataCollection( );
    DataCollection * aDC3 = new DataCollection( );
-      
 // Test case 1 - Empty DataCollection 1
    cout << "Test Case 1 - Just constructed a DataCollection 1:" << endl;
    cout << "Empty DataCollection 1: " << *aDC1 << endl;
@@ -37,7 +36,6 @@ int main () {
       }
    }
    cout << "Content of DataCollection 1: " << *aDC1 << endl;
-   
 
 // Test case 3 - Appending a few elements: 1 2 3 4 5 6 to DataCollection 2
    cout << "Test Case 3 - Appending a few elements: 1 2 3 4 5 6 to DataCollection 2:" << endl;
@@ -163,14 +161,19 @@ int main () {
    delete aDC4;
 
 
+   // Now testing reverse linked list
+   cout << "Now testing the reverse linked list which contains the following elements: " << endl;
+   cout << *aDC3 << endl;
+
+   cout << "Now printing the linked list after the reversal" << endl;
+   aDC3->reverseList();
+   cout << *aDC3 << endl;
+
    delete aDC1;
    aDC1 = nullptr;
-    
    delete aDC2;
    aDC2 = nullptr;
-    
    delete aDC3;
    aDC3 = nullptr;
-    
    return 0;
 }
