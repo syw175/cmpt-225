@@ -135,7 +135,6 @@ WordPair& BST::retrieve(WordPair & targetElement) const
    return translated;
 }
 
-// TO CHECK
 // Description: Recursive retrieval from a binary search tree.
 // Exception: Throws the exception "ElementDoesNotExistException" 
 //         if "targetElement" is not found in the binary search tree.
@@ -149,7 +148,6 @@ WordPair& BST::retrieveR(WordPair & targetElement, BSTNode * current) const
    else if (current->element == targetElement)
    {
       // FOUND
-      // CHECK IF THIS WORKS
       WordPair &found = current->element;
       return found;
    }
@@ -198,43 +196,21 @@ void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
       traverseInOrderR(visit, current->right);
 }
 
-// To-TEST
+// To-Do
 // Description: Recursive post-order traversal deep copy method
 BSTNode *BST::treeCopy(const BSTNode *node)
 {
-   BSTNode *newTree = nullptr;
-   // Copy nodes
-   if (node != nullptr)
-   {
-      WordPair *copy = new WordPair(node->element.getEnglish(), node->element.getTranslation());
-      newTree = new BSTNode(*copy, node->left, node->right);
+   // Create a new node
 
-      if (node->hasLeft())
-         newTree->left = treeCopy(node->left);
+   // Copy tree nodes during post-order traversal and increment elementCount
 
-      if (node->hasRight())
-         newTree->right =treeCopy(node->right);
-   }
-   // Otherwise tree is empty, just return it
-   return newTree;
+   // If tree is empty end recursion
+   return nullptr;
 }
 
-// To-Check
+// To-Do
 // Description: Destroy all BSTNodes in the BST post-order traversal (Both sub-trees have to be deleted first)
 void BST::destroyBST(BSTNode *root)
 {
-   // Base case
-   if (root->isLeaf())
-      return;
-   
-   // Traverse the left sub-tree and delete its nodes
-   if (root->hasLeft())
-      destroyBST(root->left);
-   
-   // Traverse the right sub-tree and delete its nodes
-   if (root->hasRight())
-      destroyBST(root->right);
-   
-   // Delete the node
-   delete root;
+   return;
 }
