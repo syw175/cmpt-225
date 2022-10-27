@@ -34,12 +34,12 @@ private:
    // Description: Recursive post-order traversal of a BST and
    //              create a deep copy of the tree, returning a
    //              pointer to deep copy's root. 
-   BSTNode *treeCopy(const BSTNode *root);
+   BSTNode *treeCopy(const BSTNode *node);
 
    // Description: Recursive post-order traversal of a BST and 
    //              destroys all BSTNodes in the tree, freeing its
    //              memory from the heap.
-   void destroyBST(BSTNode *root);
+   void destroyBST(BSTNode *node);
    
    // Description: Recursive insertion into a binary search tree.
    //              Returns true when "anElement" has been successfully inserted into the 
