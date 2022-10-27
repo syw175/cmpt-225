@@ -196,33 +196,42 @@ void BST::traverseInOrderR(void visit(WordPair &), BSTNode* current) const
       traverseInOrderR(visit, current->right);
 }
 
-// To-Do
 // Description: Recursive post-order traversal deep copy method
 BSTNode *BST::treeCopy(const BSTNode *node)
 {
-   // Create a new node
+   BSTNode *newTree = nullptr;
+   // If node is nullptr, then base case is reached
+   if (node != nullptr)
+   {
+      // Create a new node and set  its left and right subtrees
+      WordPair *copy = new WordPair(node->element.getEnglish(), node->element.getTranslation());
+      newTree = new BSTNode(*copy, node->left, node->right);
+      
+      // Recursively copy the left subtree
+      if (node->hasLeft())
+         newTree->left = treeCopy(node->left);
 
-   // Copy tree nodes during post-order traversal and increment elementCount
-
-   // If tree is empty end recursion
-   return nullptr;
+      // Recursively copy the right subtree
+      if (node->hasRight())
+         newTree->right =treeCopy(node->right);
+   }
+   // Otherwise tree is empty, just return it
+   return newTree;
 }
 
 // Description: Destroy all BSTNodes in the BST post-order traversal (Both sub-trees have to be deleted first)
-void BST::destroyBST(BSTNode *root)
+void BST::destroyBST(BSTNode *node)
 {
    // Base case
-   if (root->isLeaf())
-      return;
+   if (!node) return;
+
+   // Recursively delete all nodes in left subtree
+   if (node->hasLeft())
+      destroyBST(node->left);
+      
+   // Recursively delete all nodes in right subtre
+   if (node->hasRight())
+      destroyBST(node->right);
    
-   // Traverse the left sub-tree and delete its nodes
-   if (root->hasLeft())
-      destroyBST(root->left);
-   
-   // Traverse the right sub-tree and delete its nodes
-   if (root->hasRight())
-      destroyBST(root->right);
-   
-   // Delete the node
-   delete root;
-   }
+   delete node;
+}
