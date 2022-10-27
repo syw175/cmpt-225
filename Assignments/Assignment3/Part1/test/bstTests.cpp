@@ -7,12 +7,12 @@
 #include <iostream>
 using std::cout; 
 
-// Remove later
 void visit(WordPair & element)
 {
    cout << element << endl;
 }
 
+// Having some issues with the test fixture, revisit later on how to set one up properly
 struct BSTTest : public ::testing::Test
 {
   BST *bst;
@@ -46,6 +46,7 @@ struct BSTTest : public ::testing::Test
     // Initialize BSTs
     bst = new BST();
     bst2 = new BST();
+
 
     // Initialize word pairs with ../dataFile.txt
     wp1 = new WordPair("stop", "mevyap");
@@ -116,32 +117,39 @@ TEST_F(BSTTest, BST_COPY_CONSTRUCTOR_EMPTY)
 }
 
 // Test 3: Test the copy constructor with a BST with elements
-// Seg Faults
-// TEST_F(BSTTest, COPY_CONSTRUCTOR_NON_EMPTY_BST)
-// {
-//   // Insert elements into bst
-//   bst->insert(*wp2);
-//   bst->insert(*wp3);
-//   bst->insert(*wp4);
-//   bst->insert(*wp5);
-//   bst->insert(*wp6);
-//   EXPECT_EQ(bst->getElementCount(), 5);
+TEST_F(BSTTest, COPY_CONSTRUCTOR_NON_EMPTY_BST)
+{
+  // Insert elements into bst
+  bst->insert(*wp2);
+  bst->insert(*wp3);
+  bst->insert(*wp4);
+  bst->insert(*wp5);
+  bst->insert(*wp6);
+  EXPECT_EQ(bst->getElementCount(), 5);
 
-//   // Copy bst
-//   BST *bstCopy = new BST(*bst);
-//   EXPECT_EQ(bstCopy->getElementCount(), bst->getElementCount());
+  // Copy bst
+  BST *bstCopy = new BST(*bst);
+  EXPECT_EQ(bstCopy->getElementCount(), bst->getElementCount());
 
-//   // Capture original and copy elements
-//   std::string bstOutput = testing::internal::GetCapturedStdout();
-//   bst->traverseInOrder(visit);
+  // Capture elements from bst
+  testing::internal::CaptureStdout();
+  bst->traverseInOrder(visit);
+  std::string output = testing::internal::GetCapturedStdout();
 
-//   std::string bstCopyOutput = testing::internal::GetCapturedStdout();
-//   bstCopy->traverseInOrder(visit);
+  // Capture elements from bstCopy
+  testing::internal::CaptureStdout();
+  bstCopy->traverseInOrder(visit);
+  std::string output2 = testing::internal::GetCapturedStdout();
 
-//   // Compare original and copy elements
-//   EXPECT_EQ(bstOutput, bstCopyOutput);
-//   delete bstCopy;
-// }
+  // Compare original and copy elements
+  EXPECT_EQ(output, output2);
+
+  // Modify bstCopy and check if bst is modified
+  bstCopy->insert(*wp1);
+  bstCopy->insert(*wp7);
+  EXPECT_EQ(bstCopy->getElementCount(), bst->getElementCount() + 2);
+  delete bstCopy;
+}
 
 // Test 4: Retrieve an element from an empty BST
 TEST_F(BSTTest, RETRIEVE_FROM_EMPTY_BST)
@@ -181,8 +189,11 @@ TEST_F(BSTTest, BST_INSERT_DUPLICATE)
 
   // Check that 5 elements were correctly added to the BST
   EXPECT_EQ(bst->getElementCount(), 5);
-  // Try to insert a duplicate element
+
+  // Try to insert some duplicate element
   EXPECT_THROW(bst->insert(*wp1), ElementAlreadyExistsException);
+  EXPECT_THROW(bst->insert(*wp2), ElementAlreadyExistsException);
+  EXPECT_THROW(bst->insert(*wp3), ElementAlreadyExistsException);
 }
 
 // Test 7: Retrieve an element from a BST that contains the element
@@ -217,10 +228,6 @@ TEST_F(BSTTest, RETRIEVE_ELEMENT_DOES_NOT_EXIST)
   // Try to retrieve wp1 from the BST
   EXPECT_THROW(bst->retrieve(*wp1), ElementDoesNotExistException);
 }
-
-
-
-
 
 // Test X: Check true is always true
 TEST(SANITY_CHECK, TRUE_IS_TRUE)
