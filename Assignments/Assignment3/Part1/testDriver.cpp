@@ -58,12 +58,22 @@ int main(int argc, char *argv[]) {
         translationW = aLine;
         WordPair aWordPair(englishW, translationW);
         // insert aWordPair into "testing" using a try/catch block
+         try 
+         {
+            testing->insert(aWordPair);
+         }
+         catch (ElementAlreadyExistsException& e)
+         {
+         cout << e.what() << endl;
+         }
      }
      myfile.close();
 
      // If user entered "Display" at the command line ...
      if ( ( argc > 1 ) && ( strcmp(argv[1], "Display") == 0) ) {
         // ... then display the content of the BST.
+         cout << "Displaying the content of the BST:" << endl;
+         testing->traverseInOrder(display);
      }
      else if (argc == 1) {
         // while user has not entered CTRL+D
@@ -71,13 +81,26 @@ int main(int argc, char *argv[]) {
 
            WordPair aWordPair(aWord);
            // retrieve aWordPair from "testing" using a try/catch block
-           // print aWordPair
-
+            try 
+            {
+               // print aWordPair
+               translated = testing->retrieve(aWordPair);
+               cout << translated << endl;
+            }
+            catch (ElementDoesNotExistException& e)
+            {
+               cout << e.what() << endl;
+            }
+            catch (EmptyDataCollectionException& e)
+            {
+               cout << e.what() << endl;
+            }
         }
      }
   }
   else 
      cout << "Unable to open file"; 
 
+   delete testing;
   return 0;
 }
