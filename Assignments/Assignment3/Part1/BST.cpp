@@ -208,9 +208,21 @@ BSTNode *BST::treeCopy(const BSTNode *node)
    return nullptr;
 }
 
-// To-Do
 // Description: Destroy all BSTNodes in the BST post-order traversal (Both sub-trees have to be deleted first)
 void BST::destroyBST(BSTNode *root)
 {
-   return;
-}
+   // Base case
+   if (root->isLeaf())
+      return;
+   
+   // Traverse the left sub-tree and delete its nodes
+   if (root->hasLeft())
+      destroyBST(root->left);
+   
+   // Traverse the right sub-tree and delete its nodes
+   if (root->hasRight())
+      destroyBST(root->right);
+   
+   // Delete the node
+   delete root;
+   }
