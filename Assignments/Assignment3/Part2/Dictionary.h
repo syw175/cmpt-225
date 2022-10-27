@@ -14,6 +14,10 @@
 
 #include "BST.h"
 
+
+// WHERE TO PUT THIS???
+#include <iostream>
+
 class Dictionary {
    
 private:
