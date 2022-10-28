@@ -86,7 +86,7 @@ int main (int argc, char** argv)
             {
                 // Try to retrieve the definition from our dictionary
                 translated = dict->get(aWordPair);
-                cout << translated << endl;
+                cout << translated;
             }
             // If the word definition does not exist, inform the user
             catch (const ElementDoesNotExistException &e)

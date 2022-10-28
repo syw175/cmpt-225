@@ -9,7 +9,7 @@ using std::cout;
 
 void visit(WordPair & element)
 {
-   cout << element << endl;
+   cout << element;
 }
 
 // Having some issues with the test fixture, revisit later on how to set one up properly
@@ -175,7 +175,7 @@ TEST_F(BSTTest, INSERTED_CORRECT_ORDER)
   bst->traverseInOrder(visit);
   // Capture the output of the traversal and compare it to the expected output
   std::string output = testing::internal::GetCapturedStdout();
-  std::string expected = "conduit:'och\n\nfood:Soj\n\nstop:mevyap\n\ntoday:jajvam\n\nwin:Qap\n\n";
+  std::string expected = "conduit:'och\nfood:Soj\nstop:mevyap\ntoday:jajvam\nwin:Qap\n";
   ASSERT_EQ(output, expected);
 }
 
