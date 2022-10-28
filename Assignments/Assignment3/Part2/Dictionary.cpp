@@ -11,11 +11,11 @@
 
 #include "Dictionary.h"
 
-
-// CHECK INCLUDES,, WHERE TO PLACE...
-
 // Default Constructor
-Dictionary::Dictionary() {}
+Dictionary::Dictionary() 
+{
+    keyValuePairs = new BST();
+}
 
 // Destructor
 Dictionary::~Dictionary()
@@ -35,16 +35,6 @@ unsigned int Dictionary::getElementCount() const
 // Exception: Throws ElementAlreadyExistsException if "newElement" already exists in the Dictionary.
 void Dictionary::put(WordPair &newElement)
 {
-    // Ask: Ref cannot be initilized to nullptr right? Do not need to check for it?
-    // Do I catch these exceptions or do I do it BELOW
-    // try
-    // {
-    //     keyValuePairs->insert(newElement);
-    // }
-    // catch(const ElementAlreadyExistsException &e)
-    // {
-    //     std::cout << e.what() << std::endl;
-    // }    
     keyValuePairs->insert(newElement);
 }
 
@@ -54,7 +44,6 @@ void Dictionary::put(WordPair &newElement)
 // Exception: Throws EmptyDataCollectionException if the Dictionary is empty.
 WordPair& Dictionary::get(WordPair &targetElement) const
 {
-    // Or like this...
     return keyValuePairs->retrieve(targetElement);
 }
 

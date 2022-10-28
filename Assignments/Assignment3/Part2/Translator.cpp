@@ -55,40 +55,54 @@ int main (int argc, char** argv)
             aLine.erase(0, pos + delimiter.length());
             translationW = aLine;
             WordPair aWordPair(englishW, translationW);
-            // insert aWordPair into "testing" using a try/catch block??
-            dict->put(aWordPair);
+            // Try to insert the word pair into the dictionary
+            try
+            {
+                dict->put(aWordPair);
+            }
+            // If the word pair already exists, catch the exception
+            catch (ElementAlreadyExistsException &e)
+            {
+                cout << e.what() << endl;
+            }
         }
      }
+     // Close the file
      myfile.close();
 
     // If user entered "display" at the command line, display the contents of the Dictionary
     if ((argc > 1) && (strcmp(argv[1], "display") == 0))
         dict->displayContent(display);
     
-    // else if (argc == 1)
-    // {
-    //     // While not EOF...
-    //     while (getline(cin, aWord))
-    //     {
-    //         // The user enters one English word at a time (on one line).
-    //         WordPair aWordPair(aWord);
-    //         try
-    //         {
-    //             translated = dict->get(aWordPair);
-    //             cout << translated << endl;
-    //         }
-    //         catch (const ElementDoesNotExistException &e)
-    //         {
-    //             cout << "***Not Found!***" << endl;
-    //         }
-    //         catch (const EmptyDataCollectionException &e)
-    //         {
-    //             cout << e.what() << endl;
-    //         }
-    //     }
-    // }
-    // else
-    //     cout << "Unable to open the file" << endl;
+    // If no argument was giving by the user...
+    else if (argc == 1)
+    {
+        // While not EOF...
+        while (getline(cin, aWord))
+        {
+            // The user enters one English word at a time (on one line).
+            WordPair aWordPair(aWord);
+            try
+            {
+                // Try to retrieve the definition from our dictionary
+                translated = dict->get(aWordPair);
+                cout << translated << endl;
+            }
+            // If the word definition does not exist, inform the user
+            catch (const ElementDoesNotExistException &e)
+            {
+                cout << "***Not Found!***" << endl;
+            }
+            // If our dictionary is empty, inform the user
+            catch (const EmptyDataCollectionException &e)
+            {
+                cout << e.what() << endl;
+            }
+        }
+    }
+    // Otherwise, we were unable to open the file
+    else
+        cout << "Unable to open the file" << endl;
 
     delete dict;
     return 0;
