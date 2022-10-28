@@ -9,6 +9,7 @@
  
 #include <iostream>
 #include "UnableToInsertException.h"
+#include "EmptyDataCollectionException.h"
 #include "DataCollection.h"
 
 using namespace std;
@@ -116,7 +117,7 @@ int main () {
    {
       aDC5->average();
    }
-   catch (...)
+   catch (EmptyDataCollectionException &e)
    {
       cout << "Exception caught!" << endl;
    }
@@ -140,9 +141,21 @@ int main () {
    aDC1->removeMiddle();
    aDC1->removeMiddle();
    cout << *aDC1 << endl;
-
    aDC1->removeMiddle();
-   // cout << *aDC1 << endl;
+   cout << *aDC1 << endl;
+
+   // Testing with empty data Collection remove
+   try
+   {
+      aDC1->removeMiddle();
+   }
+   catch(EmptyDataCollectionException &e)
+   {
+      cout << "Exception caught!" << endl;
+   }
+   
+
+
 
 
 

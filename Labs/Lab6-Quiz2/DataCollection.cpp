@@ -87,6 +87,10 @@ void DataCollection::prepend(int newElement){
 //              When computing the position of the middle element, round up to nearest integral value.              
 // Exception Handling: Throws EmptyDataCollectionException.
 int DataCollection::removeMiddle() {
+   // If head is nullptr, then the data collection is empty; throw EmptyDataCollectionException
+   if (head == nullptr)
+      throw EmptyDataCollectionException("Unable to remove the middle element because the Data Collection is empty");
+
    // Iterate through the linked list and count the number of elements contained it in
    int elementCount = 0; 
    Node *curr = head;
@@ -96,41 +100,33 @@ int DataCollection::removeMiddle() {
       curr = curr->next;
    }
 
-   // If the element count is 0, then throw an EmptyDataCollectionException
-   if (elementCount == 0)
-      throw EmptyDataCollectionException("Unable to remove the middle element because the Data Collection is empty");
-
    // Calculate the middle position of the elements (and round up)
-   int mid = ceil(elementCount/2);
+   int mid = ceil(elementCount/2.0);
+   int elementRemoved = 0;
+   Node *prev = nullptr;
+   curr = head;
 
-   // Remove the element at index value and return it
-   // If the middle element index is 1, remove the head
-   if (mid == 1 && head->next == nullptr)
+   // Iterate through the linked list until the middle position is reached
+   for (int i = 1; i < mid; i++)
    {
-      int value = head->data;
-      delete head;
-      head = nullptr;
-      return value;
+      prev = curr;
+      curr = curr->next;
    }
-   // If the index is greater than 1, iterate through the list to the ith index
+
+   // If the middle element is the first element in the linked list
+   if (prev == nullptr)
+   {
+      head = curr->next;
+      elementRemoved = curr->data;
+      delete curr;
+   }
    else
    {
-      // Create a pointer to the current node
-      curr = head;
-      for (int i = 1; i < mid; i++)
-      {
-         // COuld be issue here
-         curr = curr->next;
-      }
-
-      // At this point the current index is equal to the ith index
-      // Remove and return it
-      Node *tmp = curr->next->next;
-      int value = curr->data;
-      delete curr->next;
-      curr->next = tmp;
-      return value;
+      prev->next = curr->next;
+      elementRemoved = curr->data;
+      delete curr;
    }
+   return elementRemoved;
 }
       
 // Bonus Method: Will be marked only if you have implemented and submitted the above method.
