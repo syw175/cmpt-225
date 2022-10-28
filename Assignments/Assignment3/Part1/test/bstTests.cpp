@@ -75,8 +75,7 @@ struct BSTTest : public ::testing::Test
 
   virtual void TearDown() override
   {
-    delete bst;
-    delete bst2;
+   
     delete wp1;
     delete wp2;
     delete wp3;
@@ -97,6 +96,8 @@ struct BSTTest : public ::testing::Test
     delete node8;
     delete node9;
     delete node10;
+    delete bst;
+    delete bst2;
   }
 };
 
