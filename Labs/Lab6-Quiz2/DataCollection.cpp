@@ -90,43 +90,31 @@ int DataCollection::removeMiddle() {
    // If head is nullptr, then the data collection is empty; throw EmptyDataCollectionException
    if (head == nullptr)
       throw EmptyDataCollectionException("Unable to remove the middle element because the Data Collection is empty");
-
-   // Iterate through the linked list and count the number of elements contained it in
-   int elementCount = 0; 
-   Node *curr = head;
-   while (curr != nullptr)
-   {
-      elementCount++;
-      curr = curr->next;
-   }
-
-   // Calculate the middle position of the elements (and round up)
-   int mid = ceil(elementCount/2.0);
-   int elementRemoved = 0;
+   
    Node *prev = nullptr;
-   curr = head;
+   Node *fast = head;
+   Node *slow = head;
 
-   // Iterate through the linked list until the middle position is reached
-   for (int i = 1; i < mid; i++)
+   // For odd and even length lists so that we get fast to the end of the list
+   while (fast != nullptr && fast->next != nullptr)
    {
-      prev = curr;
-      curr = curr->next;
+      // Fast moves twice as fast as slow
+      fast = fast->next->next;
+      prev = slow;
+      slow = slow->next;
    }
-
-   // If the middle element is the first element in the linked list
+   
+   int middleElement = slow->data;
+   // Case where we only have one elmeent
    if (prev == nullptr)
-   {
-      head = curr->next;
-      elementRemoved = curr->data;
-      delete curr;
-   }
+      head = head->next;
+   // Case with more than one element
    else
-   {
-      prev->next = curr->next;
-      elementRemoved = curr->data;
-      delete curr;
-   }
-   return elementRemoved;
+      prev->next = slow->next;
+
+   // Delete the node
+   delete slow;
+   return middleElement;   
 }
       
 // Bonus Method: Will be marked only if you have implemented and submitted the above method.
