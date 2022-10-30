@@ -39,7 +39,7 @@ int main (int argc, char** argv)
     string aWord = "";
     string englishW = "";
     string translationW = "";
-    string filename = "dataFile.txt";
+    string filename = "myDataFile.txt";
     string delimiter = ":";
     size_t pos = 0;
     WordPair translated;
