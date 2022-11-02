@@ -11,9 +11,11 @@
 
 #include "Node.h"
 
-Node::Node() { }
+template <class ElementType>
+Node<ElementType>::Node() { }
 
-Node::Node(int theData) : data(theData) { }
+template <class ElementType>
+Node<ElementType>::Node(ElementType &theData) : data(theData) { }
 
-Node::Node(int theData, Node * theNextNode) : data(theData), next(theNextNode) { }
-
+template <class ElementType>
+Node<ElementType>::Node(ElementType &theData, Node * theNextNode) : data(theData), next(theNextNode) { }

@@ -5,7 +5,8 @@
  *              Its underlying data structure is an unsorted singly-headed singly-linked list (SHSL).
  *
  * Author: AL
- * Date: Last modified: Oct. 2022
+ * Completed by: Steven Wong
+ * Date: Last modified: November 2022
  */ 
 
 #ifndef LIST_H
@@ -13,11 +14,12 @@
 
 #include "Node.h"
 
+template <class ElementType>
 class List  {
 
 private:
 
-   Node * head = nullptr;          // Pointer to the first node in the List.
+   Node<ElementType> *head = nullptr;          // Pointer to the first node in the List.
    unsigned int elementCount = 0;  // Number of elements in the List.
         
 public:
@@ -64,13 +66,13 @@ public:
 
    // Description: Append "newElement" to the list.
    // Exception Handling: Throws UnableToInsertException.
-   void append(int newElement);
+   void append(ElementType &newElement);
    
    // Description: Removes the first instance of "toBeRemoved" from the List.
    // PreCondition: List is not empty.
    // Exception Handling: Throws EmptyListException.
    // Exception Handling: Throws ElementDoesNotExistException.
-   void remove(int toBeRemoved);
+   void remove(ElementType &toBeRemoved);
    
    // Description: Empties the List, freeing up dynamically allocated memory.
    void removeAll();
@@ -87,5 +89,6 @@ public:
     */
    void printList() const;
 
-}; 
+};
+#include "List.cpp"
 #endif

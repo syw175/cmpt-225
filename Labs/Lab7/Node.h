@@ -5,25 +5,26 @@
  *                   in which the data is of "int" data type.
  *                   Designed and implemented as a non-ADT.
  *
- * Created on: 
- * Author: 
+ * Created on: November, 2022
+ * Author: Steven Wong
  */
  
 #ifndef NODE_H
 #define NODE_H
 
-
+template <class ElementType>
 class Node {
 public:
 
    // Public attributes
-   int data = 0;            // The data in the node
-   Node * next = nullptr;   // Pointer to next node
+   ElementType &data;            // The data in the node
+   Node *next = nullptr;   // Pointer to next node
 	
    // Constructors (why no destructor?)
    Node();
-   Node(int theData);
-   Node(int theData, Node * theNextNode);
+   Node(ElementType &theData);
+   Node(ElementType &theData, Node<ElementType> *theNextNode);
 
-}; 
+};
+#include "Node.cpp"
 #endif

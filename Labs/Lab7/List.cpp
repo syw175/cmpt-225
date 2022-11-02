@@ -5,7 +5,8 @@
  *              Its underlying data structure is an unsorted singly-headed singly-linked list (SHSL).
  *
  * Author: AL
- * Date: Last modified: Oct. 2022
+ * Completed by: Steven Wong
+ * Date: Last modified: November 2022
  */ 
 
 #include "UnableToInsertException.h"
@@ -27,7 +28,9 @@ using std::endl;
  */
 // Description: Default constructor
 
-List::List() {	
+template <class ElementType>
+List<ElementType>::List()
+{	
    // cout << "List Default constructor" << endl; // For testing purposes!
 }
 
@@ -42,16 +45,19 @@ List::List() {
  */
  
 // Description: Copy constructor creates a new List object as a copy of an existing List object.
-List::List(const List & lst){
+template <class ElementType>
+List<ElementType>::List(const List &lst)
+{
    //cout << "List Copy constructor called!" << endl; // For testing purposes!
-
    elementCount = lst.elementCount;
 
    // Check to see if list lst is empty
-   if (lst.head != nullptr){
-      Node * current = lst.head;
+   if (lst.head != nullptr)
+   {
+      Node<ElementType> *current = lst.head;
       // Traverse the list
-      while (current != nullptr){
+      while (current != nullptr)
+      {
          this->append(current->data); // Append data into new List
          current = current->next; // Go to next node
       }
@@ -67,7 +73,9 @@ List::List(const List & lst){
  * There can be only one destructor for a class, and it cannot have parameters. 
  */
 // Description: Destructor.
-List::~List(){
+template <class ElementType>
+List<ElementType>::~List()
+{
    // cout << "List destructor" << endl; // For testing purposes!
    removeAll();
 }
@@ -77,27 +85,33 @@ List::~List(){
 // List Public Interface 
 
 // Description: Returns the total element count currently stored in List.
-unsigned int List::getElementCount() const {
-
+template <class ElementType>
+unsigned int List<ElementType>::getElementCount() const 
+{
    return elementCount;
 }
 
 // Description: Append "newElement" to the list.
 // Exception Handling: Throws UnableToInsertException.
-void List::append(int newElement) {
-
-   Node * newNode = new Node(newElement); 
-   if ( newNode == nullptr )  
+template <class ElementType>
+void List<ElementType>::append(ElementType &newElement)
+{
+   Node<ElementType> *newNode = new Node<ElementType>(newElement); 
+   if (newNode == nullptr)  
       throw UnableToInsertException(" in append(): new failed, newNode cannot be allocated heap memory.");
 
    // Check to see if List is empty
-   if (head == nullptr){
+   if (head == nullptr)
+   {
       // Make new Node the new head
       head = newNode;
-   }else{
+   }
+   else
+   {
       // Move to the end of the List
-      Node * current = head;
-      while (current->next != nullptr){
+      Node<ElementType> *current = head;
+      while (current->next != nullptr)
+      {
          current = current->next;
       }
       current->next = newNode;
@@ -110,25 +124,31 @@ void List::append(int newElement) {
 // PreCondition: List is not empty.
 // Exception Handling: Throws EmptyListException.
 // Exception Handling: Throws ElementDoesNotExistException.
-void List::remove(int toBeRemoved) {
-
+template <class ElementType>
+void List<ElementType>::remove(ElementType &toBeRemoved)
+{
    // Is the List empty?
    if ( head == nullptr ) throw EmptyListException(" in remove(): the List is empty.");
    
-   Node * current = head;
-   Node * toBeDeleted =  nullptr;
+   Node<ElementType> *current = head;
+   Node<ElementType> *toBeDeleted =  nullptr;
    unsigned int previousEC = elementCount;
 
    // Check to see if toBeRemoved is at the head of the list
-   if (head->data == toBeRemoved) {
+   if (head->data == toBeRemoved)
+   {
       head = head->next;
       delete current; //currently assigned head
       elementCount--;
    }
-   else  { // Otherwise iterate through list
-      for ( unsigned int i = 0; i < elementCount-1; i++ ) {
+   // Otherwise iterate through list
+   else 
+   {
+      for (unsigned int i = 0; i < elementCount-1; i++)
+      {
          // Is the next node toBeRemoved
-         if ( current->next->data == toBeRemoved ) {
+         if (current->next->data == toBeRemoved)
+         {
             toBeDeleted = current->next;
             current->next = current->next->next;
             delete toBeDeleted;
@@ -137,18 +157,20 @@ void List::remove(int toBeRemoved) {
          current = current->next;
       }
    }
-   if ( previousEC == elementCount ) 
+   if (previousEC == elementCount) 
       throw ElementDoesNotExistException(" in remove(): element to be removed is not in the List.");
    return;
 }
 
 // Description: Empties the List, freeing up dynamically allocated memory.
-void List::removeAll(){
+template <class ElementType>
+void List<ElementType>::removeAll(){
    
-   Node * temp = nullptr;
+   Node<ElementType> *temp = nullptr;
    
    // Traverse the list deleting nodes
-   for ( Node * toBeDeleted = head; toBeDeleted != nullptr; ) {
+   for (Node<ElementType> *toBeDeleted = head; toBeDeleted != nullptr;)
+   {
       temp = toBeDeleted->next; // Mustn't "lose" the next node
       delete toBeDeleted;     // Deallocate memory
       toBeDeleted = temp;  // Go to next node
@@ -169,9 +191,10 @@ void List::removeAll(){
  * For testing purpose, unless required by client in problem statement.
  * Could also overload operator<<. 
  */
-void List::printList() const {
+template <class ElementType>
+void List<ElementType>::printList() const {
 
-   Node * current = head;
+   Node<ElementType> *current = head;
    
    cout << "{"; //Nice format!
    // Traverse the list
