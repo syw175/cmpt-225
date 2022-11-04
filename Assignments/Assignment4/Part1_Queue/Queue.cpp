@@ -2,7 +2,7 @@
  * Queue.cpp
  * 
  * Description: This is a linked list-based implementation of a Queue ADT class.
- *              Its underlying data structure is a doubly-headed singly-linked list (DHSL).
+ *              Its underlying data structure is a doubly-headed doubly-linked list (DHDL).
  *              Class Invariant:  FIFO or LILO order
  *
  * Author: SW
@@ -12,10 +12,13 @@
 
 
 // QUESTIONS: 
+// ELEMENTCOUNT DATA MEMBER
 // CAN I ADD AN ELEMENT COUNT GETTER?
 // DOING THE PRINT OUT OF QUEUE, INVARIANT?
+// COPY CONSTRUCTOR?
 
 #include <iostream>
+#include <ostream>
 #include "EmptyDataCollectionException.h"
 #include "Queue.h"
 
@@ -43,25 +46,30 @@ bool Queue<ElementType>::isEmpty() const
     return head == nullptr && tail == nullptr;
 }
 
-// Description: For testing purposes only, to print out elements in the Queue
+// Description: For testing purposes only, to print out elements in the Queue in FIFO order
 // Postcondition: This Queue is unchanged by this operation.
 // Time Efficiency: O(n)
-template <class ElementType>
-std::ostream &operator<<(std::ostream &os, const Queue<ElementType> &q)
+// https://stackoverflow.com/questions/4014294/operator-overloading-on-class-templates
+// https://en.cppreference.com/w/cpp/language/friend
+template<class ElementType>
+std::ostream &operator<< (std::ostream &os, const Queue<ElementType> &q)
 {
-    // If the queue is empty, print "EMPTY"
+    // If the queue is empty, print "{}"
     if (q.isEmpty())
         os << "{}" << std::endl;
     else
     {
+        // Print out the elements in the queue in FIFO order
         os << "{";
-        Node<ElementType> *curr = head;
-        while (curr != tail)
+        Queue<ElementType>::Node *current = q.head;
+        while (current != nullptr)
         {
-            os << curr->data;
-            curr = curr->next;
+            os << current->data;
+            if (current->next != nullptr)
+                os << ", ";
+            current = current->next;
         }
-        os << curr->data << "}" << std::endl;
+        os << "}" << std::endl;
     }
     return os;
 }
@@ -73,7 +81,26 @@ std::ostream &operator<<(std::ostream &os, const Queue<ElementType> &q)
 template <class ElementType>
 bool Queue<ElementType>::enqueue(ElementType &newElement)
 {
-
+    Node *newNode = new Node(newElement);
+    // If memory alloc failed, we cannot insert.. return
+    if (!newNode)
+        return false;
+    
+    // Case where the Queue is empty, head and tail are both newNode
+    if (isEmpty())
+    {
+        head = newNode;
+        tail = newNode;
+    }
+    // Case where Queue has one or more elements
+    else
+    {
+        newNode->prev = tail;
+        tail->next = newNode;
+        tail = tail->next;
+    }
+    elementCount++;
+    return true;
 }
 
 // Description: Removes (but does not return) the element at the "front" of this Queue
@@ -84,7 +111,34 @@ bool Queue<ElementType>::enqueue(ElementType &newElement)
 template <class ElementType>
 void Queue<ElementType>::dequeue()
 {
+    // If the queue is empty, throw an exception
+    if (isEmpty())
+        throw EmptyDataCollectionException("Cannot dequeue from an empty Queue");
 
+    // Case where queue only has 1 element
+    if (elementCount == 1)
+    {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+    }
+    // Case where queue has 2 elements
+    else if (elementCount == 2)
+    {
+        delete head;
+        head = tail;
+        head->prev = nullptr;
+    }
+    // Case where queue has 3 or more elements
+    else
+    {
+        Node *tmp = head->next;
+        delete head;
+        head = tmp;
+        head->prev = nullptr;
+    }
+    elementCount--;
+    return;
 }
 
 // Description: Returns (but does not remove) the element at the "front" of this Queue

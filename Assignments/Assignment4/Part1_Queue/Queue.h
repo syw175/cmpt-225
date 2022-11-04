@@ -2,12 +2,14 @@
  * Queue.h
  * 
  * Description: This is a linked list-based implementation of a Queue ADT class.
- *              Its underlying data structure is a doubly-headed singly-linked list (DHSL).
+ *              Its underlying data structure is a doubly-headed doubly-linked list (DHDL).
  *              Class Invariant:  FIFO or LILO order
  *
  * Author: SW
  * Date: Last modified: November 2022
  */
+
+#include <ostream>
 
 #ifndef QUEUE_H
 #define QUEUE_H
@@ -15,18 +17,18 @@
 template <class ElementType>
 class Queue {
     private:
-        // Node is a nested class within Queue.
         class Node {
             public:
                 // Data members
                 ElementType &data;
-                Node<ElementType> *next = nullptr;
+                Node *next = nullptr;
+                Node *prev = nullptr;
 
                 // Default constructor
-                Node<ElementType> () {}
+                Node() {}
   
                 // Parameterised Constructor
-                Node<ElementType> (ElementType &data) : this->data(data) {}
+                Node(ElementType &newData) : data(newData) {}
         };
 
         Node *head = nullptr;
@@ -44,8 +46,8 @@ class Queue {
         // Overloaded << operator
         // Description: For testing purposes only, to print out elements in the Queue
         // Time Efficiency: O(n)
-        friend std::ostream &operator<<(std::ostream &os, const Queue &q);
-        
+        friend std::ostream &operator<<<>(std::ostream &os, const Queue<ElementType> &q);
+
         // Description: Returns true if this Queue is empty, otherwise false.
         // Postcondition: This Queue is unchanged by this operation.
         // Time Efficiency: O(1)
