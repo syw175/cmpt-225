@@ -17,18 +17,17 @@
 template <class ElementType>
 class Queue {
     private:
-        class Node {
+        class Node {               
             public:
                 // Data members
                 ElementType &data;
-                Node *next = nullptr;
-                Node *prev = nullptr;
+                Node *next;
+                Node *prev;
 
                 // Default constructor
-                Node() {}
-  
-                // Parameterised Constructor
-                Node(ElementType &newData) : data(newData) {}
+                Node() : next(nullptr), prev(nullptr) {}
+                // Parameterized constructor
+                Node(ElementType &data) : data(data), next(nullptr), prev(nullptr) {}
         };
 
         Node *head = nullptr;
@@ -43,10 +42,34 @@ class Queue {
         // Destructor
         ~Queue();
 
-        // Overloaded << operator
+        // Overload the << operator for Queue class
         // Description: For testing purposes only, to print out elements in the Queue
         // Time Efficiency: O(n)
-        friend std::ostream &operator<<<>(std::ostream &os, const Queue<ElementType> &q);
+        // https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Making_New_Friends
+        // https://www.youtube.com/watch?v=POa_V15je8Y
+        friend std::ostream &operator<< (std::ostream&os, const Queue<ElementType>&q)
+        {
+            // If the queue is empty, print "{}"
+            if (q.isEmpty())
+                os << "{}";
+            // If the queue is not empty, print "{element1, element2, ...}"
+            else
+            {
+                os << "{";
+                Node *current = q.head;
+                // Loop through queue and separate elements with a comma
+                while (current != nullptr)
+                {
+                    os << current->data;
+                    if (current->next != nullptr)
+                        os << ", ";
+                    // Move to next node
+                    current = current->next;
+                }
+                os << "}";
+            }
+            return os;
+        }
 
         // Description: Returns true if this Queue is empty, otherwise false.
         // Postcondition: This Queue is unchanged by this operation.
