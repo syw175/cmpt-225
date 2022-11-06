@@ -32,12 +32,14 @@ class Queue {
 
         Node *head = nullptr;
         Node *tail = nullptr;
-        unsigned int elementCount = 0;
 
     /******* Start of Queue Public Interface *******/
     public:
         // Default constructor
         Queue();
+
+        // Copy constructor
+        Queue(const Queue &src);
 
         // Destructor
         ~Queue();
@@ -47,7 +49,7 @@ class Queue {
         // Time Efficiency: O(n)
         // https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Making_New_Friends
         // https://www.youtube.com/watch?v=POa_V15je8Y
-        friend std::ostream &operator<< (std::ostream&os, const Queue<ElementType>&q)
+        friend std::ostream &operator<< (std::ostream&os, Queue<ElementType> const &q)
         {
             // If the queue is empty, print "{}"
             if (q.isEmpty())

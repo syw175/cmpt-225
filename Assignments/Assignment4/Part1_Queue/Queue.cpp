@@ -9,10 +9,6 @@
  * Date: Last modified: November 2022
  */
 
-// QUESTIONS TO ASK:
-// PUBLIC INTERFACE: WHAT IS VISIBLE FOR CLIENT CODE... CAN STILL ADD MY OWN METHODS/MEMBERS FOR TEST
-// COPY CONSTRUCTOR? MAYBE
-
 #include <iostream>
 #include <ostream>
 #include "EmptyDataCollectionException.h"
@@ -21,6 +17,26 @@
 template <class ElementType>
 // Default constructor
 Queue<ElementType>::Queue() {}
+
+// Copy constructor
+template <class ElementType>
+Queue<ElementType>::Queue(const Queue<ElementType> &src)
+{
+    // If the source queue is empty, do nothing
+    if (src.isEmpty())
+        return;
+    // If the source queue is not empty, copy the elements
+    else
+    {
+        // Start at the head of the source queue
+        Node *current = src.head;
+        while (current != nullptr)
+        {
+            enqueue(current->data);
+            current = current->next;
+        }
+    }
+}
 
 // Destructor
 template <class ElementType>
@@ -37,9 +53,7 @@ Queue<ElementType>::~Queue()
 template <class ElementType>
 bool Queue<ElementType>::isEmpty() const
 {
-    // Check w/ TAs or ANNE
-    // return elementCount == 0;
-    return head == nullptr && tail == nullptr;
+    return head == nullptr;
 }
 
 // Description: Inserts newElement at the "back" of this Queue
@@ -68,7 +82,6 @@ bool Queue<ElementType>::enqueue(ElementType &newElement)
         // Set the tail to the new node
         tail = newNode;
     }
-    elementCount++;
     return true;
 }
 
@@ -85,28 +98,21 @@ void Queue<ElementType>::dequeue()
         throw EmptyDataCollectionException("Cannot dequeue from an empty Queue");
 
     // Case where queue only has 1 element
-    if (elementCount == 1)
+    if (head == tail)
     {
+        // Set head and tail to nullptr
         delete head;
         head = nullptr;
         tail = nullptr;
     }
-    // Case where queue has 2 elements
-    else if (elementCount == 2)
-    {
-        delete head;
-        head = tail;
-        head->prev = nullptr;
-    }
-    // Case where queue has 3 or more elements
+    // Case where queue has more than 1 element
     else
     {
-        Node *tmp = head->next;
-        delete head;
-        head = tmp;
-        head->prev = nullptr;
+        // Set the head to the next node and delete the old head
+        Node *oldHead = head;
+        head = head->next;
+        delete oldHead;
     }
-    elementCount--;
     return;
 }
 
