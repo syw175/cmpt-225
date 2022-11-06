@@ -11,7 +11,7 @@
  */  
 
 #include <iostream>
-#include "BinaryHeap.h"  // Header file
+#include "BinaryHeap.h"
 
 using std::cout;
 using std::endl;
