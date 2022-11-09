@@ -1,9 +1,9 @@
 /* 
  * BinaryHeap.h
  *
- * Description: ____________ Binary Heap ADT class.
+ * Description: Minimum Binary Heap ADT class.
  *
- * Class Invariant:  Always a ____________ Binary Heap.
+ * Class Invariant:  Always a minimum Binary Heap. The parent's value is always less than the child's value.
  * 
  * Author: Steven Wong
  * Last Modification: November 2022
@@ -17,14 +17,23 @@ template <class ElementType>
 class BinaryHeap
 {
     private:
-        ElementType *elements; // Array of elements in the heap
+        static const unsigned int INITIAL_CAPACITY = 10; // Initial capacity of the array
+        ElementType *heap; // Array of elements in the heap
         unsigned int elementCount; // Number of elements in the heap
         unsigned int capacity; // Current capacity of the heap array
 
-        // Utility method
-        // Description: Recursively put the array back into a ____________ Binary Heap.
-        void reHeapDown(unsigned int indexOfRoot);
+        // Do I need these?
+        unsigned int root;
+        unsigned int indexOfBottom;
 
+        // Description: Recursively put the array back into a Minimum Binary Heap.
+        void reHeapDown(unsigned int index);
+
+        // Description: Recursively put the array back into a Minimum Binary Heap.
+        void reHeapUp(unsigned int index);
+
+        // Description: Swap the values of two elements in the array.
+        void swap(unsigned int index1, unsigned int index2);
 
     public:
         // Description: Default Constructor
@@ -45,18 +54,24 @@ class BinaryHeap
         // Time Efficiency: O(log2 n)
         bool insert(ElementType &newElement);
 
-        // Description:
+        // Description: Remove the element with the lowest value in the BinaryHeap.
         // Precondition: BinaryHeap is not empty.
         // Exception: Throws EmptyDataCollectionException if BinaryHeap is empty.
         // Time Efficiency: O(log2 n)
         void remove();
 
-        // Description:
+        // Description: Retrieve the element with the lowest value in the BinaryHeap.
         // Precondition: BinaryHeap is not empty.
         // Postcondition: The BinaryHeap is unchanged.
         // Exceptions: Throws EmptyDataCollectionException if BinaryHeap is empty.
         // Time Efficiency: O(1)
         ElementType &retrieve() const;
+
+        // For testing purposes only.
+        // Description: Prints a string representation of the BinaryHeap.
+        // Postcondition: The BinaryHeap is unchanged.
+        // Time Efficiency: O(n)
+        void print() const;
 };
 #include "BinaryHeap.cpp"
 #endif
