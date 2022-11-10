@@ -13,18 +13,20 @@
 #ifndef BINARYHEAP_H
 #define BINARYHEAP_H
 
+#include <iostream>
+#include <cmath>
+#include "EmptyDataCollectionException.h"
+
 template <class ElementType>
 class BinaryHeap
 {
     private:
-        static const unsigned int INITIAL_CAPACITY = 10; // Initial capacity of the array
+        static const unsigned int INITIAL_CAPACITY = 10;
+        static const unsigned int ROOT = 0;
+
         ElementType *heap; // Array of elements in the heap
         unsigned int elementCount; // Number of elements in the heap
         unsigned int capacity; // Current capacity of the heap array
-
-        // Do I need these?
-        unsigned int root;
-        unsigned int indexOfBottom;
 
         // Description: Recursively put the array back into a Minimum Binary Heap.
         void reHeapDown(unsigned int index);
@@ -34,6 +36,9 @@ class BinaryHeap
 
         // Description: Swap the values of two elements in the array.
         void swap(unsigned int index1, unsigned int index2);
+
+        // Description: Expanding the size of an array that is full
+        void expand(int newSize);
 
     public:
         // Description: Default Constructor

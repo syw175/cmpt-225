@@ -20,7 +20,9 @@ using std::endl;
 template <class ElementType>
 BinaryHeap<ElementType>::BinaryHeap()
 {
-
+   heap = new ElementType[INITIAL_CAPACITY];
+   capacity = INITIAL_CAPACITY;
+   elementCount = 0;
 }
 
 // Copy Constructor
@@ -44,7 +46,7 @@ BinaryHeap<ElementType>::~BinaryHeap()
 template <class ElementType>
 unsigned int BinaryHeap<ElementType>::getElementCount() const
 {
-
+   return elementCount;
 }
 
 // Description: Insert newElement in the BinaryHeap, return true if successful.
@@ -73,7 +75,9 @@ void BinaryHeap<ElementType>::remove()
 template <class ElementType>
 ElementType &BinaryHeap<ElementType>::retrieve() const
 {
-
+   if (getElementCount() == 0)
+      throw EmptyDataCollectionException("Retrieve() method called with an empty Binary Heap");
+   return heap[ROOT];
 }
 
 // For testing purposes only.
@@ -84,4 +88,43 @@ template <class ElementType>
 void BinaryHeap<ElementType>::print() const
 {
    // Print out the heap array.
+   if (getElementCount() == 0)
+      cout << "{}" << endl;
+   else
+   {
+      // Maybe?
+      cout << "{";
+      for (unsigned int i = 0; i < getElementCount(); i++)
+      {
+         cout << heap[i] << endl;
+      }
+   }
+}
+
+// Description: Recursively put the array back into a Minimum Binary Heap.
+template <class ElementType>
+void reHeapDown(unsigned int index)
+{
+
+}
+
+// Description: Recursively put the array back into a Minimum Binary Heap.
+template <class ElementType>
+void reHeapUp(unsigned int index)
+{
+
+}
+
+// Description: Swap the values of two elements in the array.
+template <class ElementType>
+void swap(unsigned int index1, unsigned int index2)
+{
+
+}
+
+// Description: Expanding the size of an array that is full
+template <class ElementType>
+void expand(int newSize)
+{
+
 }
