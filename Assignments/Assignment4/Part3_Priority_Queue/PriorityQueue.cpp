@@ -22,7 +22,7 @@ PriorityQueue<ElementType>::PriorityQueue()
 template <class ElementType>
 PriorityQueue<ElementType>::PriorityQueue(const PriorityQueue<ElementType> &q)
 {
-
+    this->priorityQueue = new BinaryHeap<ElementType>(q->priorityQueue);
 }
 
 // Destructor
@@ -60,14 +60,11 @@ bool PriorityQueue<ElementType>::enqueue(ElementType &newElement)
 template <class ElementType>
 void PriorityQueue<ElementType>::dequeue()
 {
-    try
-    {
-        priorityQueue->remove();
-    }
-    catch(EmptyDataCollectionException &e)
-    {
+    // The priority queue must NOT be empty to remove the next element
+    if (isEmpty())
         throw EmptyDataCollectionException("Dequeue() method called with an empty Priority Queue");
-    }
+
+    priorityQueue->remove();
 }
 
 // Description: Returns (but does not remove) the element with the next 
@@ -79,14 +76,11 @@ void PriorityQueue<ElementType>::dequeue()
 template <class ElementType>
 ElementType& PriorityQueue<ElementType>::peek() const
 {
-    try
-    {
-        priorityQueue->retrieve();
-    }
-    catch(EmptyDataCollectionException &e)
-    {
+    // The priority queue must NOT be empty to peek at the next element
+    if (isEmpty())
         throw EmptyDataCollectionException("Peek() method called with an empty Priority Queue");
-    }
+
+    priorityQueue->retrieve();
 }
 
 // Description: Prints all elements in the priority queue for testing purposes.
@@ -97,8 +91,9 @@ ElementType& PriorityQueue<ElementType>::peek() const
 template <class ElementType>
 void PriorityQueue<ElementType>::printPriorityQueue() const
 {
-    if (priorityQueue->getElementCount() == 0)
+    // The priority queue must NOT be empty to print the Priority Queue
+    if (isEmpty())
         throw EmptyDataCollectionException("PrintPriorityQueue() method called with an empty Priority Queue");
-    else
-        priorityQueue->print();
+    
+    priorityQueue->print();
 }
