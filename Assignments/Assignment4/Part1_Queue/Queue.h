@@ -9,7 +9,9 @@
  * Date: Last modified: November 2022
  */
 
+#include <iostream>
 #include <ostream>
+#include "EmptyDataCollectionException.h"
 
 #ifndef QUEUE_H
 #define QUEUE_H
@@ -49,29 +51,29 @@ class Queue {
         // Time Efficiency: O(n)
         // https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Making_New_Friends
         // https://www.youtube.com/watch?v=POa_V15je8Y
-        friend std::ostream &operator<< (std::ostream&os, Queue<ElementType> const &q)
-        {
-            // If the queue is empty, print "{}"
-            if (q.isEmpty())
-                os << "{}";
-            // If the queue is not empty, print "{element1, element2, ...}"
-            else
-            {
-                os << "{";
-                Node *current = q.head;
-                // Loop through queue and separate elements with a comma
-                while (current != nullptr)
-                {
-                    os << current->data;
-                    if (current->next != nullptr)
-                        os << ", ";
-                    // Move to next node
-                    current = current->next;
-                }
-                os << "}";
-            }
-            return os;
-        }
+        // friend std::ostream &operator<< (std::ostream&os, Queue<ElementType> const &q)
+        // {
+        //     // If the queue is empty, print "{}"
+        //     if (q.isEmpty())
+        //         os << "{}";
+        //     // If the queue is not empty, print "{element1, element2, ...}"
+        //     else
+        //     {
+        //         os << "{";
+        //         Node *current = q.head;
+        //         // Loop through queue and separate elements with a comma
+        //         while (current != nullptr)
+        //         {
+        //             os << current->data;
+        //             if (current->next != nullptr)
+        //                 os << ", ";
+        //             // Move to next node
+        //             current = current->next;
+        //         }
+        //         os << "}";
+        //     }
+        //     return os;
+        // }
 
         // Description: Returns true if this Queue is empty, otherwise false.
         // Postcondition: This Queue is unchanged by this operation.
@@ -98,6 +100,11 @@ class Queue {
         // Exception: Throws EmptyDataCollectionException if this Queue is empty.
         // Time Efficiency: O(1)
         ElementType &peek() const;
+
+        // Description: Prints out the elements in this Queue for TESTING PURPOSES
+        // Postcondition: This Queue is unchanged by this operation.
+        // Time Efficiency: O(n)
+        void print() const;
 };
 #include "Queue.cpp"
 #endif

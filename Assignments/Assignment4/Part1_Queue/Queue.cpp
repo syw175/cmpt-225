@@ -9,9 +9,6 @@
  * Date: Last modified: November 2022
  */
 
-#include <iostream>
-#include <ostream>
-#include "EmptyDataCollectionException.h"
 #include "Queue.h"
 
 template <class ElementType>
@@ -131,4 +128,32 @@ ElementType& Queue<ElementType>::peek() const
 
     // Return the element at the front of the Queue
     return head->data;
+}
+
+// Description: Prints the contents of "this" Queue to the console window.
+// Postcondition: This Queue is unchanged by this operation.
+// Time Efficiency: O(n)
+template <class ElementType>
+void Queue<ElementType>::print() const
+{
+    // If the queue is empty, print {}
+    if (isEmpty())
+        std::cout << "{}" << std::endl;
+    // If the queue is not empty, print the elements
+    else
+    {
+        // Start at the head of the queue
+        Node *current = head;
+        std::cout << "{";
+        while (current != nullptr)
+        {
+            std::cout << current->data;
+            // If the current node is not the tail, print a comma
+            if (current != tail)
+                std::cout << ", ";
+            current = current->next;
+        }
+        std::cout << "}" << std::endl;
+    }
+    return;
 }
