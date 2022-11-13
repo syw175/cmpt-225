@@ -26,7 +26,6 @@ PriorityQueue<ElementType>::PriorityQueue(const PriorityQueue<ElementType> &q)
 }
 
 // Destructor
-// Why does this cause a compiler error? 
 template <class ElementType>
 PriorityQueue<ElementType>::~PriorityQueue()
 {

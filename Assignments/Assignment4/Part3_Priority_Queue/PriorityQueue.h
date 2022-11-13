@@ -29,9 +29,9 @@ class PriorityQueue
         PriorityQueue();
 
         // Copy Constructor
-        PriorityQueue(const PriorityQueue<ElementType> &q)
+        PriorityQueue(const PriorityQueue<ElementType> &q);
 
-        // Destructor Necessary or no?
+        // Destructor
         ~PriorityQueue();
 
         // Description: Returns true if this Priority Queue is empty, otherwise false.
