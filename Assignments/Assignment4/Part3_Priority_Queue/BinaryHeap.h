@@ -14,7 +14,6 @@
 #define BINARYHEAP_H
 
 #include <iostream>
-#include <cmath>
 #include "EmptyDataCollectionException.h"
 
 template <class ElementType>
@@ -30,15 +29,18 @@ class BinaryHeap
 
         // Description: Recursively put the array back into a Minimum Binary Heap.
         void reHeapDown(unsigned int index);
-
-        // Description: Recursively put the array back into a Minimum Binary Heap.
         void reHeapUp(unsigned int index);
 
         // Description: Swap the values of two elements in the array.
         void swap(unsigned int index1, unsigned int index2);
 
-        // Description: Expanding the size of an array that is full
-        void expand(int newSize);
+        // Description: Doubles the size of our array based heap
+        bool expandHeap();
+
+        // Private helper functions
+        unsigned int leftChildIndex(unsigned int i) { return 2 * i + 1; }
+        unsigned int rightChildIndex(unsigned int i) { return 2 * i + 2; }
+        unsigned int parentIndex(unsigned int i) { return (i - 1) / 2; }
 
     public:
         // Description: Default Constructor
@@ -50,6 +52,7 @@ class BinaryHeap
         // Description: Destructor
         ~BinaryHeap();
 
+        // *** Public Interface ***
         // Description: Returns the number of elements in the BinaryHeap.
         // Postcondition: BinaryHeap is unchanged.
         // Time Efficiency: O(1)
@@ -77,6 +80,7 @@ class BinaryHeap
         // Postcondition: The BinaryHeap is unchanged.
         // Time Efficiency: O(n)
         void print() const;
+        // *** End Public Interface ***
 };
 #include "BinaryHeap.cpp"
 #endif
