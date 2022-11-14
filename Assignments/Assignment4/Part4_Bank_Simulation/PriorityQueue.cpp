@@ -79,7 +79,7 @@ ElementType& PriorityQueue<ElementType>::peek() const
     if (isEmpty())
         throw EmptyDataCollectionException("Peek() method called with an empty Priority Queue");
 
-    priorityQueue->retrieve();
+    return priorityQueue->retrieve();
 }
 
 // Description: Prints all elements in the priority queue for testing purposes.

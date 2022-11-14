@@ -144,9 +144,9 @@ void BinaryHeap<ElementType>::reHeapDown(unsigned int index)
    unsigned int indexOfMin = index;
 
    // Get the index of the minimum child among the parent and its children
-   if (indexOfLeftChild < getElementCount() && heap[indexOfLeftChild] < heap[indexOfMin])
+   if (indexOfLeftChild < getElementCount() && heap[indexOfLeftChild] <= heap[indexOfMin])
       indexOfMin = indexOfLeftChild;
-   if (indexOfRightChild < getElementCount() && heap[indexOfRightChild] < heap[indexOfMin])
+   if (indexOfRightChild < getElementCount() && heap[indexOfRightChild] <= heap[indexOfMin])
       indexOfMin = indexOfRightChild;
 
    // If the minimum index is not the parent, swap the parent with the minimum child, continue reHeapDown
@@ -168,9 +168,10 @@ void BinaryHeap<ElementType>::reHeapUp(unsigned int index)
    unsigned int indexOfParent = parentIndex(index);
 
    // If the parent is greater than the child, swap them
-   if (heap[indexOfParent] > heap[index])
+   // We only have the <= operator defined for the ElementType, so we use that
+   if (heap[index] <= heap[indexOfParent])
    {
-      swap(indexOfParent, index);
+      swap(index, indexOfParent);
       reHeapUp(indexOfParent);
    }
    return;

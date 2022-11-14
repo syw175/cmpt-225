@@ -21,7 +21,7 @@ class PriorityQueue
 {
     private:
         // Underlying data structure of our PriorityQueue
-        BinaryHeap<ElementType> priorityQueue;
+        BinaryHeap<ElementType> *priorityQueue;
 
     /******* Start of Priority Queue Public Interface *******/
     public:
