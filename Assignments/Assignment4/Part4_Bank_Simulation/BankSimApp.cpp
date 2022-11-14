@@ -135,6 +135,6 @@ int main(int argc, char** argv)
     cout << "Simulation Ends" << endl << endl;
     cout << "Final Statistics:" << endl << endl;
     cout << "\tTotal number of people processed: " << people << endl;
-    cout << "\tAverage amount of time spent waiting: " << (float)cumulativeTime / people << endl;
+    cout << "\tAverage amount of time spent waiting: " << (float)cumulativeTime / people << endl << endl;
     return 0;
 }
