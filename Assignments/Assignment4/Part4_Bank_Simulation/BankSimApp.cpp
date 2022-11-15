@@ -76,7 +76,7 @@ void processArrival(Event &arrival, PriorityQueue<Event> &eventQueue, Queue<Even
     // If the teller is available, create a departure event and enqueue it
     if (tellerLine.isEmpty() && tellerAvail)
     {
-        Event departureEvent('D', arrival.getTime() + arrival.getLength(), 0);
+        Event departureEvent('D', arrival.getTime() + arrival.getLength());
         eventQueue.enqueue(departureEvent);
         tellerAvail = false;
     }
@@ -98,9 +98,7 @@ void processDeparture(Event &departure, PriorityQueue<Event> &eventQueue, Queue<
     {
         // Customer at front of line begins transaction
         Event customer = tellerLine.peek();
-        cout << "Values going in: " << departure.getTime() << " " << customer.getTime() << endl;
         cumulativeTime += (departure.getTime() - customer.getTime());
-        cout << "Cumulative time spent waiting: " << cumulativeTime << endl;
 
         tellerLine.dequeue();
         Event nextDeparture('D', departure.getTime() + customer.getLength());
