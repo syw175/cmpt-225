@@ -12,6 +12,8 @@
 #include "EmptyDataCollectionException.h"
 #include "Queue.h"
 #include "PriorityQueue.h"
+#include <iomanip>
+
 
 using std::cout;
 using std::cin;
@@ -97,7 +99,7 @@ int main(int argc, char* argv[])
 // Process an arrival event
 void processArrival(Event &arrival, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, int &currentTime, bool &tellerAvail)
 {
-    cout << "Processing an arrival event at time: " << currentTime << endl;
+    cout << "Processing an arrival event at time: " << std::setw(5) << std::right << currentTime << endl;
     // Dequeue the arrival event
     eventQueue.dequeue();
 
@@ -115,7 +117,7 @@ void processArrival(Event &arrival, PriorityQueue<Event> &eventQueue, Queue<Even
 // Process a departure event
 void processDeparture(Event &departure, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, int &currentTime, bool &tellerAvail)
 {
-    cout << "Processing a departure event at time: " << currentTime << endl;
+    cout << "Processing a departure event at time: " << std::setw(4) << std::right << currentTime << endl;
     // Dequeue the departure event
     eventQueue.dequeue();
 
