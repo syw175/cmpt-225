@@ -18,8 +18,8 @@ using std::cin;
 using std::endl;
 
 // Function prototypes
-void processArrival(Event &arrival, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, bool &tellerAvailable);
-void processDeparture(Event &departure, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, bool &tellerAvailable, int &cumulativeTime);
+void processArrival(Event &arrival, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, int &currentTime, bool &tellerAvailable);
+void processDeparture(Event &departure, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, int &currentTime, bool &tellerAvailable);
 
 int main(int argc, char* argv[])
 {
@@ -28,7 +28,11 @@ int main(int argc, char* argv[])
     PriorityQueue<Event> eventQueue;
     bool tellerAvail = true;
     int people = 0;
-    int cumulativeTime = 0;
+    int currentTime = 0;
+    int prevEvent = 0;
+    int currentWaitTime = 0;
+    int processed = 0;
+    int totalWaitTime = 0;
 
     cout << "Simulation Begins" << endl;
     // Read in events with command line input
@@ -46,50 +50,72 @@ int main(int argc, char* argv[])
         people++;
     }
 
+    // Get the first currentTime
+    if (!eventQueue.isEmpty())
+        prevEvent = eventQueue.peek().getTime() + eventQueue.peek().getLength();
+
     // While there remains events to be processed in the event queue...
     while (!eventQueue.isEmpty())
     {
         // Get the next highest priority event and get current time
         Event nextEvent = eventQueue.peek();
 
+        // If event is not the first event, update the current time
+        if (processed != 0)
+        {
+            // Calculate the current wait time
+            currentWaitTime =  prevEvent - nextEvent.getTime();
+            // If the current wait time is negative, set it to 0
+            if (currentWaitTime <= 0)
+                currentWaitTime = 0;
+            prevEvent = nextEvent.getTime() + nextEvent.getLength() + currentWaitTime;
+        }
+        // Increment the number of processed events
+        processed++;
+
+        // Update our current time
+        currentTime = nextEvent.getTime() + currentWaitTime;
+
         // Process the event
         if (nextEvent.isArrival())
-            processArrival(nextEvent, eventQueue, tellerLine, tellerAvail);
+        {
+            // Total wait time is the sum of all wait times
+            totalWaitTime += currentWaitTime;
+            processArrival(nextEvent, eventQueue, tellerLine, currentTime, tellerAvail);
+        }
         else
-            processDeparture(nextEvent, eventQueue, tellerLine, tellerAvail, cumulativeTime);
+            processDeparture(nextEvent, eventQueue, tellerLine, currentTime, tellerAvail);
     }
 
     cout << "Simulation Ends" << endl << endl;
     cout << "Final Statistics:" << endl << endl;
     cout << "\tTotal number of people processed: " << people << endl;
-    cout << "\tAverage amount of time spent waiting: " << (float)cumulativeTime / people << endl << endl;
+    cout << "\tAverage amount of time spent waiting: " << (float)totalWaitTime / people << endl << endl;
     return 0;
 }
 
 // Process an arrival event
-void processArrival(Event &arrival, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, bool &tellerAvail)
+void processArrival(Event &arrival, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, int &currentTime, bool &tellerAvail)
 {
-    cout << "Processing an arrival event at time: " << arrival.getTime() << endl;
+    cout << "Processing an arrival event at time: " << currentTime << endl;
     // Dequeue the arrival event
     eventQueue.dequeue();
 
     // If the teller is available, create a departure event and enqueue it
     if (tellerLine.isEmpty() && tellerAvail)
     {
-        Event departureEvent('D', arrival.getTime() + arrival.getLength());
+        Event departureEvent('D', currentTime + arrival.getLength());
         eventQueue.enqueue(departureEvent);
         tellerAvail = false;
     }
     else
-    {
         tellerLine.enqueue(arrival);
-    }
 }
 
 // Process a departure event
-void processDeparture(Event &departure, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, bool &tellerAvail, int &cumulativeTime)
+void processDeparture(Event &departure, PriorityQueue<Event> &eventQueue, Queue<Event> &tellerLine, int &currentTime, bool &tellerAvail)
 {
-    cout << "Processing a departure event at time: " << departure.getTime() << endl;
+    cout << "Processing a departure event at time: " << currentTime << endl;
     // Dequeue the departure event
     eventQueue.dequeue();
 
@@ -98,10 +124,8 @@ void processDeparture(Event &departure, PriorityQueue<Event> &eventQueue, Queue<
     {
         // Customer at front of line begins transaction
         Event customer = tellerLine.peek();
-        cumulativeTime += (departure.getTime() - customer.getTime());
-
         tellerLine.dequeue();
-        Event nextDeparture('D', departure.getTime() + customer.getLength());
+        Event nextDeparture('D', currentTime + customer.getLength());
         eventQueue.enqueue(nextDeparture);
     }
     else
