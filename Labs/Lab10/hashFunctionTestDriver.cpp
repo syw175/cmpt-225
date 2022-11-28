@@ -40,11 +40,9 @@ void createRandomTestData( unsigned int size, unsigned int digitCount ) {
 //              "modular arithmetic" in which we use the modulo 
 //              operator to produce the "hash index".
 unsigned int hashModulo( string indexingKey ) {
-
   // stoul -> string-to-unsigned int function
   // "hashCode" is an intermediate result
   unsigned int hashCode = stoul(indexingKey);
- 
   return hashCode % hashDataCollection::SIZE;
 }
 
@@ -54,13 +52,15 @@ unsigned int hashModulo( string indexingKey ) {
 //              in which we partition the indexing key into parts and combine 
 //              these parts using arithmetic operation(s).
 unsigned int hashFoldShift( string indexingKey ) {
+  // Break up the 16 digit indexingKey into 4*4 digit numbers.
+  unsigned int num1 = stoul(indexingKey.substr(0,4));
+  unsigned int num2 = stoul(indexingKey.substr(4,4));
+  unsigned int num3 = stoul(indexingKey.substr(8,4));
+  unsigned int num4 = stoul(indexingKey.substr(12,4));
 
-  // Implements the Folding -> shift hash function.
-  
   // "hashCode" is an intermediate result
-  unsigned int hashCode = 0;
-  	
-  return hashCode;
+  unsigned int hashCode = num1 + num2 + num3 + num4;
+  return hashCode % hashDataCollection::SIZE;
 }
 
 // For you to do:
@@ -70,13 +70,32 @@ unsigned int hashFoldShift( string indexingKey ) {
 //              these parts using arithmetic operation(s). In this type of folding,
 //              the alternate parts (2nd, 4th ... parts) are reversed (i.e., flipped).
 unsigned int hashFoldBoundary( string indexingKey ) {
+  // Break up the 16 digit indexingKey into 4*4 digit numbers with numbers 2 and 4 reversed.
+  unsigned int num1 = stoul(indexingKey.substr(0,4));
+  unsigned int num2 = stoul(indexingKey.substr(4,4));
+  unsigned int num3 = stoul(indexingKey.substr(8,4));
+  unsigned int num4 = stoul(indexingKey.substr(12,4));
 
-  // Implements the Folding -> boundary hash function.
+  // Reverse num2 and num4
+  int num2rev = 0;
+  while (num2 != 0)
+  {
+    num2rev = num2rev * 10;
+    num2rev = num2rev + num2 % 10;
+    num2 = num2 / 10;
+  }
+
+  int num4rev = 0;
+  while (num4 != 0)
+  {
+    num4rev = num4rev * 10;
+    num4rev = num4rev + num4 % 10;
+    num4 = num4 / 10;
+  }
 
   // "hashCode" is an intermediate result
-  unsigned int hashCode = 0;
-  	
-  return hashCode;
+  unsigned int hashCode = num1 + num2rev + num3 + num4rev;
+  return hashCode % hashDataCollection::SIZE;
 }
 
 
@@ -84,6 +103,7 @@ int main(int argc, char *argv[]) {
 
   hashDataCollection * testingModulo = new hashDataCollection(hashModulo);
   string anIndexingKey = "";
+  // hashFoldBoundary = hashModulo;
   
   // If you enter the command: ./hftd 100 16
   // createRandomTestData( 100, 16 ) is called

@@ -90,6 +90,8 @@ void hashDataCollection::histogram() {
   return;
 }
  
+
+
 // Description: Prints various stats.	
 void hashDataCollection::printStats() {
   unsigned int emptyCell = 0;
@@ -111,7 +113,7 @@ void hashDataCollection::printStats() {
     
   cout << endl << "There are " << emptyCell << " empty cells." << endl;
   cout << oneProbe << " elements inserted without collisions." << endl;
-  cout << "There were " << oneProbe << " collisions." << endl;
+  cout << "There were " << moreProbes << " collisions." << endl;
   
   return;
 }
