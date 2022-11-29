@@ -29,6 +29,12 @@ List::List(unsigned int (*hFcn)(string))
 // Description: Destruct a List object, releasing heap-allocated memory.
 List::~List()
 {
+    // Iterate through the hashTable and delete each element
+    for (int i = 0; i < CAPACITY; i++)
+    {
+        if (hashTable[i] != nullptr)
+            delete hashTable[i];
+    }
     delete[] hashTable;
     hashTable = nullptr;
 }
