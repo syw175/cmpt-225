@@ -60,30 +60,32 @@ void List::insert(Member &newElement)
     {
         hashTable = new Member *[CAPACITY];
         if (hashTable == nullptr)
-            throw UnableToInsertException("Unable to insert newElement in the List.");
+            throw UnableToInsertException("Unable to insert newElement in the List: Memory Allocation Failed.");
         // Initialize all elements in hashTable to nullptr with memset
         memset(hashTable, 0, CAPACITY * sizeof(Member *));
     }
 
-    // Check if newElement already exists in the List (hashTable) and throw exception if it does
-    if (getElementCount() != 0)
+    // Check if the hashTable is full
+    if (getElementCount() == CAPACITY)
+        throw UnableToInsertException("Unable to insert newElement in the List: Capacity Reached.");
+    // Otherwise insert the element into our List unless it is already in List
+    else
     {
-        try 
+        // Get the index of the element to be inserted
+        unsigned int index = hashFcn(newElement.getPhone());
+
+        while (hashTable[index] != nullptr)
         {
-            search(newElement);
-        }
-        catch (ElementDoesNotExistException &e)
-        {
-            // Calculate the index of the hashTable where we want to insert newElement
-            unsigned int index = hashFcn(newElement.getPhone());
-            // Linear probing
-            while (hashTable[index] != nullptr)
-            {
+            // If the element is already in the List, throw an exception
+            if (*hashTable[index] == newElement)
+                throw ElementAlreadyExistsException("Unable to insert newElement in the List: Element already exists.");
+            // Otherwise, increment the index and check the next element
+            else
                 index = (index + 1) % CAPACITY;
-            }
-            // Insert newElement into the hashTable
-            hashTable[index] = &newElement;
         }
+        // Insert the element into the List
+        hashTable[index] = &newElement;
+        elementCount++;
     }
 }
 
@@ -94,16 +96,28 @@ void List::insert(Member &newElement)
 Member* List::search(Member &target) const
 {
     Member *result = nullptr;
+    unsigned int index = hashFcn(target.getPhone());
     // Check if List is empty
     if (getElementCount() == 0)
         throw EmptyDataCollectionException("List is empty.");
 
-    // Iterate through the hashTable and search for target
-    for (int i = 0; i < CAPACITY; i++)
+    // Check if target exists in the List
+    if (hashTable[index] == nullptr)
+        throw ElementDoesNotExistException("Element does not exist in the List.");
+    else
     {
-        if (hashTable[i] != nullptr && *hashTable[i] == target)
-            result = hashTable[i];
+        // Linear probing
+        while (hashTable[index] != nullptr)
+        {
+            if (*hashTable[index] == target)
+            {
+                result = hashTable[index];
+                break;
+            }
+            index = (index + 1) % CAPACITY;
+        }
     }
+
     // At this point, result is not contained in the List, throw exception
     if (result == nullptr)
         throw ElementDoesNotExistException("Element does not exist in the List.");
