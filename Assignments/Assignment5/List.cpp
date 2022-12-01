@@ -13,6 +13,7 @@
  */
 
 #include <iostream>
+#include <cstring>
 #include "List.h"
 #include "EmptyDataCollectionException.h"
 #include "ElementAlreadyExistsException.h"
