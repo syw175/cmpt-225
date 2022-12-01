@@ -102,6 +102,8 @@ unsigned int hashFoldBoundary( string indexingKey ) {
 int main(int argc, char *argv[]) {
 
   hashDataCollection * testingModulo = new hashDataCollection(hashModulo);
+  hashDataCollection *testingFoldShift = new hashDataCollection(hashFoldShift);
+  hashDataCollection *testingHashFoldBoundary = new hashDataCollection(hashFoldBoundary);
   string anIndexingKey = "";
   // hashFoldBoundary = hashModulo;
   
@@ -140,7 +142,17 @@ int main(int argc, char *argv[]) {
         cout << "***Experimenting with the modulo hash function***" << endl;
         testingModulo->print();
         testingModulo->histogram();
-        testingModulo->printStats();                
+        testingModulo->printStats();      
+
+        cout << "***Experimenting with the fold shift function***" << endl;
+	      testingFoldShift->print();
+	      testingFoldShift->histogram();
+	      testingFoldShift->printStats();
+
+	      cout << "***Experimenting with the boundary fold function***" << endl;
+        testingHashFoldBoundary->print();
+	      testingHashFoldBoundary->histogram();
+	      testingHashFoldBoundary->printStats();	          
 	
       }
       else 
