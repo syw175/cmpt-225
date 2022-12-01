@@ -135,7 +135,7 @@ void List::printList() const
     for (unsigned int i = 0; i < CAPACITY; i++)
     {
         if (hashTable[i] != nullptr)
-            cout << *hashTable[i];
+            cout << i << ": " << *hashTable[i];
     }
     cout << "}" << endl;
 }

@@ -33,6 +33,10 @@ int main(void)
     Member *member5 = new Member("Steven", "111-111-1111", "wonderlad@gmail.com", "1234567890123456");
     Member *member6 = new Member("Fred Zhang", "604-354-4759", "iamFredzhang@gmail.com", "1234567890123456");
 
+    // Few members that result in the same hash value (modulo 103) as member1 with different phone numbers
+
+
+
     // Instantiate a List object with hashSimpleModulo as the hashing function
     List *test = new List(hashSimpleModulo);
 
@@ -137,6 +141,8 @@ int main(void)
 // Simple modulo hashing function
 unsigned int hashSimpleModulo(string phone)
 {
-    unsigned int hashcode = stoul(phone);
-    return hashcode % List::CAPACITY;    
+    unsigned int firstThree = stoul(phone.substr(0, 3));
+    unsigned int secondThree = stoul(phone.substr(4, 3));
+    unsigned int lastFour = stoul(phone.substr(8, 4));
+    return (firstThree + secondThree + lastFour) % List::CAPACITY;
 }

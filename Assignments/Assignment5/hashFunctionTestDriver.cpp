@@ -14,6 +14,10 @@
 #include <string>
 #include "List.h"
 #include "Member.h"
+#include "ElementAlreadyExistsException.h"
+#include "ElementDoesNotExistException.h"
+#include "EmptyDataCollectionException.h"
+#include "UnableToInsertException.h"
 
 // Function prototypes: 
 // Let's record our results as comments above each hash function. More specifically
@@ -64,16 +68,18 @@ int main(int argc, char *argv[])
 // A simple modular arithmetic hashing method
 unsigned int hashSimpleModulo(string phone)
 {
-    unsigned int hashcode = stoul(phone);
-    return hashcode % List::CAPACITY;
+    unsigned int firstThree = stoul(phone.substr(0, 3));
+    unsigned int secondThree = stoul(phone.substr(4, 3));
+    unsigned int lastFour = stoul(phone.substr(8, 4));
+    return (firstThree + secondThree + lastFour) % List::CAPACITY;
 }
 
 // A simple shift hashing method
 unsigned int hashSimpleShift(string phone)
 {
     unsigned int firstThree = stoul(phone.substr(0, 3));
-    unsigned int secondThree = stoul(phone.substr(3, 3));
-    unsigned int lastFour = stoul(phone.substr(6, 4));
+    unsigned int secondThree = stoul(phone.substr(4, 3));
+    unsigned int lastFour = stoul(phone.substr(8, 4));
     // Add all three components and modulo by capacity to get hashcode
     unsigned int hashcode = (firstThree + secondThree + lastFour) % List::CAPACITY;
 }
@@ -82,8 +88,8 @@ unsigned int hashSimpleShift(string phone)
 unsigned int hashBoundaryFolding(string phone)
 {
     unsigned int firstThree = stoul(phone.substr(0, 3));
-    unsigned int secondThree = stoul(phone.substr(3, 3));
-    unsigned int lastFour = stoul(phone.substr(6, 4));
+    unsigned int secondThree = stoul(phone.substr(4, 3));
+    unsigned int lastFour = stoul(phone.substr(8, 4));
 
     // Reverse first three digits and second three digits
     unsigned int reversedFirstThree = reverseDigits(firstThree);
