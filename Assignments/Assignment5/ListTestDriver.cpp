@@ -35,7 +35,8 @@ int main(void)
 
     // Few members that result in the same hash value (modulo 103) as member1 with different phone numbers
 
-
+    // Q: 7777777777 % 103 = ? 
+    // A: 7777777777 % 103 = 77
 
     // Instantiate a List object with hashSimpleModulo as the hashing function
     List *test = new List(hashSimpleModulo);
@@ -138,11 +139,13 @@ int main(void)
     delete test;
 }
 
-// Simple modulo hashing function
+// A simple shift hashing method
 unsigned int hashSimpleModulo(string phone)
 {
     unsigned int firstThree = stoul(phone.substr(0, 3));
     unsigned int secondThree = stoul(phone.substr(4, 3));
     unsigned int lastFour = stoul(phone.substr(8, 4));
-    return (firstThree + secondThree + lastFour) % List::CAPACITY;
+    // Add all three components and modulo by capacity to get hashcode
+    unsigned int hashcode = firstThree + secondThree + lastFour;
+    return hashcode % List::CAPACITY;
 }

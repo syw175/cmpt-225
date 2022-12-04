@@ -29,15 +29,17 @@ List::List(unsigned int (*hFcn)(string))
 // Destructor
 // Description: Destruct a List object, releasing heap-allocated memory.
 List::~List()
-{
-    // Iterate through the hashTable and delete each element
-    for (int i = 0; i < CAPACITY; i++)
-    {
-        if (hashTable[i] != nullptr)
-            delete hashTable[i];
-    }
-    delete[] hashTable;
-    hashTable = nullptr;
+{    
+    delete [] hashTable;
+
+
+    // // Iterate through the hashTable and delete each element
+    // for (int i = 0; i < CAPACITY; i++)
+    // {
+    //     if (hashTable[i] != nullptr)
+    //         delete hashTable[i];
+    // }
+    // delete[] hashTable;
 }
 
 // Description: Returns the total element count currently stored in List.
@@ -61,14 +63,15 @@ void List::insert(Member &newElement)
     {
         hashTable = new Member *[CAPACITY];
         if (hashTable == nullptr)
-            throw UnableToInsertException("Unable to insert newElement in the List: Memory Allocation Failed.");
-        // Initialize all elements in hashTable to nullptr with memset
-        memset(hashTable, 0, CAPACITY * sizeof(Member *));
+            throw UnableToInsertException("Insert() failed to insert newElement in the List: Memory Allocation Failed.");
+        // Initialize all elements in hashTable to nullptr
+        for (int i = 0; i < CAPACITY; i++)
+            hashTable[i] = nullptr;
     }
 
     // Check if the hashTable is full
     if (getElementCount() == CAPACITY)
-        throw UnableToInsertException("Unable to insert newElement in the List: Capacity Reached.");
+        throw UnableToInsertException("Insert() failed to insert newElement in the List: Capacity Reached.");
     // Otherwise insert the element into our List unless it is already in List
     else
     {
@@ -79,7 +82,7 @@ void List::insert(Member &newElement)
         {
             // If the element is already in the List, throw an exception
             if (*hashTable[index] == newElement)
-                throw ElementAlreadyExistsException("Unable to insert newElement in the List: Element already exists.");
+                throw ElementAlreadyExistsException("Insert() failed to insert newElement in the List: Element Already Exists.");
             // Otherwise, increment the index and check the next element
             else
                 index = (index + 1) % CAPACITY;
@@ -100,30 +103,29 @@ Member* List::search(Member &target) const
     unsigned int index = hashFcn(target.getPhone());
     // Check if List is empty
     if (getElementCount() == 0)
-        throw EmptyDataCollectionException("List is empty.");
+        throw EmptyDataCollectionException("Search() called on an empty List.");
 
-    // Check if target exists in the List
-    if (hashTable[index] == nullptr)
-        throw ElementDoesNotExistException("Element does not exist in the List.");
-    else
+    // Search for the target element using linear probing
+    while (hashTable[index] != nullptr)
     {
-        // Linear probing
-        while (hashTable[index] != nullptr)
+        // If the element is found, return a pointer to it
+        if (*hashTable[index] == target)
         {
-            if (*hashTable[index] == target)
-            {
-                result = hashTable[index];
-                break;
-            }
-            index = (index + 1) % CAPACITY;
+            result = hashTable[index];
+            break;
         }
-    }
+        // Otherwise, increment the index and check the next element
+        else
+            index = (index + 1) % CAPACITY;
 
-    // At this point, result is not contained in the List, throw exception
+        // If we have reached the end of the List and circled back to our starting index, throw an exception
+        if (index == hashFcn(target.getPhone()))
+            throw ElementDoesNotExistException("Search() called on an element that does not exist in the List.");
+    }
+    // If the element is not found, throw an exception
     if (result == nullptr)
-        throw ElementDoesNotExistException("Element does not exist in the List.");
-    
-    return result;
+        throw ElementDoesNotExistException("Search() called on an element that does not exist in the List.");
+    return result;    
 }
 
 // Description: Prints all elements stored in the List (unsorted).
