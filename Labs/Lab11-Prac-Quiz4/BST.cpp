@@ -177,16 +177,203 @@ using std::endl;
   //              Fell free to implement this method as an iterative method or
   //              as a wrapper method calling a recursive method.		
   unsigned int BST::numberOfNodes( ) const {
-  
-    // to do
-	
+    return numberOfNodesR(root);
+  }
+
+  // Description: Recursive helper method for numberOfNodes( ).
+  unsigned int BST::numberOfNodesR(BSTNode *current) const
+  {
+    if (current == nullptr) return 0;
+    return 1 + numberOfNodesR(current->left) + numberOfNodesR(current->right);
   }
 
   // Description: Returns the height of this binary search tree.
   //              Fell free to implement this method as an iterative method or
   //              as a wrapper method calling a recursive method.
   unsigned int BST::height() const {
+    return heightR(root);
+  }
 
-    // to do
+  // Description: Recursive helper method for height()
+  unsigned int BST::heightR(BSTNode *current) const
+  {
+    if (current == nullptr) return 0;
+    return 1 + std::max(heightR(current->left), heightR(current->right));
+  }
 
+  // Description: Returns the sum of all elements in the binary search tree.
+  //              Fell free to implement this method as an iterative method or
+  //              as a wrapper method calling a recursive method.
+  unsigned int BST::sumOfAllNodes() const {
+    return sumOfAllNodesR(root);
+  }
+
+  // Description: Recursive helper method for sumOfAllNodes
+  unsigned int BST::sumOfAllNodesR(BSTNode *current) const
+  {
+    if (!current) return 0;
+    return current->element + sumOfAllNodesR(current->left) + sumOfAllNodesR(current->right);   
+  }
+
+  // Description: Return the minimum element in the binary search tree.
+  int BST::findMin() const
+  {
+    // if (elementCount == 0) throw EmptyTreeException("In findMin(): tree is empty!");
+    BSTNode *current = root;
+    while (current->left != nullptr)
+    {
+      current = current->left;
+    }
+    return current->element;
+  }
+
+  // Description: Return the minimum element in the binary search tree recursively.
+  int BST::findMinR(BSTNode *current) const
+  {
+    if (current->left == nullptr) return current->element;
+    return findMinR(current->left);
+  }
+
+  // Description: Return the maximum element in the binary search tree.
+  int BST::findMax() const
+  {
+    // if (elementCount == 0) throw EmptyTreeException("In findMax(): tree is empty!");
+    BSTNode *current = root;
+    while (current->right != nullptr)
+    {
+      current = current->right;
+    }
+    return current->element;
+  }
+
+  // Description: Return the maximum element in the binary search tree recursively.
+  int BST::findMaxR(BSTNode *current) const
+  {
+    if (current->right == nullptr) return current->element;
+    return findMaxR(current->right);
+  }
+
+  // Description: Return true or false if an element is in the binary search tree.
+  bool BST::contains(int anElement) const {
+    return containsR(anElement, root);
+  }
+
+  // Description: Recursive helper method for contains( ).
+  bool BST::containsR(int anElement, BSTNode *current) const
+  {
+    if (current == nullptr) return false;
+    if (anElement == current->element) return true;
+    if (anElement < current->element) return containsR(anElement, current->left);
+    return containsR(anElement, current->right);
+  }
+
+  // Description: Return the number of leaves in the binary search tree.
+  unsigned int BST::numberOfLeaves() const {
+    return numberOfLeavesR(root);
+  }
+
+  // Description: Recursive helper method for numberOfLeaves( ).
+  unsigned int BST::numberOfLeavesR(BSTNode *current) const
+  {
+    if (current == nullptr) return 0;
+    if (current->isLeaf()) return 1;
+    return numberOfLeavesR(current->left) + numberOfLeavesR(current->right);
+  }
+
+  // Desription: Return the number of nodes at depth k.
+  int BST::numberOfNodesAtDepthK(int k) const {
+    return numberOfNodesAtDepthKR(k, root);
+  }
+
+  // Description: Recursive helper method for numberOfNodesAtDepthK( ).
+  int BST::numberOfNodesAtDepthKR(int k, BSTNode *current) const
+  {
+    if (current == nullptr) return 0;
+    if (k == 0) return 1;
+    return numberOfNodesAtDepthKR(k - 1, current->left) + numberOfNodesAtDepthKR(k - 1, current->right);
+  }
+
+  // Description: Return the number of nodes with two children.
+  int BST::numberOfNodesWithTwoChildren() const {
+    return numberOfNodesWithTwoChildrenR(root);
+  }
+
+  // Description: Recursive helper method for numberOfNodesWithTwoChildren( ).
+  int BST::numberOfNodesWithTwoChildrenR(BSTNode *current) const
+  {
+    if (current == nullptr) return 0;
+    if (current->hasLeft() && current->hasRight()) return 1 + numberOfNodesWithTwoChildrenR(current->left) + numberOfNodesWithTwoChildrenR(current->right);
+    return numberOfNodesWithTwoChildrenR(current->left) + numberOfNodesWithTwoChildrenR(current->right);
+  }
+
+  // Description: Recursively determine if the binary search tree is balanced.
+  bool BST::isBalanced() const {
+    return isBalancedR(root);
+  }
+
+  // Description: Recursive helper method for isBalanced( ).
+  bool BST::isBalancedR(BSTNode *current) const
+  {
+    if (current == nullptr) return true;
+    if (fabs(heightR(current->left) - heightR(current->right)) > 1) return false;
+    return isBalancedR(current->left) && isBalancedR(current->right);
+  }
+
+  // Description: Calculate the depth of an element in the binary search tree.
+  // This is the length of path from the root to the node containing the element.
+  int BST::depthOf(int anElement) const
+  {
+    // Assume the element is in the tree.
+    BSTNode *current = root;
+    int depth = 0;
+    while (current->element != anElement)
+    {
+      if (anElement < current->element) current = current->left;
+      else current = current->right;
+      depth++;
+    }
+    return depth;
+  }
+
+  // Description: Return the sum of all elements in a range [min, max] inclusive.
+  int BST::sumOfRange(int min, int max) const {
+    return sumOfRangeR(min, max, root);
+  }
+
+  // Description: Recursive helper method for sumOfRange( ).
+  int BST::sumOfRangeR(int min, int max, BSTNode *current) const
+  {
+    if (current == nullptr) return 0;
+    if (current->element < min) return sumOfRangeR(min, max, current->right);
+    if (current->element > max) return sumOfRangeR(min, max, current->left);
+    return current->element + sumOfRangeR(min, max, current->left) + sumOfRangeR(min, max, current->right);
+  }
+
+  // Description: Determine if a binary search tree is full
+  bool BST::isFull() const {
+    return isFullR(root);
+  }
+
+  // Description: Recursive helper method for isFull( ).
+  bool BST::isFullR(BSTNode *current) const
+  {
+    if (current == nullptr) return true;
+    if (current->isLeaf()) return true;
+    if (current->hasLeft() && current->hasRight()) return isFullR(current->left) && isFullR(current->right);
+    return false;
+  }
+
+  // Description: Determine if a binary search tree is complete
+  bool BST::isComplete() const {
+    return isCompleteR(root);
+  }
+
+  // Description: Recursive helper method for isComplete( ).
+  bool BST::isCompleteR(BSTNode *current) const
+  {
+    if (current == nullptr) return true;
+    if (current->isLeaf()) return true;
+    if (current->hasLeft() && current->hasRight()) return isCompleteR(current->left) && isCompleteR(current->right);
+    if (current->hasLeft() && !current->hasRight()) return isCompleteR(current->left);
+    return false;
   }

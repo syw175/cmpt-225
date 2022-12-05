@@ -5,13 +5,15 @@
  *              Link-based implementation.
  *              Duplicated elements are allowed.
  * 
- * Date of last modification: Nov. 2022
+ * Date of last modification: December 2022
  */
 
 #ifndef BST_H
 #define BST_H
 
 #include "UnableToInsertException.h"
+#include <algorithm> 
+#include <cmath>
 
 
 class BST {
@@ -69,6 +71,44 @@ private:
   // Description: Recursive postorder traversal of a BST in order to release heap memory allocated to BSTNode.
   void destroyR(BSTNode * current);
 
+  // Description: Recursive method to determine the number of nodes in a binary search tree.
+  unsigned int numberOfNodesR(BSTNode *current) const;
+
+  // Description: Recursive method to determine the height of a binary search tree.
+  unsigned int heightR(BSTNode *current) const;
+
+  // Description: Recursive method to find the sumOfAllNodes
+  unsigned int sumOfAllNodesR(BSTNode *current) const;
+
+  // Description: Find the minimum element in the binary search tree recursively.
+  int findMinR(BSTNode *current) const;
+
+  // Description: Find the maximum element in the binary search tree recursively.
+  int findMaxR(BSTNode *current) const;
+
+  // Description: Recurisve method to determine if a binary search tree contains a given element.
+  bool containsR(int anElement, BSTNode *current) const;
+
+  // Description: Recursive method to determine the number of leaves in a binary search tree.
+  unsigned int numberOfLeavesR(BSTNode *current) const;
+
+  // Description: Recursive method to determine the number of noes at depth k
+  int numberOfNodesAtDepthKR(int k, BSTNode *current) const;
+
+  // Description: Recursive method to determine the number of nodes with two children
+  int numberOfNodesWithTwoChildrenR(BSTNode *current) const;
+
+  // Description: Recursive method to determine if a binary search tree is balanced.
+  bool isBalancedR(BSTNode *current) const;
+
+  // Description: Returns the sum of all elements in a range [min, max] in a binary search tree.
+  int sumOfRangeR(int min, int max, BSTNode *current) const;
+
+  // Description: Recursive method to determine if a binary search tree is a full binary tree.
+  bool isFullR(BSTNode *current) const;
+
+  // Description: Recursive method to determine if a binary search tree is a complete binary tree.
+  bool isCompleteR(BSTNode *current) const;
 
 public:
 
@@ -118,6 +158,43 @@ public:
   //              as a wrapper method calling a recursive method.		
   unsigned int numberOfNodes( ) const;
 
+  // Description: Returns the sum of all elements in the binary search tree.
+  //              Fell free to implement this method as an iterative method or
+  //              as a wrapper method calling a recursive method.
+  unsigned int BST::sumOfAllNodes() const;
+  
+  // Description: Return the minimum element in the binary search tree.
+  int findMin() const;
+
+  // Description: Return the maximum element in the binary search tree.
+  int findMax() const;
+
+  // Description: Returns true if the binary search tree contains a given element.
+  bool contains(int anElement) const;
+
+  // Description: Returns the number of leaves in the binary search tree.
+  unsigned int numberOfLeaves() const;
+
+  // Description: Returns the number of nodes at depth k in the binary search tree.
+  int numberOfNodesAtDepthK(int k) const;
+
+  // Description: Returns the number of nodes with two children in the binary search tree.
+  int numberOfNodesWithTwoChildren() const;
+
+  // Description: Returns true if the binary search tree is balanced.
+  bool isBalanced() const;
+
+  // Description: Returns the depth of the given element in the binary search tree.
+  int depthOf(int anElement) const;
+
+  // Description: Returns the sum of all elements in a range [min, max] in the binary search tree.
+  int sumOfRange(int min, int max) const;
+
+  // Description: Returns true if the binary search tree is a full binary tree.
+  bool isFull() const;
+
+  // Description: Returns true if the binary search tree is a complete binary tree.
+  bool isComplete() const;
 };
 
 #endif
